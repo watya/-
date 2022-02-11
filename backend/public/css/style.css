@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+html {
+    font-size: 110%;
+}
+
+body {
+    color: #333;
+    font-size: 1rem;
+}
+
+.a {
+    /* ブログタイトル */
+    font-size: 2rem;
+    font-family: serif;
+    position: relative; /* 今の位置を基準 */
+    top: 4px;
+}
+
+.b {
+    /* 画像一覧 */
+    font-size: 1rem;
+    position: relative; /* 今の位置を基準 */
+    top: 5px;
+    left: 20px;
+}
+
+.c {
+    /* 検索ボタン */
+    position: relative; /* 今の位置を基準 */
+    left: 230px;
+    bottom: 41px;
+}
+
+.input-group {
+    /* 検索枠 */
+    left: 60px;
+    top: 20px;
+}

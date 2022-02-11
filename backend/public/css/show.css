@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+.e {
+    position: relative; /* 今の位置を基準 */
+    left: 500px;
+}
+
+.red {
+    position: relative; /* 今の位置を基準 */
+    left: 70px;
+    bottom: 41px;
+}
+
+.blue {
+    /* コメントする */
+    position: relative;
+    top: 7px;
+    left: 4px;
+}
+
+.green {
+    /* ブログ一覧 */
+    position: relative;
+    bottom: 37px;
+    left: 770px;
+}
+
+.greeen {
+    /* ページトップ */
+    position: relative;
+    bottom: 65px;
+    left: 900px;
+}
+
+.card-title1 {
+    /* ブログタイトル */
+    font-size: 45px;
+    font-family: sans-serif;
+}
+
+.card-title2 {
+    /* ブログ日付 */
+    font-size: 20px;
+    font-family: serif;
+}
+
+.card-title3 {
+    /* ブログカテゴリ */
+    font-size: 24px;
+}
+
+.card-text1 {
+    /* ブログ内容 */
+    font-size: 26px;
+}
+
+.edit {
+    /* 編集削除ボタン */
+    position: relative;
+    top: 10px;
+}
