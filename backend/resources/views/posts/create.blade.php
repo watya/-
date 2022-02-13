@@ -34,26 +34,11 @@
           <input type="text" class="form-control" placeholder="category" name="tagCategory">
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="file-preview">
           <label for="exampleFormControlFile1">サムネイル</label>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
-        </div>
-        <div id="file_viewer"></div>
-
-        <div class="form-group">
-          <label for="comment">本文</label>
-          <textarea class="form-control" rows="12" id="comment" name="content" cols="40"></textarea>
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-          <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-          <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-          <script>
-            $(document).ready(function() {
-              var simplemde = new SimpleMDE({
-                element: document.getElementById("comment"),
-                spellChecker:false,
-              });
-            });
-          </script>
+          <input type="file" ref="file" class="form-control-file" id="exampleFormControlFile1" name="image" accept="image/*" v-on:change="onFileChange">
+          <img class="userInfo__icon" v-bind:src="imageData" v-if="imageData" style="width: 270px;">
+          <button class="btn btn-danger" v-if="imageData" @click="resetFile()">削除</button>
         </div>
 
         <div class="form-group">
@@ -74,8 +59,7 @@
   </div>
 </div>
 
-
-<script type="application/javascript">
+<!-- <script type="application/javascript">
   function checkSubmit() {
     if (window.confirm('投稿してよろしいですか？')) {
       return true;
@@ -83,8 +67,40 @@
       return false;
     }
   }
-</script>
+</script> -->
 
-<script type="application/javascript" src="{{ asset('js/create.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+  new Vue({
+      el: '#file-preview',
+      data: {
+          imageData: '' //画像格納用変数
+      },
+      methods: {
+        onFileChange(e) {
+            const files = e.target.files;
+
+            if(files.length > 0) {
+
+                const file = files[0];
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    this.imageData = e.target.result;
+
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        resetFile() {
+          const input = this.$refs.file;
+          input.type = 'text';
+          input.type = 'file';
+          this.imageData = '';
+        }
+      }
+  });
+</script>
 
 @endsection

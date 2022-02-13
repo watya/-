@@ -1,5 +1,4 @@
 
-
 window.addEventListener('DOMContentLoaded', function(){
 
 	var image = document.querySelector('[name=image]');
