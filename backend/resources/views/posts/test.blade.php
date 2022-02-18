@@ -42,13 +42,19 @@
         </div>
 
         <div class="form-group">
+          <p>本文</p>
+          <div id="app">
+            <markdown-component></markdown-component>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label for="exampleFormControlSelect1">公開設定</label>
           <select input type="id" id="exampleFormControlSelect1" name="is_published">
             <option value="1">公開</option>
             <option value="0">非公開</option>
           </select>
         </div>
-
 
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
 
@@ -59,6 +65,8 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 <!-- <script type="application/javascript">
   function checkSubmit() {
     if (window.confirm('投稿してよろしいですか？')) {
@@ -68,8 +76,6 @@
     }
   }
 </script> -->
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 <script>
   new Vue({
