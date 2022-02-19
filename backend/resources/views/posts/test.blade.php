@@ -60,12 +60,14 @@
 
         <button type="submit" class="btn btn-primary">投稿</button>
         <a href="{{ route('posts.index') }}" class="btn btn-primary">キャンセル</a>
+        <a href="{{ route('posts.store') }}" class="btn btn-primary">テスト</a>
       </form>
     </div>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
 
 <!-- <script type="application/javascript">
   function checkSubmit() {
@@ -77,7 +79,7 @@
   }
 </script> -->
 
-<script>
+<script type="application/javascript">
   new Vue({
     el: '#file-preview',
     data: {
@@ -109,4 +111,9 @@
   });
 </script>
 
+<script>
+  
+</script>
+
 @endsection
+

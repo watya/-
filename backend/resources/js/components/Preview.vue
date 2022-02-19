@@ -8,7 +8,6 @@
 
 <script>
 export default {
-  name: "PreviewComponent",
   el: '#file-preview',
   data: {
       imageData: '' //画像格納用変数
