@@ -24,14 +24,8 @@
       <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" onSubmit="return checkSubmit()">
         {{ csrf_field() }}
 
-        <div class="form-group">
-          <label for="exampleInputEmail1">タイトル</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" placeholder="title" name="title">
-        </div>
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">カテゴリ</label>
-          <input type="text" class="form-control" placeholder="category" name="tagCategory">
+        <div class="form-group" id="app">
+          <axios-component></axios-component>
         </div>
 
         <div class="form-group" id="file-preview">
@@ -41,32 +35,12 @@
           <button class="btn btn-danger" v-if="imageData" @click="resetFile()">削除</button>
         </div>
 
-        <div class="form-group">
-          <p>本文</p>
-          <div id="app">
-            <markdown-component></markdown-component>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">公開設定</label>
-          <select input type="id" id="exampleFormControlSelect1" name="is_published">
-            <option value="1">公開</option>
-            <option value="0">非公開</option>
-          </select>
-        </div>
-
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
 
-        <button type="submit" class="btn btn-primary">投稿</button>
-        <a href="{{ route('posts.index') }}" class="btn btn-primary">キャンセル</a>
-        <a href="{{ route('posts.store') }}" class="btn btn-primary">テスト</a>
       </form>
     </div>
   </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
 
 
 <!-- <script type="application/javascript">
@@ -111,9 +85,6 @@
   });
 </script>
 
-<script>
-  
-</script>
 
 @endsection
 
