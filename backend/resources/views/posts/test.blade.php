@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="card-header">新規投稿</div>
+<p>Helllo!</p>
 <div class="card-body">
   @if (session('status'))
   <div class="alert alert-success" role="alert">
