@@ -21,39 +21,30 @@
         </ul>
       </div>
       @endif
+
       <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" onSubmit="return checkSubmit()">
-        {{ csrf_field() }}
 
         <div class="form-group" id="app">
-          <axios-component></axios-component>
+          <markdown-component></markdown-component>
         </div>
-
-        <div class="form-group" id="file-preview">
-          <label for="exampleFormControlFile1">サムネイル</label>
-          <input type="file" ref="file" class="form-control-file" id="exampleFormControlFile1" name="image" accept="image/*" v-on:change="onFileChange">
-          <img class="userInfo__icon" v-bind:src="imageData" v-if="imageData" style="width: 270px;">
-          <button class="btn btn-danger" v-if="imageData" @click="resetFile()">削除</button>
-        </div>
-
-        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
 
       </form>
     </div>
   </div>
 </div>
 
-
-<!-- <script type="application/javascript">
+<!-- 
+<script type="application/javascript">
   function checkSubmit() {
     if (window.confirm('投稿してよろしいですか？')) {
-      return true;
+      console.log(1);
     } else {
-      return false;
+      console.log(0);
     }
   }
 </script> -->
 
-<script type="application/javascript">
+<!-- <script type="application/javascript">
   new Vue({
     el: '#file-preview',
     data: {
@@ -83,7 +74,7 @@
       }
     }
   });
-</script>
+</script> -->
 
 
 @endsection

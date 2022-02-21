@@ -56,13 +56,15 @@ class PostController extends Controller
     {
         // Log::debug($request);
         // return Response::json($request);
-        dd($request->all());
+        // dd($request->all());
 
         $post = new Post;
-        $post->user_id = $request->user_id;
-        $post->content = $request->content;
+        $post->user_id = \Auth::id();
+        // $post->content = $request->content;
         $post->title = $request->title;
         $post->is_published = $request->is_published;
+
+        dd($post->toArray());
 
         // tagcategoryからtagを抽出。それを$matchに移行
         preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
@@ -278,8 +280,4 @@ class PostController extends Controller
         return view('posts.test', []);
     }
 
-    public function test2()
-    {
-        return view('posts.test2', []);
-    }
 }
