@@ -51,48 +51,48 @@
     </div>
 </template>
 
-<script>
-import "codemirror/lib/codemirror.css";
-import "@toast-ui/editor/dist/toastui-editor.css";
-import { Editor } from "@toast-ui/vue-editor";
+    <script>
+    import "codemirror/lib/codemirror.css";
+    import "@toast-ui/editor/dist/toastui-editor.css";
+    import { Editor } from "@toast-ui/vue-editor";
 
-export default {
-    name: "MarkdownComponent",
-    components: {
-        editor: Editor,
-    },
-    data() {
-      return {
-        title: "",
-        tagCategory: "",
-        is_published: "",
-      };
-    },
-    methods: {
-        scroll() {
-            this.$refs.toastuiEditor.invoke("setScrollTop", 10);
+    export default {
+        name: "MarkdownComponent",
+        components: {
+            editor: Editor,
         },
-        moveTop() {
-            this.$refs.toastuiEditor.invoke("moveCursorToStart");
+        data() {
+        return {
+            title: "",
+            tagCategory: "",
+            is_published: "",
+        };
         },
-        getHTML() {
-            let HTML = this.$refs.toastuiEditor.invoke("getHTML");
-            axios
-                .post("/posts", {
-                    contents: HTML,
-                    title: this.title,
-                    tagCategory: this.tagCategory,
-                    is_published: this.is_published,
-                })
-                .then((res) => {
-                    console.log(res);
-                    this.posts = res.data.posts;
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        },
+        methods: {
+            scroll() {
+                this.$refs.toastuiEditor.invoke("setScrollTop", 10);
+            },
+            moveTop() {
+                this.$refs.toastuiEditor.invoke("moveCursorToStart");
+            },
+            getHTML() {
+                let HTML = this.$refs.toastuiEditor.invoke("getHTML");
+                axios
+                    .post("/posts", {
+                        contents: HTML,
+                        title: this.title,
+                        tagCategory: this.tagCategory,
+                        is_published: this.is_published,
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        this.posts = res.data.posts;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            },
 
-    },
-};
-</script>
+        },
+    };
+    </script>
