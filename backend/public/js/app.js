@@ -42521,6 +42521,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -42533,7 +42559,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       title: "",
       tagCategory: "",
-      is_published: ""
+      is_published: "",
+      imageData: "" //画像格納用変数
+
     };
   },
   methods: {
@@ -42548,16 +42576,39 @@ __webpack_require__.r(__webpack_exports__);
 
       var HTML = this.$refs.toastuiEditor.invoke("getHTML");
       axios.post("/posts", {
-        contents: HTML,
         title: this.title,
         tagCategory: this.tagCategory,
-        is_published: this.is_published
+        contents: HTML,
+        is_published: this.is_published,
+        imageData: this.imageData
       }).then(function (res) {
         console.log(res);
         _this.posts = res.data.posts;
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    onFileChange: function onFileChange(e) {
+      var _this2 = this;
+
+      var files = e.target.files;
+
+      if (files.length > 0) {
+        var file = files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          _this2.imageData = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    resetFile: function resetFile() {
+      var input = this.$refs.file;
+      input.type = "text";
+      input.type = "file";
+      this.imageData = "";
     }
   }
 });
@@ -92854,6 +92905,47 @@ var render = function () {
           },
         },
       }),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group", attrs: { id: "file-preview" } }, [
+      _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
+        _vm._v("サムネイル"),
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        ref: "file",
+        staticClass: "form-control-file",
+        attrs: {
+          type: "file",
+          id: "exampleFormControlFile1",
+          name: "image",
+          accept: "image/*",
+        },
+        on: { change: _vm.onFileChange },
+      }),
+      _vm._v(" "),
+      _vm.imageData
+        ? _c("img", {
+            staticClass: "userInfo__icon",
+            staticStyle: { width: "270px" },
+            attrs: { src: _vm.imageData },
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.imageData
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              on: {
+                click: function ($event) {
+                  return _vm.resetFile()
+                },
+              },
+            },
+            [_vm._v("\n            削除\n        ")]
+          )
+        : _vm._e(),
     ]),
     _vm._v(" "),
     _c(
