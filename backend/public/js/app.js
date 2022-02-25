@@ -42560,6 +42560,7 @@ __webpack_require__.r(__webpack_exports__);
       title: "",
       tagCategory: "",
       is_published: "",
+      content: "",
       imageData: "" //画像格納用変数
 
     };
@@ -42578,7 +42579,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/posts", {
         title: this.title,
         tagCategory: this.tagCategory,
-        contents: HTML,
+        content: HTML,
         is_published: this.is_published,
         imageData: this.imageData
       }).then(function (res) {

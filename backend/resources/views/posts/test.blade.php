@@ -22,16 +22,18 @@
       </div>
       @endif
 
-      <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" onSubmit="return checkSubmit()">
+      <!-- <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" onSubmit="return checkSubmit()"> -->
 
         <div class="form-group" id="app">
           <markdown-component></markdown-component>
         </div>
 
-      </form>
+      <!-- </form> -->
     </div>
   </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 
 <!-- 
 <script type="application/javascript">
@@ -43,39 +45,6 @@
     }
   }
 </script> -->
-
-<!-- <script type="application/javascript">
-  new Vue({
-    el: '#file-preview',
-    data: {
-        imageData: '' //画像格納用変数
-    },
-    methods: {
-      onFileChange(e) {
-        const files = e.target.files;
-
-        if(files.length > 0) {
-
-            const file = files[0];
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                this.imageData = e.target.result;
-
-            };
-            reader.readAsDataURL(file);
-        }
-      },
-      resetFile() {
-        const input = this.$refs.file;
-        input.type = 'text';
-        input.type = 'file';
-        this.imageData = '';
-      }
-    }
-  });
-</script> -->
-
 
 @endsection
 

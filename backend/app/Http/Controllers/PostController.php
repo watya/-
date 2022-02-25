@@ -56,18 +56,18 @@ class PostController extends Controller
     {
         // Log::debug($request);
         // return Response::json($request);
-        // dd($request->all());
+
+        dd($request->all());
+        //dd($post->toArray());
 
         $post = new Post;
         $post->user_id = \Auth::id();
-        // $post->content = $request->content;
+        $post->content = $request->content;
         $post->title = $request->title;
         $post->is_published = $request->is_published;
 
-        dd($post->toArray());
-
         // tagcategoryからtagを抽出。それを$matchに移行
-        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
+        preg_match_all('/([a-zA-Z0-90-9ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
 
         $tags = [];
 
@@ -98,10 +98,11 @@ class PostController extends Controller
         //     }
         // }
 
-        if ($request->image != null) {
-            if ($request->image->isValid()) {
+
+        if ($request->imageData != null) {
+            if ($request->imageData->isValid()) {
                 $image = new Image;
-                $filename = $request->image->store('public/image');
+                $filename = $request->imageData->store('public/image');
                 $image->image = basename($filename);
                 $image->post_id = $post->id;
                 $image->save();

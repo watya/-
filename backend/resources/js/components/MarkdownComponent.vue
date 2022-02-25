@@ -92,6 +92,7 @@ export default {
             title: "",
             tagCategory: "",
             is_published: "",
+            content:"",
             imageData: "", //画像格納用変数
         };
     },
@@ -104,11 +105,12 @@ export default {
         },
         getHTML() {
             let HTML = this.$refs.toastuiEditor.invoke("getHTML");
+
             axios
-                .post("/posts", {
+                .post("/posts",{
                     title: this.title,
                     tagCategory: this.tagCategory,
-                    contents: HTML,
+                    content: HTML,
                     is_published: this.is_published,
                     imageData:this.imageData,
                 })

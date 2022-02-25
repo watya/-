@@ -77,11 +77,11 @@
                         </li>
                         @endif
 
-                        <!-- @if (Route::has('register'))
+                        @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('新規登録') }}</a>
                                 </li>
-                            @endif -->
+                            @endif
 
                         @else
                         <!-- Authentication Links  ログインしているときは～のやつ-->
