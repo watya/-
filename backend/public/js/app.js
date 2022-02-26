@@ -42543,10 +42543,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -42561,7 +42557,7 @@ __webpack_require__.r(__webpack_exports__);
       tagCategory: "",
       is_published: "",
       content: "",
-      imageData: "" //画像格納用変数
+      imageData: "" //画像格納用変
 
     };
   },
@@ -42573,24 +42569,23 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.toastuiEditor.invoke("moveCursorToStart");
     },
     getHTML: function getHTML() {
-      var _this = this;
-
       var HTML = this.$refs.toastuiEditor.invoke("getHTML");
-      axios.post("/posts", {
+      axios.post("/posts1", {
         title: this.title,
         tagCategory: this.tagCategory,
         content: HTML,
         is_published: this.is_published,
         imageData: this.imageData
       }).then(function (res) {
-        console.log(res);
-        _this.posts = res.data.posts;
+        // console.log(res);
+        // this.posts = res.data.posts;
+        window.location = "/";
       })["catch"](function (err) {
         console.log(err);
       });
     },
     onFileChange: function onFileChange(e) {
-      var _this2 = this;
+      var _this = this;
 
       var files = e.target.files;
 
@@ -42599,7 +42594,7 @@ __webpack_require__.r(__webpack_exports__);
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          _this2.imageData = e.target.result;
+          _this.imageData = e.target.result;
         };
 
         reader.readAsDataURL(file);
@@ -93009,22 +93004,6 @@ var render = function () {
     _c("button", { attrs: { type: "button" }, on: { click: _vm.getHTML } }, [
       _vm._v("保存"),
     ]),
-    _vm._v(" "),
-    _c(
-      "a",
-      {
-        staticClass: "btn btn-primary",
-        attrs: { href: "/posts" },
-        on: { click: _vm.getHTML },
-      },
-      [_vm._v("DD")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-      [_vm._v("投稿")]
-    ),
     _vm._v(" "),
     _c("a", { staticClass: "btn btn-primary", attrs: { href: "/" } }, [
       _vm._v("キャンセル"),

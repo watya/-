@@ -54,10 +54,10 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        // Log::debug($request);
-        // return Response::json($request);
+        dd(Log::debug('request all', $request->all()));
 
-        dd($request->all());
+        // dd($request->input("title"));
+        // dd($request->all());
         //dd($post->toArray());
 
         $post = new Post;
@@ -279,6 +279,47 @@ class PostController extends Controller
     public function test()
     {
         return view('posts.test', []);
+    }
+
+
+    public function store1(PostRequest $request)
+    {
+        $post = new Post;
+        $post->user_id = \Auth::id();
+        $post->content = $request->content;
+        $post->title = $request->title;
+        $post->is_published = $request->is_published;
+
+        // tagcategoryからtagを抽出。それを$matchに移行
+        preg_match_all('/([a-zA-Z0-90-9ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
+
+        $tags = [];
+
+        foreach ($match[1] as $tag) {
+            $found = Tag::firstOrCreate(['tag_name' => $tag]); //タグが既に存在していたら作らない。存在してなかったら作る。
+
+            array_push($tags, $found);
+        }
+
+        $tag_ids = [];
+
+        foreach ($tags as $tag) {
+            array_push($tag_ids, $tag['id']);
+        }
+
+        $post->save();
+        $post->tags()->attach($tag_ids);
+
+        if ($request->imageData != null) {
+            if ($request->imageData->isValid()) {
+                $image = new Image;
+                $filename = $request->imageData->store('public/image');
+                $image->image = basename($filename);
+                $image->post_id = $post->id;
+                $image->save();
+            }
+        }
+
     }
 
 }

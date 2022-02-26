@@ -22,21 +22,15 @@
       </div>
       @endif
 
-      <!-- <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" onSubmit="return checkSubmit()"> -->
-
         <div class="form-group" id="app">
           <markdown-component></markdown-component>
         </div>
-
-      <!-- </form> -->
     </div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-
-<!-- 
-<script type="application/javascript">
+<!-- <script type="application/javascript">
   function checkSubmit() {
     if (window.confirm('投稿してよろしいですか？')) {
       console.log(1);

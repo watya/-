@@ -69,10 +69,6 @@
         </div>
 
         <button type="button" @click="getHTML">保存</button>
-
-        <a href="/posts" class="btn btn-primary" @click="getHTML">DD</a>
-
-        <button type="submit" class="btn btn-primary">投稿</button>
         <a href="/" class="btn btn-primary">キャンセル</a>
     </div>
 </template>
@@ -93,7 +89,7 @@ export default {
             tagCategory: "",
             is_published: "",
             content:"",
-            imageData: "", //画像格納用変数
+            imageData: "", //画像格納用変
         };
     },
     methods: {
@@ -105,9 +101,8 @@ export default {
         },
         getHTML() {
             let HTML = this.$refs.toastuiEditor.invoke("getHTML");
-
             axios
-                .post("/posts",{
+                .post("/posts1",{
                     title: this.title,
                     tagCategory: this.tagCategory,
                     content: HTML,
@@ -115,8 +110,9 @@ export default {
                     imageData:this.imageData,
                 })
                 .then((res) => {
-                    console.log(res);
-                    this.posts = res.data.posts;
+                    // console.log(res);
+                    // this.posts = res.data.posts;
+                    window.location = "/";
                 })
                 .catch((err) => {
                     console.log(err);
