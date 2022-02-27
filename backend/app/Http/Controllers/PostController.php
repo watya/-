@@ -311,7 +311,7 @@ class PostController extends Controller
         $post->tags()->attach($tag_ids);
 
         if ($request->imageData != null) {
-            if ($request->imageData->isValid()) {
+            if ($request->imageData->isValid()){
                 $image = new Image;
                 $filename = $request->imageData->store('public/image');
                 $image->image = basename($filename);
@@ -319,7 +319,6 @@ class PostController extends Controller
                 $image->save();
             }
         }
-
     }
 
 }

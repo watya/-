@@ -30,7 +30,7 @@
                 ref="file"
                 class="form-control-file"
                 id="exampleFormControlFile1"
-                name="image"
+                name="imageData"
                 accept="image/*"
                 v-on:change="onFileChange"
             />
@@ -99,28 +99,13 @@ export default {
         moveTop() {
             this.$refs.toastuiEditor.invoke("moveCursorToStart");
         },
-        getHTML() {
-            let HTML = this.$refs.toastuiEditor.invoke("getHTML");
-            axios
-                .post("/posts1",{
-                    title: this.title,
-                    tagCategory: this.tagCategory,
-                    content: HTML,
-                    is_published: this.is_published,
-                    imageData:this.imageData,
-                })
-                .then((res) => {
-                    // console.log(res);
-                    // this.posts = res.data.posts;
-                    window.location = "/";
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        },
 
         onFileChange(e) {
             const files = e.target.files;
+
+            e.preventDefault();
+            this.uploadFile = files[0];
+
             if (files.length > 0) {
                 const file = files[0];
                 const reader = new FileReader();
@@ -135,6 +120,34 @@ export default {
             input.type = "text";
             input.type = "file";
             this.imageData = "";
+        },
+
+        getHTML() {
+            const HTML = this.$refs.toastuiEditor.invoke("getHTML");
+
+            const data = new FormData;
+            data.append('imageData', this.uploadFile);
+            data.append('title', this.title);
+            data.append('content', HTML);
+            data.append('is_published', this.is_published);
+            data.append('tagCategory', this.tagCategory);
+
+            const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                };
+
+            axios
+                .post("/posts1",data,config)
+                .then((res) => {
+                    console.log(res);
+                    this.posts = res.data.posts;
+                    window.location = "/";
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
     },
 };

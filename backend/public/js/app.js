@@ -42568,26 +42568,12 @@ __webpack_require__.r(__webpack_exports__);
     moveTop: function moveTop() {
       this.$refs.toastuiEditor.invoke("moveCursorToStart");
     },
-    getHTML: function getHTML() {
-      var HTML = this.$refs.toastuiEditor.invoke("getHTML");
-      axios.post("/posts1", {
-        title: this.title,
-        tagCategory: this.tagCategory,
-        content: HTML,
-        is_published: this.is_published,
-        imageData: this.imageData
-      }).then(function (res) {
-        // console.log(res);
-        // this.posts = res.data.posts;
-        window.location = "/";
-      })["catch"](function (err) {
-        console.log(err);
-      });
-    },
     onFileChange: function onFileChange(e) {
       var _this = this;
 
       var files = e.target.files;
+      e.preventDefault();
+      this.uploadFile = files[0];
 
       if (files.length > 0) {
         var file = files[0];
@@ -42605,6 +42591,29 @@ __webpack_require__.r(__webpack_exports__);
       input.type = "text";
       input.type = "file";
       this.imageData = "";
+    },
+    getHTML: function getHTML() {
+      var _this2 = this;
+
+      var HTML = this.$refs.toastuiEditor.invoke("getHTML");
+      var data = new FormData();
+      data.append('imageData', this.uploadFile);
+      data.append('title', this.title);
+      data.append('content', HTML);
+      data.append('is_published', this.is_published);
+      data.append('tagCategory', this.tagCategory);
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      axios.post("/posts1", data, config).then(function (res) {
+        console.log(res);
+        _this2.posts = res.data.posts;
+        window.location = "/";
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }
 });
@@ -92914,7 +92923,7 @@ var render = function () {
         attrs: {
           type: "file",
           id: "exampleFormControlFile1",
-          name: "image",
+          name: "imageData",
           accept: "image/*",
         },
         on: { change: _vm.onFileChange },
