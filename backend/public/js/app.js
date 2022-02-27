@@ -42572,10 +42572,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var files = e.target.files;
-      e.preventDefault();
-      this.uploadFile = files[0];
 
       if (files.length > 0) {
+        this.uploadFile = files[0];
         var file = files[0];
         var reader = new FileReader();
 
@@ -42595,25 +42594,35 @@ __webpack_require__.r(__webpack_exports__);
     getHTML: function getHTML() {
       var _this2 = this;
 
-      var HTML = this.$refs.toastuiEditor.invoke("getHTML");
-      var data = new FormData();
-      data.append('imageData', this.uploadFile);
-      data.append('title', this.title);
-      data.append('content', HTML);
-      data.append('is_published', this.is_published);
-      data.append('tagCategory', this.tagCategory);
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
+      if (window.confirm('投稿してよろしいですか？')) {
+        var HTML = this.$refs.toastuiEditor.invoke("getHTML");
+        var data = new FormData();
+        data.append('imageData', this.uploadFile);
+
+        if (data.append.imageData == null) {
+          data.append('imageData', null);
         }
-      };
-      axios.post("/posts1", data, config).then(function (res) {
-        console.log(res);
-        _this2.posts = res.data.posts;
-        window.location = "/";
-      })["catch"](function (err) {
-        console.log(err);
-      });
+
+        ;
+        data.append('title', this.title);
+        data.append('content', HTML);
+        data.append('is_published', this.is_published);
+        data.append('tagCategory', this.tagCategory);
+        var config = {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        };
+        axios.post("/posts1", data, config).then(function (res) {
+          console.log(res);
+          _this2.posts = res.data.posts;
+          window.location = "/";
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      } else {
+        return false;
+      }
     }
   }
 });

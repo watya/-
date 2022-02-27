@@ -319,6 +319,12 @@ class PostController extends Controller
                 $image->save();
             }
         }
+
+        if ($post->is_published == 1) {
+            \Session::flash('err_msg', 'ブログを投稿しました');
+        } else {
+            \Session::flash('err_msg', 'ブログをアーカイブに保存しました');
+        }
     }
 
 }

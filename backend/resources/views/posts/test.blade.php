@@ -29,16 +29,7 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-<!-- <script type="application/javascript">
-  function checkSubmit() {
-    if (window.confirm('投稿してよろしいですか？')) {
-      console.log(1);
-    } else {
-      console.log(0);
-    }
-  }
-</script> -->
+<script src="{{ asset('js/app.js') }}" defer></script>
 
 @endsection
 
