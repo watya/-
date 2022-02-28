@@ -123,7 +123,15 @@ export default {
 
         getHTML() {
             if (window.confirm('投稿してよろしいですか？')) {
-                const HTML = this.$refs.toastuiEditor.invoke("getHTML");
+                let HTML = this.$refs.toastuiEditor.invoke("getHTML");
+
+                if(HTML === '<p><br class="ProseMirror-trailingBreak"></p>'){
+                    alert('本文が入力されていません');
+                    return;
+                }else if(this.title === ''){
+                    alert('タイトルが入力されていません');
+                    return;
+                }
 
                 const data = new FormData;
                 data.append('imageData', this.uploadFile);
@@ -131,6 +139,7 @@ export default {
                 data.append('content', HTML);
                 data.append('is_published', this.is_published);
                 data.append('tagCategory', this.tagCategory);
+
                 axios
                     .post("/posts1",data,)
                     .then((res) => {
@@ -140,6 +149,7 @@ export default {
                     })
                     .catch((err) => {
                         console.log(err);
+                        console.log(err.response.data);
                     });
             } else {
                 return false;

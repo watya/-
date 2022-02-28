@@ -42598,6 +42598,34 @@ __webpack_require__.r(__webpack_exports__);
 
       if (window.confirm('投稿してよろしいですか？')) {
         var HTML = this.$refs.toastuiEditor.invoke("getHTML");
+
+        if (HTML === '<p><br class="ProseMirror-trailingBreak"></p>') {
+          alert('本文が入力されていません');
+          return;
+        } else if (this.title === "") {
+          alert('タイトルが入力されていません');
+          return;
+        } // else{
+        //     const data = new FormData;
+        //     data.append('imageData', this.uploadFile);
+        //     data.append('title', this.title);
+        //     data.append('content', HTML);
+        //     data.append('is_published', this.is_published);
+        //     data.append('tagCategory', this.tagCategory);
+        //     axios
+        //         .post("/posts1",data,)
+        //         .then((res) => {
+        //             console.log(res);
+        //             this.posts = res.data.posts;
+        //             window.location = "/";
+        //         })
+        //         .catch((err) => {
+        //             console.log(err);
+        //             console.log(err.response.data);
+        //         });
+        // }
+
+
         var data = new FormData();
         data.append('imageData', this.uploadFile);
         data.append('title', this.title);
@@ -42610,6 +42638,7 @@ __webpack_require__.r(__webpack_exports__);
           window.location = "/";
         })["catch"](function (err) {
           console.log(err);
+          console.log(err.response.data);
         });
       } else {
         return false;
