@@ -131,6 +131,9 @@ export default {
                 }else if(this.title === ''){
                     alert('タイトルが入力されていません');
                     return;
+                }else if(this.title.length > 255){
+                    alert('タイトルは255文字以内にしてください');
+                    return;
                 }
 
                 const data = new FormData;
