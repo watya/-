@@ -68,7 +68,7 @@
             </select>
         </div>
 
-        <button type="button" @click="getHTML">保存</button>
+        <button type="button" class="btn btn-primary" @click="getHTML">投稿</button>
         <a href="/" class="btn btn-primary">キャンセル</a>
     </div>
 </template>
@@ -87,9 +87,10 @@ export default {
         return {
             title: "",
             tagCategory: "",
-            is_published: "",
+            is_published: "1",
             content:"",
             imageData: "", //画像格納用変
+            uploadFile: "",
         };
     },
     methods: {
@@ -117,6 +118,7 @@ export default {
             input.type = "text";
             input.type = "file";
             this.imageData = "";
+            this.uploadFile = "";
         },
 
         getHTML() {
@@ -129,13 +131,8 @@ export default {
                 data.append('content', HTML);
                 data.append('is_published', this.is_published);
                 data.append('tagCategory', this.tagCategory);
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
-                };
                 axios
-                    .post("/posts1",data,config)
+                    .post("/posts1",data,)
                     .then((res) => {
                         console.log(res);
                         this.posts = res.data.posts;

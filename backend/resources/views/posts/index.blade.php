@@ -74,7 +74,6 @@
                     @else
                     {{ $posts->links('pagination::bootstrap-4') }}
                     @endif
-
                 </div>
             </div>
         </div>

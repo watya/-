@@ -42555,10 +42555,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       title: "",
       tagCategory: "",
-      is_published: "",
+      is_published: "1",
       content: "",
-      imageData: "" //画像格納用変
-
+      imageData: "",
+      //画像格納用変
+      uploadFile: ""
     };
   },
   methods: {
@@ -42590,6 +42591,7 @@ __webpack_require__.r(__webpack_exports__);
       input.type = "text";
       input.type = "file";
       this.imageData = "";
+      this.uploadFile = "";
     },
     getHTML: function getHTML() {
       var _this2 = this;
@@ -42598,22 +42600,11 @@ __webpack_require__.r(__webpack_exports__);
         var HTML = this.$refs.toastuiEditor.invoke("getHTML");
         var data = new FormData();
         data.append('imageData', this.uploadFile);
-
-        if (data.append.imageData == null) {
-          data.append('imageData', null);
-        }
-
-        ;
         data.append('title', this.title);
         data.append('content', HTML);
         data.append('is_published', this.is_published);
         data.append('tagCategory', this.tagCategory);
-        var config = {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        };
-        axios.post("/posts1", data, config).then(function (res) {
+        axios.post("/posts1", data).then(function (res) {
           console.log(res);
           _this2.posts = res.data.posts;
           window.location = "/";
@@ -93019,9 +93010,15 @@ var render = function () {
       ),
     ]),
     _vm._v(" "),
-    _c("button", { attrs: { type: "button" }, on: { click: _vm.getHTML } }, [
-      _vm._v("保存"),
-    ]),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: { type: "button" },
+        on: { click: _vm.getHTML },
+      },
+      [_vm._v("投稿")]
+    ),
     _vm._v(" "),
     _c("a", { staticClass: "btn btn-primary", attrs: { href: "/" } }, [
       _vm._v("キャンセル"),

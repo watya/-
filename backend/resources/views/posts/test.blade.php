@@ -22,14 +22,12 @@
       </div>
       @endif
 
-        <div class="form-group" id="app">
+        <div class="form-group">
           <markdown-component></markdown-component>
         </div>
     </div>
   </div>
 </div>
-
-<script src="{{ asset('js/app.js') }}" defer></script>
 
 @endsection
 
