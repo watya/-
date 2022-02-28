@@ -42597,26 +42597,27 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (window.confirm('投稿してよろしいですか？')) {
-        var HTML = this.$refs.toastuiEditor.invoke("getHTML");
+        //let HTML = this.$refs.toastuiEditor.invoke("getHTML");
+        var markdown = this.$refs.toastuiEditor.invoke('getMarkdown');
 
-        if (HTML === '<p><br class="ProseMirror-trailingBreak"></p>') {
+        if (markdown === '') {
           alert('本文が入力されていません');
           return;
         } else if (this.title === '') {
           alert('タイトルが入力されていません');
           return;
         } else if (this.title.length > 255) {
-          alert('タイトルは255字以内にしてください');
+          alert('タイトルは255文字以内にしてください');
           return;
         }
 
         var data = new FormData();
         data.append('imageData', this.uploadFile);
         data.append('title', this.title);
-        data.append('content', HTML);
+        data.append('content', markdown);
         data.append('is_published', this.is_published);
         data.append('tagCategory', this.tagCategory);
-        axios.post("/posts1", data).then(function (res) {
+        axios.post("/posts", data).then(function (res) {
           console.log(res);
           _this2.posts = res.data.posts;
           window.location = "/";

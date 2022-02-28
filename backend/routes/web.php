@@ -35,5 +35,3 @@ Route::resource('/posts', 'App\Http\Controllers\PostController', ['except' => ['
 Route::resource('/users', 'App\Http\Controllers\UserController');
 Route::resource('/comments', 'App\Http\Controllers\CommentController')->middleware('auth'); //ログインしてる人だけ
 Route::resource('/images', 'App\Http\Controllers\ImageController');
-
-Route::post('/posts1', [PostController::class, 'store1']);
