@@ -12,6 +12,11 @@
             />
         </div>
 
+        {{post.title}}
+        {{post.id}}
+        {{post.content}}
+        {{post.image}}
+
         <div class="form-group">
             <label for="exampleInputEmail1">カテゴリ</label>
             <input
@@ -68,8 +73,8 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-primary" @click="getHTML">投稿</button>
-        <a href="/" class="btn btn-primary">キャンセル</a>
+        <button type="button" class="btn btn-primary" @click="getHTML">更新</button>
+        <!-- <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">キャンセル</a> -->
     </div>
 </template>
 
@@ -83,11 +88,16 @@ export default {
     components: {
         editor: Editor,
     },
+    
+    props: {
+        post: {type: Object, required: true},
+    },
+
     data() {
         return {
             title: "",
             tagCategory: "",
-            is_published: "1",
+            is_published: "",
             content:"",
             imageData: "", //画像格納用変
             uploadFile: "",
@@ -134,6 +144,9 @@ export default {
                 }else if(this.title.length > 255){
                     alert('タイトルは255文字以内にしてください');
                     return;
+                }else if(this.is_published === ''){
+                    alert('公開設定を選択してください');
+                    return;
                 }
 
                 const data = new FormData;
@@ -143,17 +156,24 @@ export default {
                 data.append('is_published', this.is_published);
                 data.append('tagCategory', this.tagCategory);
 
+                const id = $id;
+
                 axios
-                    .post("/posts",data,)
-                    .then((res) => {
+                    .put('/posts' + id, data)
+                    .then(res => {
+                        // alert("「" + modify.name + "」更新完了");
+                        // this.$router.push({path: '/articles/list'});
                         console.log(res);
                         this.posts = res.data.posts;
                         window.location = "/";
                     })
-                    .catch((err) => {
+                    .catch(error => {
+                        // alert("「" + modify.name + "」更新失敗");
+                        // console.log(error, id, modify);
                         console.log(err);
                         console.log(err.response.data);
                     });
+
             } else {
                 return false;
             }

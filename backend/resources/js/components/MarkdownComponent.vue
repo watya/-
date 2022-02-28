@@ -87,7 +87,7 @@ export default {
         return {
             title: "",
             tagCategory: "",
-            is_published: "1",
+            is_published: "",
             content:"",
             imageData: "", //画像格納用変
             uploadFile: "",
@@ -133,6 +133,9 @@ export default {
                     return;
                 }else if(this.title.length > 255){
                     alert('タイトルは255文字以内にしてください');
+                    return;
+                }else if(this.is_published === ''){
+                    alert('公開設定を選択してください');
                     return;
                 }
 
