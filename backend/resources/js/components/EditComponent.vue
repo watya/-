@@ -12,11 +12,6 @@
             />
         </div>
 
-        {{post.title}}
-        {{post.id}}
-        {{post.content}}
-        {{post.image}}
-
         <div class="form-group">
             <label for="exampleInputEmail1">カテゴリ</label>
             <input
@@ -56,7 +51,7 @@
 
         <div class="form-group">
             <p>本文</p>
-            <editor ref="toastuiEditor" />
+            <editor ref="toastuiEditor" initialValue= "こんにちはああああああ" />
         </div>
 
         <div class="form-group">
@@ -88,17 +83,24 @@ export default {
     components: {
         editor: Editor,
     },
-    
     props: {
         post: {type: Object, required: true},
     },
 
-    data() {
+    postData(post) {
+        this.post.id = post.id;
+        this.post.title = post.title;
+
+        this.post.tag = post.tag;
+        this.post.content = post.content;
+    },
+
+    data(){
         return {
-            title: "",
-            tagCategory: "",
+            title: this.post.title,
+            tagCategory: this.post.tag,
+            content: "",
             is_published: "",
-            content:"",
             imageData: "", //画像格納用変
             uploadFile: "",
         };
@@ -157,7 +159,6 @@ export default {
                 data.append('tagCategory', this.tagCategory);
 
                 const id = $id;
-
                 axios
                     .put('/posts' + id, data)
                     .then(res => {

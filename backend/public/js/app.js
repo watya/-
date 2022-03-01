@@ -42456,11 +42456,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -42475,12 +42470,18 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  postData: function postData(post) {
+    this.post.id = post.id;
+    this.post.title = post.title;
+    this.post.tag = post.tag;
+    this.post.content = post.content;
+  },
   data: function data() {
     return {
-      title: "",
-      tagCategory: "",
-      is_published: "",
+      title: this.post.title,
+      tagCategory: this.post.tag,
       content: "",
+      is_published: "",
       imageData: "",
       //画像格納用変
       uploadFile: ""
@@ -92972,17 +92973,7 @@ var render = function () {
         },
       }),
     ]),
-    _vm._v(
-      "\n\n    " +
-        _vm._s(_vm.post.title) +
-        "\n    " +
-        _vm._s(_vm.post.id) +
-        "\n    " +
-        _vm._s(_vm.post.content) +
-        "\n    " +
-        _vm._s(_vm.post.image) +
-        "\n\n    "
-    ),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "exampleInputEmail1" } }, [
         _vm._v("カテゴリ"),
@@ -93058,7 +93049,10 @@ var render = function () {
       [
         _c("p", [_vm._v("本文")]),
         _vm._v(" "),
-        _c("editor", { ref: "toastuiEditor" }),
+        _c("editor", {
+          ref: "toastuiEditor",
+          attrs: { initialValue: "こんにちはああああああ" },
+        }),
       ],
       1
     ),
