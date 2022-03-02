@@ -42468,16 +42468,20 @@ __webpack_require__.r(__webpack_exports__);
     post: {
       type: Object,
       required: true
+    },
+    initialValue: {
+      type: String
     }
   },
   postData: function postData(post) {
     this.post.id = post.id;
     this.post.title = post.title;
-    this.post.tag = post.tag;
     this.post.content = post.content;
+    this.post.tag = post.tag;
   },
   data: function data() {
     return {
+      editorText: this.post.content,
       title: this.post.title,
       tagCategory: this.post.tag,
       content: "",
@@ -42518,13 +42522,13 @@ __webpack_require__.r(__webpack_exports__);
       this.imageData = "";
       this.uploadFile = "";
     },
-    getHTML: function getHTML() {
+    getContent: function getContent() {
       var _this2 = this;
 
       if (window.confirm('投稿してよろしいですか？')) {
-        var markdown = this.$refs.toastuiEditor.invoke('getMarkdown');
+        var content = this.$refs.toastuiEditor.invoke('getMarkdown');
 
-        if (markdown === '') {
+        if (content === '') {
           alert('本文が入力されていません');
           return;
         } else if (this.title === '') {
@@ -42541,7 +42545,7 @@ __webpack_require__.r(__webpack_exports__);
         var data = new FormData();
         data.append('imageData', this.uploadFile);
         data.append('title', this.title);
-        data.append('content', markdown);
+        data.append('content', content);
         data.append('is_published', this.is_published);
         data.append('tagCategory', this.tagCategory);
         var id = $id;
@@ -42740,13 +42744,13 @@ __webpack_require__.r(__webpack_exports__);
       this.imageData = "";
       this.uploadFile = "";
     },
-    getHTML: function getHTML() {
+    getContent: function getContent() {
       var _this2 = this;
 
       if (window.confirm('投稿してよろしいですか？')) {
-        var markdown = this.$refs.toastuiEditor.invoke('getMarkdown');
+        var content = this.$refs.toastuiEditor.invoke('getMarkdown');
 
-        if (markdown === '') {
+        if (content === '') {
           alert('本文が入力されていません');
           return;
         } else if (this.title === '') {
@@ -42763,7 +42767,7 @@ __webpack_require__.r(__webpack_exports__);
         var data = new FormData();
         data.append('imageData', this.uploadFile);
         data.append('title', this.title);
-        data.append('content', markdown);
+        data.append('content', content);
         data.append('is_published', this.is_published);
         data.append('tagCategory', this.tagCategory);
         axios.post("/posts", data).then(function (res) {
@@ -93051,7 +93055,7 @@ var render = function () {
         _vm._v(" "),
         _c("editor", {
           ref: "toastuiEditor",
-          attrs: { initialValue: "こんにちはああああああ" },
+          attrs: { height: "500px", initialValue: _vm.editorText },
         }),
       ],
       1
@@ -93108,7 +93112,7 @@ var render = function () {
       {
         staticClass: "btn btn-primary",
         attrs: { type: "button" },
-        on: { click: _vm.getHTML },
+        on: { click: _vm.getContent },
       },
       [_vm._v("更新")]
     ),
@@ -93350,7 +93354,7 @@ var render = function () {
       {
         staticClass: "btn btn-primary",
         attrs: { type: "button" },
-        on: { click: _vm.getHTML },
+        on: { click: _vm.getContent },
       },
       [_vm._v("投稿")]
     ),

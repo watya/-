@@ -51,7 +51,7 @@
 
         <div class="form-group">
             <p>本文</p>
-            <editor ref="toastuiEditor" initialValue= "こんにちはああああああ" />
+            <editor ref="toastuiEditor" height="500px" :initialValue= "editorText" />
         </div>
 
         <div class="form-group">
@@ -68,7 +68,7 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-primary" @click="getHTML">更新</button>
+        <button type="button" class="btn btn-primary" @click="getContent">更新</button>
         <!-- <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">キャンセル</a> -->
     </div>
 </template>
@@ -81,22 +81,23 @@ import { Editor } from "@toast-ui/vue-editor";
 export default {
     name: "MarkdownComponent",
     components: {
-        editor: Editor,
+        editor : Editor,
     },
     props: {
         post: {type: Object, required: true},
+        initialValue: {type: String},
     },
 
     postData(post) {
         this.post.id = post.id;
         this.post.title = post.title;
-
-        this.post.tag = post.tag;
         this.post.content = post.content;
+        this.post.tag = post.tag;
     },
 
     data(){
         return {
+            editorText: this.post.content,
             title: this.post.title,
             tagCategory: this.post.tag,
             content: "",
@@ -133,11 +134,11 @@ export default {
             this.uploadFile = "";
         },
 
-        getHTML() {
+        getContent() {
             if (window.confirm('投稿してよろしいですか？')) {
-                let markdown = this.$refs.toastuiEditor.invoke('getMarkdown');
+                let content = this.$refs.toastuiEditor.invoke('getMarkdown');
 
-                if(markdown === ''){
+                if(content === ''){
                     alert('本文が入力されていません');
                     return;
                 }else if(this.title === ''){
@@ -154,7 +155,7 @@ export default {
                 const data = new FormData;
                 data.append('imageData', this.uploadFile);
                 data.append('title', this.title);
-                data.append('content', markdown);
+                data.append('content', content);
                 data.append('is_published', this.is_published);
                 data.append('tagCategory', this.tagCategory);
 

@@ -68,7 +68,7 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-primary" @click="getHTML">投稿</button>
+        <button type="button" class="btn btn-primary" @click="getContent">投稿</button>
         <a href="/" class="btn btn-primary">キャンセル</a>
     </div>
 </template>
@@ -121,11 +121,11 @@ export default {
             this.uploadFile = "";
         },
 
-        getHTML() {
+        getContent() {
             if (window.confirm('投稿してよろしいですか？')) {
-                let markdown = this.$refs.toastuiEditor.invoke('getMarkdown');
+                let content = this.$refs.toastuiEditor.invoke('getMarkdown');
 
-                if(markdown === ''){
+                if(content === ''){
                     alert('本文が入力されていません');
                     return;
                 }else if(this.title === ''){
@@ -142,7 +142,7 @@ export default {
                 const data = new FormData;
                 data.append('imageData', this.uploadFile);
                 data.append('title', this.title);
-                data.append('content', markdown);
+                data.append('content', content);
                 data.append('is_published', this.is_published);
                 data.append('tagCategory', this.tagCategory);
 
