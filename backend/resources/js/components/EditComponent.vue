@@ -17,7 +17,7 @@
             <input
                 type="text"
                 class="form-control"
-                placeholder="category"
+                placeholder="#カテゴリ #複数可"
                 name="tagCategory"
                 v-model="tagCategory"
             />
@@ -63,6 +63,7 @@
                 name="is_published"
                 v-model="is_published"
             >
+                <option disabled selected value>選択してください</option>
                 <option value="1">公開</option>
                 <option value="0">非公開</option>
             </select>
@@ -92,14 +93,16 @@ export default {
         this.post.id = post.id;
         this.post.title = post.title;
         this.post.content = post.content;
+
         this.post.tag = post.tag;
     },
 
     data(){
         return {
-            editorText: this.post.content,
-            title: this.post.title,
             tagCategory: this.post.tag,
+
+            title: this.post.title,
+            editorText: this.post.content,
             content: "",
             is_published: "",
             imageData: "", //画像格納用変
@@ -107,6 +110,7 @@ export default {
         };
     },
     methods: {
+
         scroll() {
             this.$refs.toastuiEditor.invoke("setScrollTop", 10);
         },

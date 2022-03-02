@@ -42456,6 +42456,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -42481,9 +42482,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      editorText: this.post.content,
-      title: this.post.title,
       tagCategory: this.post.tag,
+      title: this.post.title,
+      editorText: this.post.content,
       content: "",
       is_published: "",
       imageData: "",
@@ -42619,6 +42620,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! codemirror/lib/codemirror.css */ "./node_modules/codemirror/lib/codemirror.css");
 /* harmony import */ var _toast_ui_editor_dist_toastui_editor_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @toast-ui/editor/dist/toastui-editor.css */ "./node_modules/@toast-ui/editor/dist/toastui-editor.css");
 /* harmony import */ var _toast_ui_vue_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @toast-ui/vue-editor */ "./node_modules/@toast-ui/vue-editor/dist/esm/index.js");
+//
 //
 //
 //
@@ -92993,7 +92995,11 @@ var render = function () {
           },
         ],
         staticClass: "form-control",
-        attrs: { type: "text", placeholder: "category", name: "tagCategory" },
+        attrs: {
+          type: "text",
+          placeholder: "#カテゴリ #複数可",
+          name: "tagCategory",
+        },
         domProps: { value: _vm.tagCategory },
         on: {
           input: function ($event) {
@@ -93100,6 +93106,10 @@ var render = function () {
           },
         },
         [
+          _c("option", { attrs: { disabled: "", selected: "", value: "" } }, [
+            _vm._v("選択してください"),
+          ]),
+          _vm._v(" "),
           _c("option", { attrs: { value: "1" } }, [_vm._v("公開")]),
           _vm._v(" "),
           _c("option", { attrs: { value: "0" } }, [_vm._v("非公開")]),
@@ -93238,7 +93248,11 @@ var render = function () {
           },
         ],
         staticClass: "form-control",
-        attrs: { type: "text", placeholder: "category", name: "tagCategory" },
+        attrs: {
+          type: "text",
+          placeholder: "#カテゴリ #複数可",
+          name: "tagCategory",
+        },
         domProps: { value: _vm.tagCategory },
         on: {
           input: function ($event) {
@@ -93342,6 +93356,10 @@ var render = function () {
           },
         },
         [
+          _c("option", { attrs: { disabled: "", selected: "", value: "" } }, [
+            _vm._v("選択してください"),
+          ]),
+          _vm._v(" "),
           _c("option", { attrs: { value: "1" } }, [_vm._v("公開")]),
           _vm._v(" "),
           _c("option", { attrs: { value: "0" } }, [_vm._v("非公開")]),

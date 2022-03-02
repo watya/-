@@ -17,7 +17,7 @@
             <input
                 type="text"
                 class="form-control"
-                placeholder="category"
+                placeholder="#カテゴリ #複数可"
                 name="tagCategory"
                 v-model="tagCategory"
             />
@@ -63,6 +63,7 @@
                 name="is_published"
                 v-model="is_published"
             >
+                <option disabled selected value>選択してください</option>
                 <option value="1">公開</option>
                 <option value="0">非公開</option>
             </select>
