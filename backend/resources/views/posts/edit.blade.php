@@ -23,7 +23,7 @@
       @endif
 
         <div class="form-group">
-          <edit-component v-bind:post="{{ json_encode($post) }}"></edit-component>
+          <edit-component v-bind:post="{{ json_encode($post) }}" v-bind:tags="{{ ($post->tags) }}"></edit-component>
         </div>
     </div>
   </div>

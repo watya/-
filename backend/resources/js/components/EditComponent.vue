@@ -69,6 +69,10 @@
             </select>
         </div>
 
+        <div v-for="(tag,index) of tags" :key="index">
+            #{{ tag.tag_name }}
+        </div>
+
         <button type="button" class="btn btn-primary" @click="getContent">更新</button>
         <!-- <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">キャンセル</a> -->
     </div>
@@ -87,20 +91,12 @@ export default {
     props: {
         post: {type: Object, required: true},
         initialValue: {type: String},
+        tags:{type: Array}
     },
 
-    postData(post) {
-        this.post.id = post.id;
-        this.post.title = post.title;
-        this.post.content = post.content;
-
-        this.post.tag = post.tag;
-    },
-
-    data(){
+    data( post,tags ){
         return {
-            tagCategory: this.post.tag,
-
+            tagCategory: "",
             title: this.post.title,
             editorText: this.post.content,
             content: "",
@@ -109,8 +105,8 @@ export default {
             uploadFile: "",
         };
     },
-    methods: {
 
+    methods: {
         scroll() {
             this.$refs.toastuiEditor.invoke("setScrollTop", 10);
         },
