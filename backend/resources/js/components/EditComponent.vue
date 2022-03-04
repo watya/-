@@ -69,10 +69,6 @@
             </select>
         </div>
 
-        <div v-for="(tag,index) of tags" :key="index">
-            #{{ tag.tag_name }}
-        </div>
-
         <button type="button" class="btn btn-primary" @click="getContent">更新</button>
         <!-- <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">キャンセル</a> -->
     </div>
@@ -95,12 +91,16 @@ export default {
     },
 
     data( post,tags ){
+        const category = this.tags.map(item => "#"+item.tag_name+" ");
+        const re = category.join("");
+        console.log(re);
+
         return {
-            tagCategory: "",
+            tagCategory: category,
             title: this.post.title,
             editorText: this.post.content,
             content: "",
-            is_published: "",
+            is_published: 1,
             imageData: "", //画像格納用変
             uploadFile: "",
         };
