@@ -23,8 +23,7 @@
             />
         </div>
 
-
-        <div v-if="images.length === 0 " class="form-group" id="file-preview">
+        <div v-if="images.length === 0" class="form-group" id="file-preview">
             <label for="exampleFormControlFile1">サムネイル</label>
             <input
                 type="file"
@@ -50,15 +49,23 @@
             </button>
         </div>
 
-        <div v-else v-for="(image,index) of images" :key="index">
+        <div v-else v-for="(image, index) of images" :key="index">
             <p>サムネイル</p>
-            <img v-for="(image,index) of images" :key="index" :src="'/storage/image/' + image.image" style="width: 200px" />
+            <img
+                v-for="(image, index) of images"
+                :key="index"
+                :src="'/storage/image/' + image.image"
+                style="width: 200px"
+            />
         </div>
-
 
         <div class="form-group">
             <p>本文</p>
-            <editor ref="toastUiEditor" height="500px" :initialValue= "editorText" />
+            <editor
+                ref="toastUiEditor"
+                height="500px"
+                :initialValue="editorText"
+            />
         </div>
 
         <div class="form-group">
@@ -76,7 +83,9 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-primary" @click="getContent">更新</button>
+        <button type="button" class="btn btn-primary" @click="getContent">
+            更新
+        </button>
         <!-- <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">キャンセル</a> -->
     </div>
 </template>
@@ -89,19 +98,19 @@ import { Editor } from "@toast-ui/vue-editor";
 export default {
     name: "MarkdownComponent",
     components: {
-        editor : Editor,
+        editor: Editor,
     },
     props: {
-        post: {type: Object, required: true},
-        initialValue: {type: String},
-        tags:{type: Array},
-        images:{type: Array},
+        post: { type: Object, required: true },
+        initialValue: { type: String },
+        tags: { type: Array },
+        images: { type: Array },
     },
 
-    data( post,tags,images,){
-        const category = this.tags.map(item => "#"+item.tag_name+" ");
+    data(post, tags, images) {
+        const category = this.tags.map((item) => "#" + item.tag_name + " ");
         const re_category = category.join("");
-        const image = this.images.map(item => item.image);
+        const image = this.images.map((item) => item.image);
 
         console.log(this.images.length);
 
@@ -117,7 +126,6 @@ export default {
     },
 
     methods: {
-
         scroll() {
             this.$refs.toastUiEditor.invoke("setScrollTop", 10);
         },
@@ -146,47 +154,46 @@ export default {
         },
 
         getContent() {
-            if (window.confirm('更新してよろしいですか？')) {
-                let content = this.$refs.toastUiEditor.invoke('getMarkdown');
+            if (window.confirm("更新してよろしいですか？")) {
+                let content = this.$refs.toastUiEditor.invoke("getMarkdown");
 
-                if(content === ''){
-                    alert('本文が入力されていません');
+                if (content === "") {
+                    alert("本文が入力されていません");
                     return;
-                }else if(this.title === ''){
-                    alert('タイトルが入力されていません');
+                } else if (this.title === "") {
+                    alert("タイトルが入力されていません");
                     return;
-                }else if(this.title.length > 255){
-                    alert('タイトルは255文字以内にしてください');
+                } else if (this.title.length > 255) {
+                    alert("タイトルは255文字以内にしてください");
                     return;
-                }else if(this.is_published === ''){
-                    alert('公開設定を選択してください');
+                } else if (this.is_published === "") {
+                    alert("公開設定を選択してください");
                     return;
                 }
 
-                const data = new FormData;
-                data.append('imageData', this.uploadFile);
-                data.append('title', this.title);
-                data.append('content', content);
-                data.append('is_published', this.is_published);
-                data.append('tagCategory', this.tagCategory);
+                const data = new FormData();
+                data.append("imageData", this.uploadFile);
+                data.append("title", this.title);
+                data.append("content", content);
+                data.append("is_published", this.is_published);
+                data.append("tagCategory", this.tagCategory);
 
                 const id = $id;
                 axios
-                    .put('/posts' + id, data)
-                    .then(res => {
+                    .put("/posts" + id, data)
+                    .then((res) => {
                         // alert("「" + modify.name + "」更新完了");
                         // this.$router.push({path: '/articles/list'});
                         console.log(res);
                         this.posts = res.data.posts;
                         window.location = "/";
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         // alert("「" + modify.name + "」更新失敗");
                         // console.log(error, id, modify);
                         console.log(err);
                         console.log(err.response.data);
                     });
-
             } else {
                 return false;
             }
