@@ -201,7 +201,7 @@ class PostController extends Controller
     public function destroy(int $id)
     {
         if (empty($id)) {
-            \Session::flash('err_msg', 'データがありませんよ？');
+            \Session::flash('err_msg', 'データがありません');
             return redirect('/');
         }
 
@@ -211,7 +211,7 @@ class PostController extends Controller
             abort(500);
         }
 
-        \Session::flash('err_msg', '削除しました');
+        \Session::flash('err_msg', 'ブログを削除しました');
         return redirect('/');
     }
 

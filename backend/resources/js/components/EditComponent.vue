@@ -23,7 +23,8 @@
             />
         </div>
 
-        <div class="form-group" id="file-preview">
+
+        <div v-if="images.length === 0 " class="form-group" id="file-preview">
             <label for="exampleFormControlFile1">サムネイル</label>
             <input
                 type="file"
@@ -49,9 +50,15 @@
             </button>
         </div>
 
+        <div v-else v-for="(image,index) of images" :key="index">
+            <p>サムネイル</p>
+            <img v-for="(image,index) of images" :key="index" :src="'/storage/image/' + image.image" style="width: 200px" />
+        </div>
+
+
         <div class="form-group">
             <p>本文</p>
-            <editor ref="toastuiEditor" height="500px" :initialValue= "editorText" />
+            <editor ref="toastUiEditor" height="500px" :initialValue= "editorText" />
         </div>
 
         <div class="form-group">
@@ -87,31 +94,35 @@ export default {
     props: {
         post: {type: Object, required: true},
         initialValue: {type: String},
-        tags:{type: Array}
+        tags:{type: Array},
+        images:{type: Array},
     },
 
-    data( post,tags ){
+    data( post,tags,images,){
         const category = this.tags.map(item => "#"+item.tag_name+" ");
-        const re = category.join("");
-        console.log(re);
+        const re_category = category.join("");
+        const image = this.images.map(item => item.image);
+
+        console.log(this.images.length);
 
         return {
-            tagCategory: category,
+            tagCategory: re_category,
             title: this.post.title,
             editorText: this.post.content,
             content: "",
-            is_published: 1,
+            is_published: "",
             imageData: "", //画像格納用変
             uploadFile: "",
         };
     },
 
     methods: {
+
         scroll() {
-            this.$refs.toastuiEditor.invoke("setScrollTop", 10);
+            this.$refs.toastUiEditor.invoke("setScrollTop", 10);
         },
         moveTop() {
-            this.$refs.toastuiEditor.invoke("moveCursorToStart");
+            this.$refs.toastUiEditor.invoke("moveCursorToStart");
         },
 
         onFileChange(e) {
@@ -135,8 +146,8 @@ export default {
         },
 
         getContent() {
-            if (window.confirm('投稿してよろしいですか？')) {
-                let content = this.$refs.toastuiEditor.invoke('getMarkdown');
+            if (window.confirm('更新してよろしいですか？')) {
+                let content = this.$refs.toastUiEditor.invoke('getMarkdown');
 
                 if(content === ''){
                     alert('本文が入力されていません');

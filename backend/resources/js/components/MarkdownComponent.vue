@@ -51,7 +51,7 @@
 
         <div class="form-group">
             <p>本文</p>
-            <editor ref="toastuiEditor" />
+            <editor ref="toastUiEditor" height="400px" />
         </div>
 
         <div class="form-group">
@@ -88,7 +88,7 @@ export default {
         return {
             title: "",
             tagCategory: "",
-            is_published: 1,
+            is_published: "",
             content:"",
             imageData: "", //画像格納用変
             uploadFile: "",
@@ -96,10 +96,10 @@ export default {
     },
     methods: {
         scroll() {
-            this.$refs.toastuiEditor.invoke("setScrollTop", 10);
+            this.$refs.toastUiEditor.invoke("setScrollTop", 10);
         },
         moveTop() {
-            this.$refs.toastuiEditor.invoke("moveCursorToStart");
+            this.$refs.toastUiEditor.invoke("moveCursorToStart");
         },
 
         onFileChange(e) {
@@ -124,7 +124,7 @@ export default {
 
         getContent() {
             if (window.confirm('投稿してよろしいですか？')) {
-                let content = this.$refs.toastuiEditor.invoke('getMarkdown');
+                let content = this.$refs.toastUiEditor.invoke('getMarkdown');
 
                 if(content === ''){
                     alert('本文が入力されていません');

@@ -51,11 +51,11 @@
 
                             <div class=d>
                                 @isset($post->images)
-                                @foreach($post->images as $image)
-                                <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
+                                    @foreach($post->images as $image)
+                                    <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
                                     @break
                                     @endforeach
-                                    @endisset
+                                @endisset
                             </div>
 
                             <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">詳細へ</a>
