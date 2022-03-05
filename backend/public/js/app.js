@@ -42512,7 +42512,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "MarkdownComponent",
+  name: "EditComponent",
   components: {
     editor: _toast_ui_vue_editor__WEBPACK_IMPORTED_MODULE_2__.Editor
   },
@@ -42546,7 +42546,8 @@ __webpack_require__.r(__webpack_exports__);
       //画像格納用変
       uploadFile: "",
       show: true,
-      hide: false
+      hide: false,
+      id: this.post.id
     };
   },
   methods: {
@@ -42591,7 +42592,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
       });
     },
-    getContent: function getContent() {
+    update: function update(post) {
       var _this2 = this;
 
       if (window.confirm("更新してよろしいですか？")) {
@@ -42611,24 +42612,22 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
 
+        var id = this.post.id;
         var data = new FormData();
         data.append("imageData", this.uploadFile);
         data.append("title", this.title);
         data.append("content", content);
         data.append("is_published", this.is_published);
         data.append("tagCategory", this.tagCategory);
-        var id = $id;
-        axios.put("/posts" + id, data).then(function (res) {
-          // alert("「" + modify.name + "」更新完了");
-          // this.$router.push({path: '/articles/list'});
+        data.append("id", id);
+        console.log(id);
+        axios.put("/posts/" + id, data).then(function (res) {
           console.log(res);
           _this2.posts = res.data.posts;
           window.location = "/";
         })["catch"](function (error) {
-          // alert("「" + modify.name + "」更新失敗");
-          // console.log(error, id, modify);
-          console.log(err);
-          console.log(err.response.data);
+          console.log(error);
+          console.log(error.response.data);
         });
       } else {
         return false;
@@ -93125,67 +93124,64 @@ var render = function () {
               : _vm._e(),
           ]
         )
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
+      : _c(
+          "div",
           {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.show,
-            expression: "show",
-          },
-        ],
-        staticClass: "form-group",
-        attrs: { else: "" },
-      },
-      [
-        _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
-          _vm._v("サムネイル"),
-        ]),
-        _vm._v(" "),
-        _vm._l(_vm.images, function (image, index) {
-          return _c(
-            "div",
-            { key: index },
-            [
-              _vm._l(_vm.images, function (image, index) {
-                return _c("img", {
-                  key: index,
-                  staticStyle: { width: "200px" },
-                  attrs: { src: "/storage/image/" + image.image },
-                })
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.show,
-                      expression: "show",
-                    },
-                  ],
-                  staticClass: "btn btn-danger",
-                  on: {
-                    click: function ($event) {
-                      return _vm.resetThumbnail()
-                    },
-                  },
-                },
-                [_vm._v("\n                削除\n            ")]
-              ),
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.show,
+                expression: "show",
+              },
             ],
-            2
-          )
-        }),
-      ],
-      2
-    ),
+            staticClass: "form-group",
+          },
+          [
+            _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
+              _vm._v("サムネイル"),
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.images, function (image, index) {
+              return _c(
+                "div",
+                { key: index },
+                [
+                  _vm._l(_vm.images, function (image, index) {
+                    return _c("img", {
+                      key: index,
+                      staticStyle: { width: "200px" },
+                      attrs: { src: "/storage/image/" + image.image },
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.show,
+                          expression: "show",
+                        },
+                      ],
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function ($event) {
+                          return _vm.resetThumbnail()
+                        },
+                      },
+                    },
+                    [_vm._v("\n                削除\n            ")]
+                  ),
+                ],
+                2
+              )
+            }),
+          ],
+          2
+        ),
     _vm._v(" "),
     _c(
       "div",
@@ -93312,7 +93308,7 @@ var render = function () {
       {
         staticClass: "btn btn-primary",
         attrs: { type: "button" },
-        on: { click: _vm.getContent },
+        on: { click: _vm.update },
       },
       [_vm._v("\n        更新\n    ")]
     ),

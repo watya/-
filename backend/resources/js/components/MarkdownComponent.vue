@@ -124,7 +124,7 @@ export default {
 
         getContent() {
             if (window.confirm('投稿してよろしいですか？')) {
-                let content = this.$refs.toastUiEditor.invoke('getMarkdown');
+                const content = this.$refs.toastUiEditor.invoke('getMarkdown');
 
                 if(content === ''){
                     alert('本文が入力されていません');

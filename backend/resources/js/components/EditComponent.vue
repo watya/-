@@ -49,7 +49,7 @@
             </button>
         </div>
 
-        <div else v-show="show" class="form-group">
+        <div v-else v-show="show" class="form-group">
             <label for="exampleFormControlFile1">サムネイル</label>
             <div v-for="(image, index) of images" :key="index">
                 <img
@@ -118,7 +118,7 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-primary" @click="getContent">
+        <button type="button" class="btn btn-primary" @click="update">
             更新
         </button>
         <a :href="'/posts/' + post.id" class="btn btn-primary">キャンセル</a>
@@ -131,7 +131,7 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/vue-editor";
 
 export default {
-    name: "MarkdownComponent",
+    name: "EditComponent",
     components: {
         editor: Editor,
     },
@@ -156,6 +156,7 @@ export default {
             uploadFile: "",
             show: true,
             hide: false,
+            id: this.post.id,
         };
     },
 
@@ -196,9 +197,9 @@ export default {
                 console.log(res);
             });
         },
-        getContent() {
+        update(post) {
             if (window.confirm("更新してよろしいですか？")) {
-                let content = this.$refs.toastUiEditor.invoke("getMarkdown");
+                const content = this.$refs.toastUiEditor.invoke("getMarkdown");
 
                 if (content === "") {
                     alert("本文が入力されていません");
@@ -214,28 +215,27 @@ export default {
                     return;
                 }
 
+                const id =this.post.id;
                 const data = new FormData();
                 data.append("imageData", this.uploadFile);
                 data.append("title", this.title);
                 data.append("content", content);
                 data.append("is_published", this.is_published);
                 data.append("tagCategory", this.tagCategory);
+                data.append("id", id);
 
-                const id = $id;
+                console.log(id);
+
                 axios
-                    .put("/posts" + id, data)
+                    .put("/posts/" + id, data)
                     .then((res) => {
-                        // alert("「" + modify.name + "」更新完了");
-                        // this.$router.push({path: '/articles/list'});
                         console.log(res);
                         this.posts = res.data.posts;
                         window.location = "/";
                     })
                     .catch((error) => {
-                        // alert("「" + modify.name + "」更新失敗");
-                        // console.log(error, id, modify);
-                        console.log(err);
-                        console.log(err.response.data);
+                        console.log(error);
+                        console.log(error.response.data);
                     });
             } else {
                 return false;

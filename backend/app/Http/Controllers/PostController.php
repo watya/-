@@ -181,12 +181,10 @@ class PostController extends Controller
         \DB::commit();
 
         if ($post->is_published == 1) {
-            \Session::flash('err_msg', 'ブログを投稿しました');
+            \Session::flash('err_msg', 'ブログを更新しました');
         } else {
             \Session::flash('err_msg', 'ブログをアーカイブに保存しました');
         }
-        return redirect('/');
-
 
         // \Session::flash('err_msg', 'ブログを更新しました');
         // return redirect('/');
