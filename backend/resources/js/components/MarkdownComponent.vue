@@ -88,7 +88,7 @@ export default {
         return {
             title: "",
             tagCategory: "",
-            is_published: "",
+            is_published: 0,
             content:"",
             imageData: "", //画像格納用変
             uploadFile: "",

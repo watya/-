@@ -49,14 +49,48 @@
             </button>
         </div>
 
-        <div v-else v-for="(image, index) of images" :key="index">
-            <p>サムネイル</p>
-            <img
-                v-for="(image, index) of images"
-                :key="index"
-                :src="'/storage/image/' + image.image"
-                style="width: 200px"
+        <div else v-show="show" class="form-group">
+            <div v-for="(image, index) of images" :key="index">
+                <img
+                    v-for="(image, index) of images"
+                    :key="index"
+                    :src="'/storage/image/' + image.image"
+                    style="width: 200px"
+                />
+                <button
+                    v-show="show"
+                    @click="resetThumbnail()"
+                    class="btn btn-danger"
+                >
+                    削除
+                </button>
+            </div>
+        </div>
+
+        <div v-show="hide" class="form-group" id="file-preview">
+            <label for="exampleFormControlFile1">サムネイル</label>
+            <input
+                type="file"
+                ref="file"
+                class="form-control-file"
+                id="exampleFormControlFile1"
+                name="imageData"
+                accept="image/*"
+                v-on:change="onFileChange"
             />
+            <img
+                class="userInfo__icon"
+                v-bind:src="imageData"
+                v-if="imageData"
+                style="width: 270px"
+            />
+            <button
+                class="btn btn-danger"
+                v-if="imageData"
+                @click="resetFile()"
+            >
+                削除
+            </button>
         </div>
 
         <div class="form-group">
@@ -86,7 +120,7 @@
         <button type="button" class="btn btn-primary" @click="getContent">
             更新
         </button>
-        <!-- <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">キャンセル</a> -->
+        <a :href="'/posts/' + post.id" class="btn btn-primary">キャンセル</a>
     </div>
 </template>
 
@@ -112,16 +146,16 @@ export default {
         const re_category = category.join("");
         const image = this.images.map((item) => item.image);
 
-        console.log(this.images.length);
-
         return {
             tagCategory: re_category,
             title: this.post.title,
             editorText: this.post.content,
             content: "",
-            is_published: "",
+            is_published: 0,
             imageData: "", //画像格納用変
             uploadFile: "",
+            show: true,
+            hide: false,
         };
     },
 
@@ -152,7 +186,10 @@ export default {
             this.imageData = "";
             this.uploadFile = "";
         },
-
+        resetThumbnail() {
+            this.show = !this.show;
+            this.hide = !this.hide;
+        },
         getContent() {
             if (window.confirm("更新してよろしいですか？")) {
                 let content = this.$refs.toastUiEditor.invoke("getMarkdown");

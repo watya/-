@@ -42464,6 +42464,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -42495,16 +42538,17 @@ __webpack_require__.r(__webpack_exports__);
     var image = this.images.map(function (item) {
       return item.image;
     });
-    console.log(this.images.length);
     return {
       tagCategory: re_category,
       title: this.post.title,
       editorText: this.post.content,
       content: "",
-      is_published: "",
+      is_published: 0,
       imageData: "",
       //画像格納用変
-      uploadFile: ""
+      uploadFile: "",
+      show: true,
+      hide: false
     };
   },
   methods: {
@@ -42538,34 +42582,38 @@ __webpack_require__.r(__webpack_exports__);
       this.imageData = "";
       this.uploadFile = "";
     },
+    resetThumbnail: function resetThumbnail() {
+      this.show = !this.show;
+      this.hide = !this.hide;
+    },
     getContent: function getContent() {
       var _this2 = this;
 
-      if (window.confirm('更新してよろしいですか？')) {
-        var content = this.$refs.toastUiEditor.invoke('getMarkdown');
+      if (window.confirm("更新してよろしいですか？")) {
+        var content = this.$refs.toastUiEditor.invoke("getMarkdown");
 
-        if (content === '') {
-          alert('本文が入力されていません');
+        if (content === "") {
+          alert("本文が入力されていません");
           return;
-        } else if (this.title === '') {
-          alert('タイトルが入力されていません');
+        } else if (this.title === "") {
+          alert("タイトルが入力されていません");
           return;
         } else if (this.title.length > 255) {
-          alert('タイトルは255文字以内にしてください');
+          alert("タイトルは255文字以内にしてください");
           return;
-        } else if (this.is_published === '') {
-          alert('公開設定を選択してください');
+        } else if (this.is_published === "") {
+          alert("公開設定を選択してください");
           return;
         }
 
         var data = new FormData();
-        data.append('imageData', this.uploadFile);
-        data.append('title', this.title);
-        data.append('content', content);
-        data.append('is_published', this.is_published);
-        data.append('tagCategory', this.tagCategory);
+        data.append("imageData", this.uploadFile);
+        data.append("title", this.title);
+        data.append("content", content);
+        data.append("is_published", this.is_published);
+        data.append("tagCategory", this.tagCategory);
         var id = $id;
-        axios.put('/posts' + id, data).then(function (res) {
+        axios.put("/posts" + id, data).then(function (res) {
           // alert("「" + modify.name + "」更新完了");
           // this.$router.push({path: '/articles/list'});
           console.log(res);
@@ -42723,7 +42771,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       title: "",
       tagCategory: "",
-      is_published: "",
+      is_published: 0,
       content: "",
       imageData: "",
       //画像格納用変
@@ -92961,214 +93009,312 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-          _vm._v("タイトル"),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.title,
-              expression: "title",
-            },
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "exampleInputEmail1",
-            placeholder: "title",
-            name: "title",
-          },
-          domProps: { value: _vm.title },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.title = $event.target.value
-            },
-          },
-        }),
+  return _c("div", [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+        _vm._v("タイトル"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "exampleInputEmail1" } }, [
-          _vm._v("カテゴリ"),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.tagCategory,
-              expression: "tagCategory",
-            },
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            placeholder: "#カテゴリ #複数可",
-            name: "tagCategory",
-          },
-          domProps: { value: _vm.tagCategory },
-          on: {
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.tagCategory = $event.target.value
-            },
-          },
-        }),
-      ]),
-      _vm._v(" "),
-      _vm.images.length === 0
-        ? _c(
-            "div",
-            { staticClass: "form-group", attrs: { id: "file-preview" } },
-            [
-              _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
-                _vm._v("サムネイル"),
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                ref: "file",
-                staticClass: "form-control-file",
-                attrs: {
-                  type: "file",
-                  id: "exampleFormControlFile1",
-                  name: "imageData",
-                  accept: "image/*",
-                },
-                on: { change: _vm.onFileChange },
-              }),
-              _vm._v(" "),
-              _vm.imageData
-                ? _c("img", {
-                    staticClass: "userInfo__icon",
-                    staticStyle: { width: "270px" },
-                    attrs: { src: _vm.imageData },
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.imageData
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      on: {
-                        click: function ($event) {
-                          return _vm.resetFile()
-                        },
-                      },
-                    },
-                    [_vm._v("\n            削除\n        ")]
-                  )
-                : _vm._e(),
-            ]
-          )
-        : _vm._l(_vm.images, function (image, index) {
-            return _c(
-              "div",
-              { key: index },
-              [
-                _c("p", [_vm._v("サムネイル")]),
-                _vm._v(" "),
-                _vm._l(_vm.images, function (image, index) {
-                  return _c("img", {
-                    key: index,
-                    staticStyle: { width: "200px" },
-                    attrs: { src: "/storage/image/" + image.image },
-                  })
-                }),
-              ],
-              2
-            )
-          }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c("p", [_vm._v("本文")]),
-          _vm._v(" "),
-          _c("editor", {
-            ref: "toastUiEditor",
-            attrs: { height: "500px", initialValue: _vm.editorText },
-          }),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "exampleFormControlSelect1" } }, [
-          _vm._v("公開設定"),
-        ]),
-        _vm._v(" "),
-        _c(
-          "select",
+      _c("input", {
+        directives: [
           {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.is_published,
-                expression: "is_published",
-              },
-            ],
-            attrs: {
-              input: "",
-              type: "id",
-              id: "exampleFormControlSelect1",
-              name: "is_published",
-            },
-            on: {
-              change: function ($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function (o) {
-                    return o.selected
-                  })
-                  .map(function (o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.is_published = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              },
-            },
+            name: "model",
+            rawName: "v-model",
+            value: _vm.title,
+            expression: "title",
           },
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          id: "exampleInputEmail1",
+          placeholder: "title",
+          name: "title",
+        },
+        domProps: { value: _vm.title },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.title = $event.target.value
+          },
+        },
+      }),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "exampleInputEmail1" } }, [
+        _vm._v("カテゴリ"),
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.tagCategory,
+            expression: "tagCategory",
+          },
+        ],
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          placeholder: "#カテゴリ #複数可",
+          name: "tagCategory",
+        },
+        domProps: { value: _vm.tagCategory },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.tagCategory = $event.target.value
+          },
+        },
+      }),
+    ]),
+    _vm._v(" "),
+    _vm.images.length === 0
+      ? _c(
+          "div",
+          { staticClass: "form-group", attrs: { id: "file-preview" } },
           [
-            _c("option", { attrs: { disabled: "", selected: "", value: "" } }, [
-              _vm._v("選択してください"),
+            _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
+              _vm._v("サムネイル"),
             ]),
             _vm._v(" "),
-            _c("option", { attrs: { value: "1" } }, [_vm._v("公開")]),
+            _c("input", {
+              ref: "file",
+              staticClass: "form-control-file",
+              attrs: {
+                type: "file",
+                id: "exampleFormControlFile1",
+                name: "imageData",
+                accept: "image/*",
+              },
+              on: { change: _vm.onFileChange },
+            }),
             _vm._v(" "),
-            _c("option", { attrs: { value: "0" } }, [_vm._v("非公開")]),
+            _vm.imageData
+              ? _c("img", {
+                  staticClass: "userInfo__icon",
+                  staticStyle: { width: "270px" },
+                  attrs: { src: _vm.imageData },
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.imageData
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function ($event) {
+                        return _vm.resetFile()
+                      },
+                    },
+                  },
+                  [_vm._v("\n            削除\n        ")]
+                )
+              : _vm._e(),
           ]
-        ),
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.show,
+            expression: "show",
+          },
+        ],
+        staticClass: "form-group",
+        attrs: { else: "" },
+      },
+      _vm._l(_vm.images, function (image, index) {
+        return _c(
+          "div",
+          { key: index },
+          [
+            _vm._l(_vm.images, function (image, index) {
+              return _c("img", {
+                key: index,
+                staticStyle: { width: "200px" },
+                attrs: { src: "/storage/image/" + image.image },
+              })
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.show,
+                    expression: "show",
+                  },
+                ],
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function ($event) {
+                    return _vm.resetThumbnail()
+                  },
+                },
+              },
+              [_vm._v("\n                削除\n            ")]
+            ),
+          ],
+          2
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.hide,
+            expression: "hide",
+          },
+        ],
+        staticClass: "form-group",
+        attrs: { id: "file-preview" },
+      },
+      [
+        _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
+          _vm._v("サムネイル"),
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          ref: "file",
+          staticClass: "form-control-file",
+          attrs: {
+            type: "file",
+            id: "exampleFormControlFile1",
+            name: "imageData",
+            accept: "image/*",
+          },
+          on: { change: _vm.onFileChange },
+        }),
+        _vm._v(" "),
+        _vm.imageData
+          ? _c("img", {
+              staticClass: "userInfo__icon",
+              staticStyle: { width: "270px" },
+              attrs: { src: _vm.imageData },
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.imageData
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function ($event) {
+                    return _vm.resetFile()
+                  },
+                },
+              },
+              [_vm._v("\n            削除\n        ")]
+            )
+          : _vm._e(),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group" },
+      [
+        _c("p", [_vm._v("本文")]),
+        _vm._v(" "),
+        _c("editor", {
+          ref: "toastUiEditor",
+          attrs: { height: "500px", initialValue: _vm.editorText },
+        }),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "exampleFormControlSelect1" } }, [
+        _vm._v("公開設定"),
       ]),
       _vm._v(" "),
       _c(
-        "button",
+        "select",
         {
-          staticClass: "btn btn-primary",
-          attrs: { type: "button" },
-          on: { click: _vm.getContent },
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.is_published,
+              expression: "is_published",
+            },
+          ],
+          attrs: {
+            input: "",
+            type: "id",
+            id: "exampleFormControlSelect1",
+            name: "is_published",
+          },
+          on: {
+            change: function ($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function (o) {
+                  return o.selected
+                })
+                .map(function (o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.is_published = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
+          },
         },
-        [_vm._v("更新")]
+        [
+          _c("option", { attrs: { disabled: "", selected: "", value: "" } }, [
+            _vm._v("選択してください"),
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "1" } }, [_vm._v("公開")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "0" } }, [_vm._v("非公開")]),
+        ]
       ),
-    ],
-    2
-  )
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: { type: "button" },
+        on: { click: _vm.getContent },
+      },
+      [_vm._v("\n        更新\n    ")]
+    ),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        staticClass: "btn btn-primary",
+        attrs: { href: "/posts/" + _vm.post.id },
+      },
+      [_vm._v("キャンセル")]
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
