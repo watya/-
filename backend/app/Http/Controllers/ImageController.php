@@ -21,6 +21,6 @@ class ImageController extends Controller
 
         Image::destroy($id);
 
-        return view('posts.edit', ['post' => $post]);
+        // return view('posts.edit', ['post' => $post]);
     }
 }

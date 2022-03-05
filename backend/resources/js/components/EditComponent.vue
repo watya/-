@@ -50,6 +50,7 @@
         </div>
 
         <div else v-show="show" class="form-group">
+            <label for="exampleFormControlFile1">サムネイル</label>
             <div v-for="(image, index) of images" :key="index">
                 <img
                     v-for="(image, index) of images"
@@ -144,7 +145,6 @@ export default {
     data(post, tags, images) {
         const category = this.tags.map((item) => "#" + item.tag_name + " ");
         const re_category = category.join("");
-        const image = this.images.map((item) => item.image);
 
         return {
             tagCategory: re_category,
@@ -186,9 +186,15 @@ export default {
             this.imageData = "";
             this.uploadFile = "";
         },
-        resetThumbnail() {
+        resetThumbnail(images) {
             this.show = !this.show;
             this.hide = !this.hide;
+            const id = this.images.map((item) => item.id);
+            console.log(id);
+
+            axios.delete( "/images/" + id ).then((res) => {
+                console.log(res);
+            });
         },
         getContent() {
             if (window.confirm("更新してよろしいですか？")) {

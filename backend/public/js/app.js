@@ -42507,6 +42507,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -42535,9 +42536,6 @@ __webpack_require__.r(__webpack_exports__);
       return "#" + item.tag_name + " ";
     });
     var re_category = category.join("");
-    var image = this.images.map(function (item) {
-      return item.image;
-    });
     return {
       tagCategory: re_category,
       title: this.post.title,
@@ -42582,9 +42580,16 @@ __webpack_require__.r(__webpack_exports__);
       this.imageData = "";
       this.uploadFile = "";
     },
-    resetThumbnail: function resetThumbnail() {
+    resetThumbnail: function resetThumbnail(images) {
       this.show = !this.show;
       this.hide = !this.hide;
+      var id = this.images.map(function (item) {
+        return item.id;
+      });
+      console.log(id);
+      axios["delete"]("/images/" + id).then(function (res) {
+        console.log(res);
+      });
     },
     getContent: function getContent() {
       var _this2 = this;
@@ -93136,44 +93141,50 @@ var render = function () {
         staticClass: "form-group",
         attrs: { else: "" },
       },
-      _vm._l(_vm.images, function (image, index) {
-        return _c(
-          "div",
-          { key: index },
-          [
-            _vm._l(_vm.images, function (image, index) {
-              return _c("img", {
-                key: index,
-                staticStyle: { width: "200px" },
-                attrs: { src: "/storage/image/" + image.image },
-              })
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.show,
-                    expression: "show",
-                  },
-                ],
-                staticClass: "btn btn-danger",
-                on: {
-                  click: function ($event) {
-                    return _vm.resetThumbnail()
+      [
+        _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
+          _vm._v("サムネイル"),
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.images, function (image, index) {
+          return _c(
+            "div",
+            { key: index },
+            [
+              _vm._l(_vm.images, function (image, index) {
+                return _c("img", {
+                  key: index,
+                  staticStyle: { width: "200px" },
+                  attrs: { src: "/storage/image/" + image.image },
+                })
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.show,
+                      expression: "show",
+                    },
+                  ],
+                  staticClass: "btn btn-danger",
+                  on: {
+                    click: function ($event) {
+                      return _vm.resetThumbnail()
+                    },
                   },
                 },
-              },
-              [_vm._v("\n                削除\n            ")]
-            ),
-          ],
-          2
-        )
-      }),
-      0
+                [_vm._v("\n                削除\n            ")]
+              ),
+            ],
+            2
+          )
+        }),
+      ],
+      2
     ),
     _vm._v(" "),
     _c(
