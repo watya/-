@@ -42508,6 +42508,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -42547,7 +42553,7 @@ __webpack_require__.r(__webpack_exports__);
       uploadFile: "",
       show: true,
       hide: false,
-      id: this.post.id
+      thumbnail: ""
     };
   },
   methods: {
@@ -42592,8 +42598,20 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
       });
     },
-    update: function update(post) {
+    upload: function upload() {
       var _this2 = this;
+
+      var thumbnailData = new FormData();
+      thumbnailData.append("thumbnail", this.uploadFile);
+      axios.post("/images/store", thumbnailData).then(function (res) {
+        _this2.thumbnail = res.data.thumbnail;
+      })["catch"](function (err) {
+        console.log(err);
+        console.log(err.response.data);
+      });
+    },
+    update: function update(post) {
+      var _this3 = this;
 
       if (window.confirm("更新してよろしいですか？")) {
         var content = this.$refs.toastUiEditor.invoke("getMarkdown");
@@ -42612,18 +42630,17 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
 
+        var data = {
+          title: this.title,
+          tagCategory: this.tagCategory,
+          thumbnail: this.thumbnail,
+          content: content,
+          is_published: this.is_published
+        };
         var id = this.post.id;
-        var data = new FormData();
-        data.append("imageData", this.uploadFile);
-        data.append("title", this.title);
-        data.append("content", content);
-        data.append("is_published", this.is_published);
-        data.append("tagCategory", this.tagCategory);
-        data.append("id", id);
-        console.log(id);
         axios.put("/posts/" + id, data).then(function (res) {
           console.log(res);
-          _this2.posts = res.data.posts;
+          _this3.posts = res.data.posts;
           window.location = "/";
         })["catch"](function (error) {
           console.log(error);
@@ -42763,6 +42780,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -42779,7 +42801,8 @@ __webpack_require__.r(__webpack_exports__);
       content: "",
       imageData: "",
       //画像格納用変
-      uploadFile: ""
+      uploadFile: "",
+      thumbnail: ""
     };
   },
   methods: {
@@ -42813,35 +42836,48 @@ __webpack_require__.r(__webpack_exports__);
       this.imageData = "";
       this.uploadFile = "";
     },
-    getContent: function getContent() {
+    upload: function upload() {
       var _this2 = this;
 
-      if (window.confirm('投稿してよろしいですか？')) {
-        var content = this.$refs.toastUiEditor.invoke('getMarkdown');
+      var thumbnailData = new FormData();
+      thumbnailData.append("thumbnail", this.uploadFile);
+      axios.post("/images/store", thumbnailData).then(function (res) {
+        _this2.thumbnail = res.data.thumbnail;
+      })["catch"](function (err) {
+        console.log(err);
+        console.log(err.response.data);
+      });
+    },
+    getContent: function getContent() {
+      var _this3 = this;
 
-        if (content === '') {
-          alert('本文が入力されていません');
+      if (window.confirm("投稿してよろしいですか？")) {
+        var content = this.$refs.toastUiEditor.invoke("getMarkdown");
+
+        if (content === "") {
+          alert("本文が入力されていません");
           return;
-        } else if (this.title === '') {
-          alert('タイトルが入力されていません');
+        } else if (this.title === "") {
+          alert("タイトルが入力されていません");
           return;
         } else if (this.title.length > 255) {
-          alert('タイトルは255文字以内にしてください');
+          alert("タイトルは255文字以内にしてください");
           return;
-        } else if (this.is_published === '') {
-          alert('公開設定を選択してください');
+        } else if (this.is_published === "") {
+          alert("公開設定を選択してください");
           return;
         }
 
-        var data = new FormData();
-        data.append('imageData', this.uploadFile);
-        data.append('title', this.title);
-        data.append('content', content);
-        data.append('is_published', this.is_published);
-        data.append('tagCategory', this.tagCategory);
+        var data = {
+          title: this.title,
+          tagCategory: this.tagCategory,
+          thumbnail: this.thumbnail,
+          content: content,
+          is_published: this.is_published
+        };
         axios.post("/posts", data).then(function (res) {
           console.log(res);
-          _this2.posts = res.data.posts;
+          _this3.posts = res.data.posts;
           window.location = "/";
         })["catch"](function (err) {
           console.log(err);
@@ -93112,6 +93148,21 @@ var render = function () {
               ? _c(
                   "button",
                   {
+                    staticClass: "btn btn-primary",
+                    on: {
+                      click: function ($event) {
+                        return _vm.upload()
+                      },
+                    },
+                  },
+                  [_vm._v("\n            決定\n        ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.imageData
+              ? _c(
+                  "button",
+                  {
                     staticClass: "btn btn-danger",
                     on: {
                       click: function ($event) {
@@ -93220,6 +93271,21 @@ var render = function () {
               staticStyle: { width: "270px" },
               attrs: { src: _vm.imageData },
             })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.imageData
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function ($event) {
+                    return _vm.upload()
+                  },
+                },
+              },
+              [_vm._v("\n            決定\n        ")]
+            )
           : _vm._e(),
         _vm._v(" "),
         _vm.imageData
@@ -93489,6 +93555,21 @@ var render = function () {
         ? _c(
             "button",
             {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function ($event) {
+                  return _vm.upload()
+                },
+              },
+            },
+            [_vm._v("\n            決定\n        ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.imageData
+        ? _c(
+            "button",
+            {
               staticClass: "btn btn-danger",
               on: {
                 click: function ($event) {
@@ -93569,7 +93650,7 @@ var render = function () {
         attrs: { type: "button" },
         on: { click: _vm.getContent },
       },
-      [_vm._v("投稿")]
+      [_vm._v("\n        投稿\n    ")]
     ),
     _vm._v(" "),
     _c("a", { staticClass: "btn btn-primary", attrs: { href: "/" } }, [

@@ -52,6 +52,8 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        \DB::beginTransaction();
+
         $post = new Post;
         $post->user_id = \Auth::id();
         $post->content = $request->content;
@@ -59,8 +61,7 @@ class PostController extends Controller
         $post->is_published = $request->is_published;
 
         // tagcategoryからtagを抽出。それを$matchに移行
-        preg_match_all('/([a-zA-Z0-90-9ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
-
+        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
         $tags = [];
 
         foreach ($match[1] as $tag) {
@@ -78,15 +79,14 @@ class PostController extends Controller
         $post->save();
         $post->tags()->attach($tag_ids);
 
-        if ($request->imageData != null) {
-            if ($request->imageData->isValid()){
+        if ($request->thumbnail != null) {
                 $image = new Image;
-                $filename = $request->imageData->store('public/image');
-                $image->image = basename($filename);
+                $image->image = $request->thumbnail;
                 $image->post_id = $post->id;
                 $image->save();
             }
-        }
+
+        \DB::commit();
 
         if ($post->is_published == 1) {
             \Session::flash('err_msg', 'ブログを投稿しました');
@@ -131,30 +131,25 @@ class PostController extends Controller
 
     public function update(PostRequest $request, int $id)
     {
-        //編集後のブログのデータを受け取る
-        $inputs = $request->all();
-
         \DB::beginTransaction();
 
-        //編集前のブログデータ
-        $post = Post::find($inputs['id']);
+        $post = Post::find($id);
 
         $post->fill([
-            'title' => $inputs['title'],
-            'content' => $inputs['content'],
-            'is_published' => $inputs['is_published'],
+            'title' => $request->title,
+            'content' => $request->content,
+            'is_published' => $request->is_published,
         ]);
 
         $post->tags()->detach();
 
         // contentからtagを抽出。それを$matchに移行
-        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
+        preg_match_all('/([a-zA-Z0-90-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
 
         $tags = [];
 
         foreach ($match[1] as $tag) {
             $found = Tag::firstOrCreate(['tag_name' => $tag]); //タグが既に存在していたら作らない。存在してなかったら作る。
-
             array_push($tags, $found);
         }
 
@@ -167,16 +162,12 @@ class PostController extends Controller
         $post->save();
         $post->tags()->syncWithoutDetaching($tag_ids);
 
-        if ($request->image != null) {
-            if ($request->image->isValid()) {
-                $image = new Image;
-                $filename = $request->image->store('public/image');
-                $image->image = basename($filename);
-                $image->post_id = $post->id;
-                $image->save();
-            }
+        if ($request->thumbnail != null) {
+            $image = new Image;
+            $image->image = $request->thumbnail;
+            $image->post_id = $post->id;
+            $image->save();
         }
-
 
         \DB::commit();
 
@@ -185,9 +176,6 @@ class PostController extends Controller
         } else {
             \Session::flash('err_msg', 'ブログをアーカイブに保存しました');
         }
-
-        // \Session::flash('err_msg', 'ブログを更新しました');
-        // return redirect('/');
     }
 
     /**

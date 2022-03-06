@@ -40,6 +40,9 @@
                 v-if="imageData"
                 style="width: 270px"
             />
+            <button class="btn btn-primary" v-if="imageData" @click="upload()">
+                決定
+            </button>
             <button
                 class="btn btn-danger"
                 v-if="imageData"
@@ -69,7 +72,9 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-primary" @click="getContent">投稿</button>
+        <button type="button" class="btn btn-primary" @click="getContent">
+            投稿
+        </button>
         <a href="/" class="btn btn-primary">キャンセル</a>
     </div>
 </template>
@@ -89,9 +94,10 @@ export default {
             title: "",
             tagCategory: "",
             is_published: 0,
-            content:"",
+            content: "",
             imageData: "", //画像格納用変
             uploadFile: "",
+            thumbnail: "",
         };
     },
     methods: {
@@ -121,34 +127,48 @@ export default {
             this.imageData = "";
             this.uploadFile = "";
         },
+        upload() {
+            const thumbnailData = new FormData();
+            thumbnailData.append("thumbnail", this.uploadFile);
+            axios
+                .post("/images/store", thumbnailData)
+                .then((res) => {
+                    this.thumbnail = res.data.thumbnail;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(err.response.data);
+                });
+        },
 
         getContent() {
-            if (window.confirm('投稿してよろしいですか？')) {
-                const content = this.$refs.toastUiEditor.invoke('getMarkdown');
+            if (window.confirm("投稿してよろしいですか？")) {
+                const content = this.$refs.toastUiEditor.invoke("getMarkdown");
 
-                if(content === ''){
-                    alert('本文が入力されていません');
+                if (content === "") {
+                    alert("本文が入力されていません");
                     return;
-                }else if(this.title === ''){
-                    alert('タイトルが入力されていません');
+                } else if (this.title === "") {
+                    alert("タイトルが入力されていません");
                     return;
-                }else if(this.title.length > 255){
-                    alert('タイトルは255文字以内にしてください');
+                } else if (this.title.length > 255) {
+                    alert("タイトルは255文字以内にしてください");
                     return;
-                }else if(this.is_published === ''){
-                    alert('公開設定を選択してください');
+                } else if (this.is_published === "") {
+                    alert("公開設定を選択してください");
                     return;
                 }
 
-                const data = new FormData;
-                data.append('imageData', this.uploadFile);
-                data.append('title', this.title);
-                data.append('content', content);
-                data.append('is_published', this.is_published);
-                data.append('tagCategory', this.tagCategory);
+                const data = {
+                    title: this.title,
+                    tagCategory: this.tagCategory,
+                    thumbnail: this.thumbnail,
+                    content: content,
+                    is_published: this.is_published,
+                };
 
                 axios
-                    .post("/posts",data,)
+                    .post("/posts", data)
                     .then((res) => {
                         console.log(res);
                         this.posts = res.data.posts;

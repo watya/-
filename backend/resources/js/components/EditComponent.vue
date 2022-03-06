@@ -40,6 +40,9 @@
                 v-if="imageData"
                 style="width: 270px"
             />
+            <button class="btn btn-primary" v-if="imageData" @click="upload()">
+                決定
+            </button>
             <button
                 class="btn btn-danger"
                 v-if="imageData"
@@ -85,6 +88,9 @@
                 v-if="imageData"
                 style="width: 270px"
             />
+            <button class="btn btn-primary" v-if="imageData" @click="upload()">
+                決定
+            </button>
             <button
                 class="btn btn-danger"
                 v-if="imageData"
@@ -156,7 +162,7 @@ export default {
             uploadFile: "",
             show: true,
             hide: false,
-            id: this.post.id,
+            thumbnail: "",
         };
     },
 
@@ -193,9 +199,22 @@ export default {
             const id = this.images.map((item) => item.id);
             console.log(id);
 
-            axios.delete( "/images/" + id ).then((res) => {
+            axios.delete("/images/" + id).then((res) => {
                 console.log(res);
             });
+        },
+        upload() {
+            const thumbnailData = new FormData();
+            thumbnailData.append("thumbnail", this.uploadFile);
+            axios
+                .post("/images/store", thumbnailData)
+                .then((res) => {
+                    this.thumbnail = res.data.thumbnail;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(err.response.data);
+                });
         },
         update(post) {
             if (window.confirm("更新してよろしいですか？")) {
@@ -215,17 +234,15 @@ export default {
                     return;
                 }
 
-                const id =this.post.id;
-                const data = new FormData();
-                data.append("imageData", this.uploadFile);
-                data.append("title", this.title);
-                data.append("content", content);
-                data.append("is_published", this.is_published);
-                data.append("tagCategory", this.tagCategory);
-                data.append("id", id);
+                const data = {
+                    title: this.title,
+                    tagCategory: this.tagCategory,
+                    thumbnail: this.thumbnail,
+                    content: content,
+                    is_published: this.is_published,
+                };
 
-                console.log(id);
-
+                const id = this.post.id;
                 axios
                     .put("/posts/" + id, data)
                     .then((res) => {
