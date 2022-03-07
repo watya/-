@@ -23,7 +23,7 @@
             />
         </div>
 
-        <div v-if="images.length === 0" class="form-group" id="file-preview">
+        <div v-show="reShow" v-if="images.length === 0" class="form-group" id="file-preview">
             <label for="exampleFormControlFile1">サムネイル</label>
             <input
                 type="file"
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div v-show="hide" class="form-group" id="file-preview">
+        <div v-show="reThumbnail" class="form-group" id="file-preview">
             <label for="exampleFormControlFile1">サムネイル</label>
             <input
                 type="file"
@@ -97,6 +97,43 @@
                 @click="resetFile()"
             >
                 削除
+            </button>
+        </div>
+
+        <!-- <div v-show="last" class="form-group" id="file-preview">
+            <label for="exampleFormControlFile1">サムネイル</label>
+            <input
+                type="file"
+                ref="file"
+                class="form-control-file"
+                id="exampleFormControlFile1"
+                name="imageData"
+                accept="image/*"
+                v-on:change="onFileChange"
+            />
+            <img
+                class="userInfo__icon"
+                v-bind:src="imageData"
+                v-if="imageData"
+                style="width: 270px"
+            />
+            <button class="btn btn-primary" v-if="imageData" @click="upload()">
+                決定
+            </button>
+            <button
+                class="btn btn-danger"
+                v-if="imageData"
+                @click="resetFile()"
+            >
+                削除
+            </button>
+        </div> -->
+
+        <div v-show="hide" class="form-group" id="file-preview">
+            <button
+                @click="ReThumbnail()"
+            >
+            別のサムネイルを選択する
             </button>
         </div>
 
@@ -160,9 +197,11 @@ export default {
             is_published: 0,
             imageData: "", //画像格納用変
             uploadFile: "",
-            show: true,
-            hide: false,
             thumbnail: "",
+            show: true,//元のサムネや削除ボタンやら
+            hide: false,//別のサムネを選択するボタン
+            reShow: true,//元のサムネがない時の
+            reThumbnail: false,//元からあったサムネを消した時
         };
     },
 
@@ -195,7 +234,7 @@ export default {
         },
         resetThumbnail(images) {
             this.show = !this.show;
-            this.hide = !this.hide;
+            this.reThumbnail = !this.reThumbnail;
             const id = this.images.map((item) => item.id);
             console.log(id);
 
@@ -203,7 +242,25 @@ export default {
                 console.log(res);
             });
         },
+        ReThumbnail() {
+            this.reThumbnail = true;
+            this.reShow = false;
+            this.hide = false;
+
+            const input = this.$refs.file;
+            input.type = "text";
+            input.type = "file";
+            this.uploadFile = "";
+            this.imageFile = "";
+            this.thumbnail = "";
+        },
         upload() {
+            this.hide = true;
+            this.show = false;
+            this.reShow = false;
+            this.reThumbnail = false;
+
+            this.imageData = "";
             const thumbnailData = new FormData();
             thumbnailData.append("thumbnail", this.uploadFile);
             axios

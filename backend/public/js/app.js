@@ -42514,6 +42514,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -42551,9 +42588,15 @@ __webpack_require__.r(__webpack_exports__);
       imageData: "",
       //画像格納用変
       uploadFile: "",
+      thumbnail: "",
       show: true,
+      //元のサムネや削除ボタンやら
       hide: false,
-      thumbnail: ""
+      //別のサムネを選択するボタン
+      reShow: true,
+      //元のサムネがない時の
+      reThumbnail: false //元からあったサムネを消した時
+
     };
   },
   methods: {
@@ -42589,7 +42632,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     resetThumbnail: function resetThumbnail(images) {
       this.show = !this.show;
-      this.hide = !this.hide;
+      this.reThumbnail = !this.reThumbnail;
       var id = this.images.map(function (item) {
         return item.id;
       });
@@ -42598,9 +42641,25 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
       });
     },
+    ReThumbnail: function ReThumbnail() {
+      this.reThumbnail = true;
+      this.reShow = false;
+      this.hide = false;
+      var input = this.$refs.file;
+      input.type = "text";
+      input.type = "file";
+      this.uploadFile = "";
+      this.imageFile = "";
+      this.thumbnail = "";
+    },
     upload: function upload() {
       var _this2 = this;
 
+      this.hide = true;
+      this.show = false;
+      this.reShow = false;
+      this.reThumbnail = false;
+      this.imageData = "";
       var thumbnailData = new FormData();
       thumbnailData.append("thumbnail", this.uploadFile);
       axios.post("/images/store", thumbnailData).then(function (res) {
@@ -93142,7 +93201,18 @@ var render = function () {
     _vm.images.length === 0
       ? _c(
           "div",
-          { staticClass: "form-group", attrs: { id: "file-preview" } },
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.reShow,
+                expression: "reShow",
+              },
+            ],
+            staticClass: "form-group",
+            attrs: { id: "file-preview" },
+          },
           [
             _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
               _vm._v("サムネイル"),
@@ -93265,8 +93335,8 @@ var render = function () {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.hide,
-            expression: "hide",
+            value: _vm.reThumbnail,
+            expression: "reThumbnail",
           },
         ],
         staticClass: "form-group",
@@ -93326,6 +93396,35 @@ var render = function () {
               [_vm._v("\n            削除\n        ")]
             )
           : _vm._e(),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.hide,
+            expression: "hide",
+          },
+        ],
+        staticClass: "form-group",
+        attrs: { id: "file-preview" },
+      },
+      [
+        _c(
+          "button",
+          {
+            on: {
+              click: function ($event) {
+                return _vm.ReThumbnail()
+              },
+            },
+          },
+          [_vm._v("\n        別のサムネイルを選択する\n        ")]
+        ),
       ]
     ),
     _vm._v(" "),
