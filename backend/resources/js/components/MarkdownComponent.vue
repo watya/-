@@ -53,12 +53,7 @@
         </div>
 
         <div v-show="hide" class="form-group" id="file-preview">
-            <button
-                @click="resetThumbnail()"
-            >
-            別のサムネイルを選択する
-            </button>
-
+            <button @click="resetThumbnail()">別のサムネイルを選択する</button>
         </div>
 
         <div class="form-group">

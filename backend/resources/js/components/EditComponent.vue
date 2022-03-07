@@ -23,7 +23,12 @@
             />
         </div>
 
-        <div v-show="reShow" v-if="images.length === 0" class="form-group" id="file-preview">
+        <div
+            v-show="reShow"
+            v-if="images.length === 0"
+            class="form-group"
+            id="file-preview"
+        >
             <label for="exampleFormControlFile1">サムネイル</label>
             <input
                 type="file"
@@ -130,11 +135,7 @@
         </div> -->
 
         <div v-show="hide" class="form-group" id="file-preview">
-            <button
-                @click="ReThumbnail()"
-            >
-            別のサムネイルを選択する
-            </button>
+            <button @click="ReThumbnail()">別のサムネイルを選択する</button>
         </div>
 
         <div class="form-group">
@@ -198,10 +199,10 @@ export default {
             imageData: "", //画像格納用変
             uploadFile: "",
             thumbnail: "",
-            show: true,//元のサムネや削除ボタンやら
-            hide: false,//別のサムネを選択するボタン
-            reShow: true,//元のサムネがない時の
-            reThumbnail: false,//元からあったサムネを消した時
+            show: true, //元のサムネや削除ボタンやら
+            hide: false, //別のサムネを選択するボタン
+            reShow: true, //元のサムネがない時の
+            reThumbnail: false, //元からあったサムネを消した時
         };
     },
 
