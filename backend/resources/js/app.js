@@ -21,8 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('sample-component', require('./components/SampleComponent.vue').default);
-Vue.component('markdown-component', require('./components/MarkdownComponent.vue').default);
-// Vue.component('axios-component', require('./components/AxiosComponent.vue').default);
+Vue.component('create-component', require('./components/CreateComponent.vue').default);
 Vue.component('edit-component', require('./components/EditComponent.vue').default);
 
 /**

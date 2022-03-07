@@ -23,7 +23,7 @@
       @endif
 
         <div class="form-group">
-          <markdown-component></markdown-component>
+          <create-component></create-component>
         </div>
     </div>
   </div>

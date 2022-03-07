@@ -95,7 +95,7 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/vue-editor";
 
 export default {
-    name: "MarkdownComponent",
+    name: "CreateComponent",
     components: {
         editor: Editor,
     },
@@ -119,6 +119,23 @@ export default {
         },
         moveTop() {
             this.$refs.toastUiEditor.invoke("moveCursorToStart");
+        },
+
+        addImageBlobHook(blob, callback){
+            const data = new FormData();
+            data.append('image', blob);
+            const config = {
+                header: {
+                'Content-Type': 'multipart/form-data'
+                }
+            };
+            axios.post("/images/store", data, config)
+                .then(response => {
+                callback(response.data.url, '');
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                })
         },
 
         onFileChange(e) {
