@@ -42785,6 +42785,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -42802,7 +42811,9 @@ __webpack_require__.r(__webpack_exports__);
       imageData: "",
       //画像格納用変
       uploadFile: "",
-      thumbnail: ""
+      thumbnail: "",
+      hide: false,
+      show: true
     };
   },
   methods: {
@@ -42839,14 +42850,27 @@ __webpack_require__.r(__webpack_exports__);
     upload: function upload() {
       var _this2 = this;
 
+      this.imageData = "";
       var thumbnailData = new FormData();
       thumbnailData.append("thumbnail", this.uploadFile);
       axios.post("/images/store", thumbnailData).then(function (res) {
         _this2.thumbnail = res.data.thumbnail;
+        _this2.hide = !_this2.hide;
+        _this2.show = !_this2.show; //ファイル選択ボタン
       })["catch"](function (err) {
         console.log(err);
         console.log(err.response.data);
       });
+    },
+    resetThumbnail: function resetThumbnail() {
+      this.show = !this.show;
+      this.hide = !this.hide;
+      var input = this.$refs.file;
+      input.type = "text";
+      input.type = "file";
+      this.uploadFile = "";
+      this.imageFile = "";
+      this.thumbnail = "";
     },
     getContent: function getContent() {
       var _this3 = this;
@@ -93526,61 +93550,105 @@ var render = function () {
       }),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group", attrs: { id: "file-preview" } }, [
-      _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
-        _vm._v("サムネイル"),
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        ref: "file",
-        staticClass: "form-control-file",
-        attrs: {
-          type: "file",
-          id: "exampleFormControlFile1",
-          name: "imageData",
-          accept: "image/*",
-        },
-        on: { change: _vm.onFileChange },
-      }),
-      _vm._v(" "),
-      _vm.imageData
-        ? _c("img", {
-            staticClass: "userInfo__icon",
-            staticStyle: { width: "270px" },
-            attrs: { src: _vm.imageData },
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.imageData
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              on: {
-                click: function ($event) {
-                  return _vm.upload()
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.show,
+            expression: "show",
+          },
+        ],
+        staticClass: "form-group",
+        attrs: { id: "file-preview" },
+      },
+      [
+        _c("label", { attrs: { for: "exampleFormControlFile1" } }, [
+          _vm._v("サムネイル"),
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          ref: "file",
+          staticClass: "form-control-file",
+          attrs: {
+            type: "file",
+            id: "exampleFormControlFile1",
+            name: "imageData",
+            accept: "image/*",
+          },
+          on: { change: _vm.onFileChange },
+        }),
+        _vm._v(" "),
+        _vm.imageData
+          ? _c("img", {
+              staticClass: "userInfo__icon",
+              staticStyle: { width: "270px" },
+              attrs: { src: _vm.imageData },
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.imageData
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function ($event) {
+                    return _vm.upload()
+                  },
                 },
               },
-            },
-            [_vm._v("\n            決定\n        ")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.imageData
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-danger",
-              on: {
-                click: function ($event) {
-                  return _vm.resetFile()
+              [_vm._v("\n            決定\n        ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.imageData
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function ($event) {
+                    return _vm.resetFile()
+                  },
                 },
               },
+              [_vm._v("\n            削除\n        ")]
+            )
+          : _vm._e(),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.hide,
+            expression: "hide",
+          },
+        ],
+        staticClass: "form-group",
+        attrs: { id: "file-preview" },
+      },
+      [
+        _c(
+          "button",
+          {
+            on: {
+              click: function ($event) {
+                return _vm.resetThumbnail()
+              },
             },
-            [_vm._v("\n            削除\n        ")]
-          )
-        : _vm._e(),
-    ]),
+          },
+          [_vm._v("\n        別のサムネイルを選択する\n        ")]
+        ),
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",

@@ -23,7 +23,7 @@
             />
         </div>
 
-        <div class="form-group" id="file-preview">
+        <div v-show="show" class="form-group" id="file-preview">
             <label for="exampleFormControlFile1">サムネイル</label>
             <input
                 type="file"
@@ -50,6 +50,15 @@
             >
                 削除
             </button>
+        </div>
+
+        <div v-show="hide" class="form-group" id="file-preview">
+            <button
+                @click="resetThumbnail()"
+            >
+            別のサムネイルを選択する
+            </button>
+
         </div>
 
         <div class="form-group">
@@ -98,6 +107,9 @@ export default {
             imageData: "", //画像格納用変
             uploadFile: "",
             thumbnail: "",
+
+            hide: false,
+            show: true,
         };
     },
     methods: {
@@ -128,17 +140,31 @@ export default {
             this.uploadFile = "";
         },
         upload() {
+            this.imageData = "";
             const thumbnailData = new FormData();
             thumbnailData.append("thumbnail", this.uploadFile);
             axios
                 .post("/images/store", thumbnailData)
                 .then((res) => {
                     this.thumbnail = res.data.thumbnail;
+
+                    this.hide = !this.hide;
+                    this.show = !this.show; //ファイル選択ボタン
                 })
                 .catch((err) => {
                     console.log(err);
                     console.log(err.response.data);
                 });
+        },
+        resetThumbnail() {
+            this.show = !this.show;
+            this.hide = !this.hide;
+            const input = this.$refs.file;
+            input.type = "text";
+            input.type = "file";
+            this.uploadFile = "";
+            this.imageFile = "";
+            this.thumbnail = "";
         },
 
         getContent() {
