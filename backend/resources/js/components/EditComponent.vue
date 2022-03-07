@@ -105,36 +105,13 @@
             </button>
         </div>
 
-        <!-- <div v-show="last" class="form-group" id="file-preview">
-            <label for="exampleFormControlFile1">サムネイル</label>
-            <input
-                type="file"
-                ref="file"
-                class="form-control-file"
-                id="exampleFormControlFile1"
-                name="imageData"
-                accept="image/*"
-                v-on:change="onFileChange"
-            />
+        <div v-show="hide" class="form-group" id="file-preview">
             <img
                 class="userInfo__icon"
                 v-bind:src="imageData"
                 v-if="imageData"
                 style="width: 270px"
             />
-            <button class="btn btn-primary" v-if="imageData" @click="upload()">
-                決定
-            </button>
-            <button
-                class="btn btn-danger"
-                v-if="imageData"
-                @click="resetFile()"
-            >
-                削除
-            </button>
-        </div> -->
-
-        <div v-show="hide" class="form-group" id="file-preview">
             <button @click="ReThumbnail()">別のサムネイルを選択する</button>
         </div>
 
@@ -237,7 +214,6 @@ export default {
             this.show = !this.show;
             this.reThumbnail = !this.reThumbnail;
             const id = this.images.map((item) => item.id);
-            console.log(id);
 
             axios.delete("/images/" + id).then((res) => {
                 console.log(res);
@@ -254,6 +230,7 @@ export default {
             this.uploadFile = "";
             this.imageFile = "";
             this.thumbnail = "";
+            this.imageData = "";
         },
         upload() {
             this.hide = true;
@@ -261,7 +238,6 @@ export default {
             this.reShow = false;
             this.reThumbnail = false;
 
-            this.imageData = "";
             const thumbnailData = new FormData();
             thumbnailData.append("thumbnail", this.uploadFile);
             axios

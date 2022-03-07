@@ -42529,28 +42529,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -42636,7 +42614,6 @@ __webpack_require__.r(__webpack_exports__);
       var id = this.images.map(function (item) {
         return item.id;
       });
-      console.log(id);
       axios["delete"]("/images/" + id).then(function (res) {
         console.log(res);
       });
@@ -42651,6 +42628,7 @@ __webpack_require__.r(__webpack_exports__);
       this.uploadFile = "";
       this.imageFile = "";
       this.thumbnail = "";
+      this.imageData = "";
     },
     upload: function upload() {
       var _this2 = this;
@@ -42659,7 +42637,6 @@ __webpack_require__.r(__webpack_exports__);
       this.show = false;
       this.reShow = false;
       this.reThumbnail = false;
-      this.imageData = "";
       var thumbnailData = new FormData();
       thumbnailData.append("thumbnail", this.uploadFile);
       axios.post("/images/store", thumbnailData).then(function (res) {
@@ -42853,6 +42830,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -42909,7 +42887,7 @@ __webpack_require__.r(__webpack_exports__);
     upload: function upload() {
       var _this2 = this;
 
-      this.imageData = "";
+      // this.imageData = "";
       var thumbnailData = new FormData();
       thumbnailData.append("thumbnail", this.uploadFile);
       axios.post("/images/store", thumbnailData).then(function (res) {
@@ -42930,6 +42908,7 @@ __webpack_require__.r(__webpack_exports__);
       this.uploadFile = "";
       this.imageFile = "";
       this.thumbnail = "";
+      this.imageData = "";
     },
     getContent: function getContent() {
       var _this3 = this;
@@ -93414,6 +93393,14 @@ var render = function () {
         attrs: { id: "file-preview" },
       },
       [
+        _vm.imageData
+          ? _c("img", {
+              staticClass: "userInfo__icon",
+              staticStyle: { width: "270px" },
+              attrs: { src: _vm.imageData },
+            })
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "button",
           {
@@ -93423,7 +93410,7 @@ var render = function () {
               },
             },
           },
-          [_vm._v("\n        別のサムネイルを選択する\n        ")]
+          [_vm._v("別のサムネイルを選択する")]
         ),
       ]
     ),
@@ -93735,6 +93722,14 @@ var render = function () {
         attrs: { id: "file-preview" },
       },
       [
+        _vm.imageData
+          ? _c("img", {
+              staticClass: "userInfo__icon",
+              staticStyle: { width: "270px" },
+              attrs: { src: _vm.imageData },
+            })
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "button",
           {
@@ -93744,7 +93739,7 @@ var render = function () {
               },
             },
           },
-          [_vm._v("\n        別のサムネイルを選択する\n        ")]
+          [_vm._v("別のサムネイルを選択する")]
         ),
       ]
     ),

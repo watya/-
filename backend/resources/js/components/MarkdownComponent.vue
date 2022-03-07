@@ -53,6 +53,12 @@
         </div>
 
         <div v-show="hide" class="form-group" id="file-preview">
+            <img
+                class="userInfo__icon"
+                v-bind:src="imageData"
+                v-if="imageData"
+                style="width: 270px"
+            />
             <button @click="resetThumbnail()">別のサムネイルを選択する</button>
         </div>
 
@@ -135,7 +141,7 @@ export default {
             this.uploadFile = "";
         },
         upload() {
-            this.imageData = "";
+            // this.imageData = "";
             const thumbnailData = new FormData();
             thumbnailData.append("thumbnail", this.uploadFile);
             axios
@@ -160,6 +166,7 @@ export default {
             this.uploadFile = "";
             this.imageFile = "";
             this.thumbnail = "";
+            this.imageData = "";
         },
 
         getContent() {
