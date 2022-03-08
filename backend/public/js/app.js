@@ -42501,20 +42501,6 @@ __webpack_require__.r(__webpack_exports__);
     moveTop: function moveTop() {
       this.$refs.toastUiEditor.invoke("moveCursorToStart");
     },
-    addImageBlobHook: function addImageBlobHook(blob, callback) {
-      var data = new FormData();
-      data.append('image', blob);
-      var config = {
-        header: {
-          'Content-Type': 'multipart/form-data'
-        }
-      };
-      axios.post("/images/store", data, config).then(function (response) {
-        callback(response.data.url, '');
-      })["catch"](function (error) {
-        console.log(error.response.data);
-      });
-    },
     onFileChange: function onFileChange(e) {
       var _this = this;
 

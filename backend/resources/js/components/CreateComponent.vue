@@ -108,11 +108,11 @@ export default {
             imageData: "", //画像格納用変
             uploadFile: "",
             thumbnail: "",
-
             hide: false,
             show: true,
         };
     },
+
     methods: {
         scroll() {
             this.$refs.toastUiEditor.invoke("setScrollTop", 10);
@@ -120,24 +120,6 @@ export default {
         moveTop() {
             this.$refs.toastUiEditor.invoke("moveCursorToStart");
         },
-
-        addImageBlobHook(blob, callback){
-            const data = new FormData();
-            data.append('image', blob);
-            const config = {
-                header: {
-                'Content-Type': 'multipart/form-data'
-                }
-            };
-            axios.post("/images/store", data, config)
-                .then(response => {
-                callback(response.data.url, '');
-                })
-                .catch(error => {
-                    console.log(error.response.data);
-                })
-        },
-
         onFileChange(e) {
             const files = e.target.files;
             if (files.length > 0) {
