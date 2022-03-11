@@ -12,8 +12,8 @@ class ImageController extends Controller
 
     public function store(PostRequest $request)
     {
-        if ($request->thumbnail->isValid()){
-            $filename = $request->thumbnail->store('public/image');
+        if ($request->imageData->isValid()){
+            $filename = $request->imageData->store('public/image');
             return ['thumbnail' => basename($filename)];
         }
     }

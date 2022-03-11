@@ -64,7 +64,7 @@
 
         <div class="form-group">
             <p>本文</p>
-            <editor ref="toastUiEditor" height="400px" />
+            <editor ref="toastUiEditor" height="600px" :options="options" />
         </div>
 
         <div class="form-group">
@@ -110,6 +110,24 @@ export default {
             thumbnail: "",
             hide: false,
             show: true,
+
+            options: {
+                hooks: {
+                    addImageBlobHook(blob, callback) {
+                        const uploadFile = new FormData();
+                        uploadFile.append("imageData", blob);
+                        axios
+                            .post("/images/store", uploadFile)
+                            .then((res) => {
+                                callback('/storage/image/'+res.data.thumbnail, 'image');
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                console.log(err.response.data);
+                            });
+                    },
+                },
+            },
         };
     },
 
@@ -142,7 +160,7 @@ export default {
         upload() {
             // this.imageData = "";
             const thumbnailData = new FormData();
-            thumbnailData.append("thumbnail", this.uploadFile);
+            thumbnailData.append("imageData", this.uploadFile);
             axios
                 .post("/images/store", thumbnailData)
                 .then((res) => {

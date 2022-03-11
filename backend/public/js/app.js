@@ -42491,7 +42491,21 @@ __webpack_require__.r(__webpack_exports__);
       uploadFile: "",
       thumbnail: "",
       hide: false,
-      show: true
+      show: true,
+      options: {
+        hooks: {
+          addImageBlobHook: function addImageBlobHook(blob, callback) {
+            var uploadFile = new FormData();
+            uploadFile.append("imageData", blob);
+            axios.post("/images/store", uploadFile).then(function (res) {
+              callback('/storage/image/' + res.data.thumbnail, 'image');
+            })["catch"](function (err) {
+              console.log(err);
+              console.log(err.response.data);
+            });
+          }
+        }
+      }
     };
   },
   methods: {
@@ -42530,7 +42544,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // this.imageData = "";
       var thumbnailData = new FormData();
-      thumbnailData.append("thumbnail", this.uploadFile);
+      thumbnailData.append("imageData", this.uploadFile);
       axios.post("/images/store", thumbnailData).then(function (res) {
         _this2.thumbnail = res.data.thumbnail;
         _this2.hide = !_this2.hide;
@@ -42757,6 +42771,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -42801,8 +42816,22 @@ __webpack_require__.r(__webpack_exports__);
       //別のサムネを選択するボタン
       reShow: true,
       //元のサムネがない時の
-      reThumbnail: false //元からあったサムネを消した時
-
+      reThumbnail: false,
+      //元からあったサムネを消した時
+      options: {
+        hooks: {
+          addImageBlobHook: function addImageBlobHook(blob, callback) {
+            var uploadFile = new FormData();
+            uploadFile.append("imageData", blob);
+            axios.post("/images/store", uploadFile).then(function (res) {
+              callback('/storage/image/' + res.data.thumbnail, 'image');
+            })["catch"](function (err) {
+              console.log(err);
+              console.log(err.response.data);
+            });
+          }
+        }
+      }
     };
   },
   methods: {
@@ -42866,7 +42895,7 @@ __webpack_require__.r(__webpack_exports__);
       this.reShow = false;
       this.reThumbnail = false;
       var thumbnailData = new FormData();
-      thumbnailData.append("thumbnail", this.uploadFile);
+      thumbnailData.append("imageData", this.uploadFile);
       axios.post("/images/store", thumbnailData).then(function (res) {
         _this2.thumbnail = res.data.thumbnail;
       })["catch"](function (err) {
@@ -93290,7 +93319,10 @@ var render = function () {
       [
         _c("p", [_vm._v("本文")]),
         _vm._v(" "),
-        _c("editor", { ref: "toastUiEditor", attrs: { height: "400px" } }),
+        _c("editor", {
+          ref: "toastUiEditor",
+          attrs: { height: "600px", options: _vm.options },
+        }),
       ],
       1
     ),
@@ -93695,7 +93727,11 @@ var render = function () {
         _vm._v(" "),
         _c("editor", {
           ref: "toastUiEditor",
-          attrs: { height: "500px", initialValue: _vm.editorText },
+          attrs: {
+            height: "600px",
+            initialValue: _vm.editorText,
+            options: _vm.options,
+          },
         }),
       ],
       1

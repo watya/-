@@ -119,8 +119,9 @@
             <p>本文</p>
             <editor
                 ref="toastUiEditor"
-                height="500px"
+                height="600px"
                 :initialValue="editorText"
+                :options="options"
             />
         </div>
 
@@ -180,6 +181,24 @@ export default {
             hide: false, //別のサムネを選択するボタン
             reShow: true, //元のサムネがない時の
             reThumbnail: false, //元からあったサムネを消した時
+
+            options: {
+                hooks: {
+                    addImageBlobHook(blob, callback) {
+                        const uploadFile = new FormData();
+                        uploadFile.append("imageData", blob);
+                        axios
+                            .post("/images/store", uploadFile)
+                            .then((res) => {
+                                callback('/storage/image/'+res.data.thumbnail, 'image');
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                console.log(err.response.data);
+                            });
+                    },
+                },
+            },
         };
     },
 
@@ -239,7 +258,7 @@ export default {
             this.reThumbnail = false;
 
             const thumbnailData = new FormData();
-            thumbnailData.append("thumbnail", this.uploadFile);
+            thumbnailData.append("imageData", this.uploadFile);
             axios
                 .post("/images/store", thumbnailData)
                 .then((res) => {
