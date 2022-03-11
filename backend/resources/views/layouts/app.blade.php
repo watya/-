@@ -42,10 +42,8 @@
                         {{ csrf_field() }}
                         <div class="input-group">
                             <div class="form-outline">
-                                <!-- <label class="form-label" for="form1"></label> -->
                                 <input type="text" class="form-control input-lg" placeholder="検索" name="search" value="">
-                                <!-- <input type="search" id="form1" class="form-control" /> -->
-                                <div class="c">
+                                <div class="search">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fa fa-search"></i>
                                     </button>
@@ -55,7 +53,10 @@
                     </form>
                 </div>
 
-
+                <div class="post">
+                    <a href="{{ route('posts.create') }}" class="dropdown-item">新規投稿</a>
+                    <a href="{{ route('posts.publish') }}" class="dropdown-item">アーカイブ</a>
+                </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -86,10 +87,9 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a href="{{ route('posts.create') }}" class="dropdown-item">新規投稿</a>
-                                <a href="{{ route('posts.publish') }}" class="dropdown-item">アーカイブ</a>
+                                <!-- <a href="{{ route('posts.create') }}" class="dropdown-item">新規投稿</a>
+                                <a href="{{ route('posts.publish') }}" class="dropdown-item">アーカイブ</a> -->
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('ログアウト') }}

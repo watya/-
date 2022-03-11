@@ -1,3 +1,4 @@
+
 @charset "utf-8";
 
 html {
@@ -8,6 +9,11 @@ body {
     color: #333;
     font-size: 1rem;
 }
+
+#app{
+    background-color: blanchedalmond;
+}
+
 
 .a {
     /* ブログタイトル */
@@ -25,15 +31,20 @@ body {
     left: 20px;
 }
 
-.c {
+
+.search {
     /* 検索ボタン */
     position: relative; /* 今の位置を基準 */
-    left: 230px;
+    left: 210px;
     bottom: 41px;
 }
 
 .input-group {
     /* 検索枠 */
     left: 60px;
-    top: 20px;
+    top: 25px;
+}
+
+.post{
+    /*  */
 }
