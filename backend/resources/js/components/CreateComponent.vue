@@ -119,7 +119,10 @@ export default {
                         axios
                             .post("/images/store", uploadFile)
                             .then((res) => {
-                                callback('/storage/image/'+res.data.thumbnail, 'image');
+                                callback(
+                                    "/storage/image/" + res.data.thumbnail,
+                                    "image"
+                                );
                             })
                             .catch((err) => {
                                 console.log(err);
