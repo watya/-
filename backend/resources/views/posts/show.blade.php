@@ -41,13 +41,9 @@
 
             </div>
 
-            <ul class="navbar-nav ml-auto">
-                @guest
-
-                @else
+            @if ($user_id == $post->user_id)
                 <div class="edit">
                     <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary">編集</a>
-
                     <form method="POST" action="{{ route('posts.destroy',$post->id) }}" onSubmit="return checkDelete()">
                         @csrf
                         @method('DELETE')
@@ -55,12 +51,10 @@
                             <button type="submit" class="btn btn-primary" onclick=>
                                 削除
                             </button>
-                            <div>
+                        <div>
                     </form>
-
                 </div>
-                @endguest
-            </ul>
+            @endif
 
             <div class="p-3">
 

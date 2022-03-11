@@ -23,7 +23,7 @@ class CommentRequest extends FormRequest
      */
     public function rules()
     {
-        return 
+        return
         [
             'comment'=>'required',
             'user_id'=>'required|numeric',

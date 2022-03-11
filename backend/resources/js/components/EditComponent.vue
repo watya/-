@@ -173,7 +173,7 @@ export default {
             title: this.post.title,
             editorText: this.post.content,
             content: "",
-            is_published: 0,
+            is_published: this.post.is_published,
             imageData: "", //画像格納用変
             uploadFile: "",
             thumbnail: "",

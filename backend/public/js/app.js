@@ -42498,7 +42498,7 @@ __webpack_require__.r(__webpack_exports__);
             var uploadFile = new FormData();
             uploadFile.append("imageData", blob);
             axios.post("/images/store", uploadFile).then(function (res) {
-              callback('/storage/image/' + res.data.thumbnail, 'image');
+              callback("/storage/image/" + res.data.thumbnail, "image");
             })["catch"](function (err) {
               console.log(err);
               console.log(err.response.data);
@@ -42805,7 +42805,7 @@ __webpack_require__.r(__webpack_exports__);
       title: this.post.title,
       editorText: this.post.content,
       content: "",
-      is_published: 0,
+      is_published: this.post.is_published,
       imageData: "",
       //画像格納用変
       uploadFile: "",
@@ -42824,7 +42824,7 @@ __webpack_require__.r(__webpack_exports__);
             var uploadFile = new FormData();
             uploadFile.append("imageData", blob);
             axios.post("/images/store", uploadFile).then(function (res) {
-              callback('/storage/image/' + res.data.thumbnail, 'image');
+              callback("/storage/image/" + res.data.thumbnail, "image");
             })["catch"](function (err) {
               console.log(err);
               console.log(err.response.data);
