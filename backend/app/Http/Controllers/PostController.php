@@ -104,7 +104,6 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->load('user', 'comments.user');
-
         $user_id = \Auth::id();
 
         return view('posts.show', ['post' => $post , 'user_id' => $user_id,]);
