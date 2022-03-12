@@ -3,11 +3,9 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
-
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-16">
             <div class="card-body">
                 <div class="card-header">ブログ一覧</div>
 

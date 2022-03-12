@@ -3,48 +3,61 @@
 
 html {
     font-size: 110%;
+
+    height: 100%;
 }
 
 body {
     color: #333;
     font-size: 1rem;
+
+    height: 100%;
+    margin: 0;
+
 }
 
-#app{
-    background-color: blanchedalmond;
-}
+/* .py-4{
+    background-color: hsl(33, 58%, 89%);
+} */
 
+/* #app{
+    background-color: hsl(33, 58%, 89%);
+    height: 100%;
+} */
 
-.a {
-    /* ブログタイトル */
+/* ブログタイトル */
+/* .a {
     font-size: 2rem;
-    font-family: serif;
-    position: relative; /* 今の位置を基準 */
+    font-family: 'Kaushan Script', cursive;
+    position: relative;
     top: 4px;
-}
+    left: 50px;
+} */
 
-.b {
-    /* 画像一覧 */
+/* 画像一覧 */
+/* .b {
     font-size: 1rem;
-    position: relative; /* 今の位置を基準 */
+    position: relative;
     top: 5px;
     left: 20px;
-}
+} */
 
-
-.search {
-    /* 検索ボタン */
-    position: relative; /* 今の位置を基準 */
+/* 検索ボタン */
+/* .search {
+    position: relative;
     left: 210px;
     bottom: 41px;
-}
+} */
 
-.input-group {
-    /* 検索枠 */
-    left: 60px;
+/* 検索枠 */
+/* .input-group {
+    left: 400px;
     top: 25px;
-}
+} */
 
-.post{
-    /*  */
-}
+/* .footer {
+    width:100%;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+  } */

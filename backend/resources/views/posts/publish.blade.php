@@ -3,7 +3,6 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
 
 <div class="container">
     <div class="row">
@@ -30,8 +29,8 @@
                     </div>
                     @endif
 
-
                     @foreach($posts as $post)
+                    @if ($user_id == $post->user_id)
 
                     <div class="card">
                         <div class="card-body">
@@ -62,9 +61,10 @@
 
                         </div>
                     </div>
+                    @endif
                     @endforeach
 
-                    <div class="green">
+                    <div class="postIndex">
                         <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
                     </div>
 

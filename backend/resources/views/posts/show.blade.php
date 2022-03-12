@@ -47,17 +47,14 @@
                     <form method="POST" action="{{ route('posts.destroy',$post->id) }}" onSubmit="return checkDelete()">
                         @csrf
                         @method('DELETE')
-                        <div class="red">
-                            <button type="submit" class="btn btn-primary" onclick=>
-                                削除
-                            </button>
-                        <div>
+                        <button type="submit" class="btn btn-primary" onclick=>
+                            削除
+                        </button>
                     </form>
                 </div>
             @endif
 
             <div class="p-3">
-
                 <h3 class="card-title">コメント一覧</h3>
                 @foreach($post->comments as $comment)
                 <div class="card">
@@ -75,13 +72,9 @@
                 </div>
             </div>
 
-            <div class="green">
-                <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
-            </div>
+            <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
 
-            <div class="greeen">
-                <a href="#top" id="btn">ページTOPへ戻る</a>
-            </div>
+            <a href="#top" id="btn">ページTOPへ戻る</a>
 
     </body>
 </div>

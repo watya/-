@@ -231,11 +231,13 @@ class PostController extends Controller
 
         $id = $request->post_id;
         $image = Image::find($id);
+        $user_id = \Auth::id();
 
         return view(
             'posts.publish',
             [
-                'posts' => $posts
+                'posts' => $posts,
+                'user_id' => $user_id,
             ]
         );
     }

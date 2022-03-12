@@ -22,6 +22,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Caveat" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel='stylesheet'>
+
 </head>
 
 <body>
@@ -29,9 +34,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <div class="a">
-                        {{ config('app.name', 'TheWATABLOG') }}
-                    </div>
+                    {{ config('app.name', 'TheWATABLOG') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -51,11 +54,6 @@
                             </div>
                         </div>
                     </form>
-                </div>
-
-                <div class="post">
-                    <a href="{{ route('posts.create') }}" class="dropdown-item">新規投稿</a>
-                    <a href="{{ route('posts.publish') }}" class="dropdown-item">アーカイブ</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -88,8 +86,8 @@
                                 {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <!-- <a href="{{ route('posts.create') }}" class="dropdown-item">新規投稿</a>
-                                <a href="{{ route('posts.publish') }}" class="dropdown-item">アーカイブ</a> -->
+                                <a href="{{ route('posts.create') }}" class="dropdown-item">新規投稿</a>
+                                <a href="{{ route('posts.publish') }}" class="dropdown-item">下書き一覧</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('ログアウト') }}
