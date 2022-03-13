@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+.publish{
+    width: 520px;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.card-body-publish{
+    margin-right: calc(50% - 40vw);
+    margin-left: calc(50% - 40vw);
+}
+
+#archive-index{
+    border-bottom: solid 2px #000000;
+    text-align: center;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}

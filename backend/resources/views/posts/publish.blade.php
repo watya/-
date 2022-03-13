@@ -3,13 +3,13 @@
 
 @section('content')
 
+<link rel="stylesheet" href="{{ asset('css/publish.css') }}">
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-
-            <div class="card-body">
-                <div class="card-header">アーカイブ</div>
+<div class="publish">
+    <!-- <div class="row">
+        <div class="col-md-16"> -->
+            <div class="card-body-publish">
+                <div class="card-header" id="archive-index">下書き一覧</div>
 
                 @if(session('err_msg'))
                 <p class="text-danger">
@@ -37,15 +37,15 @@
                             <h5 class="card-title">{{ $post->title }} </h5>
 
                             <h5 class="card-title">
-                                投稿日{{ $post->created_at }}
-                            </h5>
-
-                            <h5 class="card-title">
                                 @foreach($post->tags as $tag)
                                 <a href="{{ route('posts.category', $tag->id) }}">
                                     #{{ $tag->tag_name }}
                                 </a>
                                 @endforeach
+                            </h5>
+
+                            <h5 class="card-title">
+                                投稿日{{ $post->created_at }}
                             </h5>
 
                             <div class=d>
@@ -72,7 +72,7 @@
 
                 </div>
             </div>
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 </div>
 @endsection

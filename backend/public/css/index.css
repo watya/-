@@ -1,17 +1,54 @@
 @charset "utf-8";
 
-/* 画像 */
-/* .d {
-    position: relative;
-    bottom: 4px;
+.index{
+    width: 80%;
+    display: flex;
+    margin: 20px auto;
+    justify-content: center;
+}
+
+#blog-top{
+    border-bottom: solid 2px #000000;
+    text-align: center;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#image{
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    /* object-fit: cover; */
+}
+
+.card-body-index{
+    margin-right: calc(50% - 35vw);
+    margin-left: calc(50% - 35vw);
 }
 
 .card-body{
-    width: 1040px;
+    display: flex;
+	flex-wrap: wrap;
+	/* margin-left: -20px; */
+
+    align-items:stretch;
+    justify-content:center;
 }
 
-.postIndex{
-    position: relative;
-    top:20px;
-} */
+.card {
+	/* margin-left: 20px; */
+    float:left;
+    width:33%;
 
+    background-color: #ffffff;
+}
+
+.a-title{
+    color: #000000;
+    font-size:25px;
+}
+
+.card-created{
+    color:rgb(153, 152, 152);
+}

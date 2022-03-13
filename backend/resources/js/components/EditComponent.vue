@@ -136,7 +136,7 @@
             >
                 <option disabled selected value>選択してください</option>
                 <option value="1">公開</option>
-                <option value="0">非公開</option>
+                <option value="0">下書き</option>
             </select>
         </div>
 

@@ -3,11 +3,13 @@
 
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-16">
-            <div class="card-body">
-                <div class="card-header">ブログ一覧</div>
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+
+<div class="index">
+    <!-- <div class="row">
+        <div class="col-md-16"> -->
+            <div class="card-body-index">
+                <div class="card-header" id="blog-top">記事一覧</div>
 
                 @if(session('err_msg'))
                 <p class="text-danger">
@@ -27,41 +29,46 @@
                     </div>
                     @endif
 
-
                     @foreach($posts as $post)
-
                     <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $post->title }} </h5>
+                        <div class="card-body" id="card-body-content">
 
-                            <h5 class="card-title">
-                                投稿日{{ $post->created_at }}
-                            </h5>
+                        <div>
+                            <div class="card-created">
+                                {{ $post->created_at }}
+                            </div>
 
-                            <h5 class="card-title">
-                                @foreach($post->tags as $tag)
-                                <a href="{{ route('posts.category', $tag->id) }}">
-                                    #{{ $tag->tag_name }}
-                                </a>
-                                @endforeach
-                            </h5>
+                            <div class="card-title" id="post-title">
+                                <a class="a-title" href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
+                            </div>
+                        </div>
 
-                            <div class=d>
+                            <div class="card-image-tag">
+                                <div class="card-image">
                                 @isset($post->images)
                                     @foreach($post->images as $image)
-                                    <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
+                                    <a href="{{ route('posts.show', $post->id) }}">
+                                        <image id="image" src="{{ asset('storage/image/'.$image->image) }}">
+                                    </a>
                                     @break
                                     @endforeach
                                 @endisset
+                                </div>
+
+                                <div class="card-tag">
+                                    @foreach($post->tags as $tag)
+                                        <a href="{{ route('posts.category', $tag->id) }}">
+                                        #{{ $tag->tag_name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                                <!-- <a href="{{ route('posts.show', $post->id) }}">詳細へ</a> -->
                             </div>
-
-                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">詳細へ</a>
-
                         </div>
                     </div>
                     @endforeach
 
-
+                </div>
                     @if(isset($tag_name))
                     {{ $posts->appends(['tag_name' => $tag_name])->links('pagination::bootstrap-4') }}
 
@@ -71,9 +78,8 @@
                     @else
                     {{ $posts->links('pagination::bootstrap-4') }}
                     @endif
-                </div>
             </div>
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 </div>
 @endsection
