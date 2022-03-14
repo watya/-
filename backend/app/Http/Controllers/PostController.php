@@ -26,10 +26,13 @@ class PostController extends Controller
         $id = $request->post_id;
         $image = Image::find($id);
 
+        $tagPosts = Post::where('is_published', 1)->take(10)->get();
+        $tagPosts->load('tags',);
+
         return view(
             'posts.index',
             [
-                'posts' => $posts
+                'posts' => $posts,'tagPosts' => $tagPosts
             ]
         );
     }
@@ -204,22 +207,33 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        $posts = Post::where('title', 'like', "%$request->search%")->orwhere('content', 'like', "%$request->search%")
-            ->paginate(5);
+        // $posts = Post::where('is_published', 1)->where('title', 'like', "%$request->search%")->orWhere('content', 'like', "%$request->search%")
+        //     ->paginate(9);
+
+        $posts = Post::where('is_published' , 1)->where(function($query)use($request){
+             $query->where('title', 'like', "%$request->search%")
+             ->orWhere('content', 'like', "%$request->search%");
+         })->paginate(9);
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
-        return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search]);
+        $tagPosts = Post::where('is_published', 1)->take(10)->get();
+        $tagPosts->load('tags');
+
+        return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search,'tagPosts' => $tagPosts]);
     }
 
     public function category(int $id)
     {
-        $posts = Tag::find($id)->posts()->latest()->paginate(5);
+        $posts = Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
+
+        $tagPosts = Post::where('is_published', 1)->take(10)->get();
+        $tagPosts->load('tags');
 
         return view(
             'posts.index',
             [
-                'posts' => $posts,
+                'posts' => $posts,'tagPosts' => $tagPosts
             ]
         );
     }

@@ -12,14 +12,12 @@ body {
     /* background-size: cover; */
 }
 
-.navbar-brand{
-    font-family: 'Kaushan Script', cursive;
+.navbar-brand {
+    font-family: "Kaushan Script", cursive;
     font-size: 2.7rem;
 }
 
-
-#app{
+#app {
     background-color: #f0ebe8;
     /* background-color: #000000; */
 }
-
