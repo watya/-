@@ -44,17 +44,17 @@
                     <div class="card-image-tag">
                         <div class="card-image">
                             @if($post->images->isNotEmpty())
-                                @foreach ($post->images as $image)
-                                    <a href="{{ route('posts.show', $post->id) }}">
-                                        <image id="image" src="{{ asset('storage/image/' . $image->image) }}">
-                                    </a>
-                                @break
-                                @endforeach
+                            @foreach ($post->images as $image)
+                            <a href="{{ route('posts.show', $post->id) }}">
+                                <image id="image" src="{{ asset('storage/image/' . $image->image) }}">
+                            </a>
+                            @break
+                            @endforeach
                             @else
-                                <a href="{{ route('posts.show', $post->id) }}">
-                                    <image id="image"
-                                        src="https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-760x460.png">
-                                </a>
+                            <a href="{{ route('posts.show', $post->id) }}">
+                                <image id="image"
+                                    src="https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-760x460.png">
+                            </a>
                             @endif
                         </div>
                     </div>
