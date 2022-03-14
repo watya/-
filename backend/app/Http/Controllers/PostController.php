@@ -87,7 +87,7 @@ class PostController extends Controller
                 $image->image = $request->thumbnail;
                 $image->post_id = $post->id;
                 $image->save();
-            }
+            };
 
         \DB::commit();
 
@@ -207,13 +207,10 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        // $posts = Post::where('is_published', 1)->where('title', 'like', "%$request->search%")->orWhere('content', 'like', "%$request->search%")
-        //     ->paginate(9);
-
         $posts = Post::where('is_published' , 1)->where(function($query)use($request){
-             $query->where('title', 'like', "%$request->search%")
-             ->orWhere('content', 'like', "%$request->search%");
-         })->paginate(9);
+            $query->where('title', 'like', "%$request->search%")
+            ->orWhere('content', 'like', "%$request->search%");
+        })->paginate(9);
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 

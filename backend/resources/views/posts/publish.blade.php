@@ -49,12 +49,17 @@
                     </h5>
 
                     <div class=d>
-                        @isset($post->images)
-                        @foreach($post->images as $image)
-                        <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
+                        @if($post->images->isNotEmpty())
+                            @foreach($post->images as $image)
+                                <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
                             @break
                             @endforeach
-                            @endisset
+                        @else
+                            <a href="{{ route('posts.show', $post->id) }}">
+                                <image id="image"
+                                    src="https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-760x460.png" width="300">
+                            </a>
+                        @endif
                     </div>
 
                     <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">詳細へ</a>

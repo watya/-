@@ -43,24 +43,28 @@
 
                     <div class="card-image-tag">
                         <div class="card-image">
-                            @isset($post->images)
-                            @foreach ($post->images as $image)
-                            <a href="{{ route('posts.show', $post->id) }}">
-                                <image id="image" src="{{ asset('storage/image/' . $image->image) }}">
-                            </a>
-                            @break
-                            @endforeach
-                            @endisset
+                            @if($post->images->isNotEmpty())
+                                @foreach ($post->images as $image)
+                                    <a href="{{ route('posts.show', $post->id) }}">
+                                        <image id="image" src="{{ asset('storage/image/' . $image->image) }}">
+                                    </a>
+                                @break
+                                @endforeach
+                            @else
+                                <a href="{{ route('posts.show', $post->id) }}">
+                                    <image id="image"
+                                        src="https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-760x460.png">
+                                </a>
+                            @endif
                         </div>
+                    </div>
 
-                        <div class="card-tag">
-                            @foreach ($post->tags as $tag)
-                            <a href="{{ route('posts.category', $tag->id) }}">
-                                #{{ $tag->tag_name }}
-                            </a>
-                            @endforeach
-                        </div>
-                        <!-- <a href="{{ route('posts.show', $post->id) }}">詳細へ</a> -->
+                    <div class="card-tag">
+                        @foreach ($post->tags as $tag)
+                        <a href="{{ route('posts.category', $tag->id) }}">
+                            #{{ $tag->tag_name }}
+                        </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
