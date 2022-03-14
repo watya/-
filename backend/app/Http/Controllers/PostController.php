@@ -26,13 +26,13 @@ class PostController extends Controller
         $id = $request->post_id;
         $image = Image::find($id);
 
-        $tagPosts = Post::where('is_published', 1)->take(10)->get();
-        $tagPosts->load('tags',);
+
+        $categories = Tag::take(15)->get();
 
         return view(
             'posts.index',
             [
-                'posts' => $posts,'tagPosts' => $tagPosts
+                'posts' => $posts,'categories'=>$categories
             ]
         );
     }
@@ -214,23 +214,21 @@ class PostController extends Controller
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
-        $tagPosts = Post::where('is_published', 1)->take(10)->get();
-        $tagPosts->load('tags');
+        $categories = Tag::take(15)->get();
 
-        return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search,'tagPosts' => $tagPosts]);
+        return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search,'categories' => $categories]);
     }
 
     public function category(int $id)
     {
         $posts = Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
 
-        $tagPosts = Post::where('is_published', 1)->take(10)->get();
-        $tagPosts->load('tags');
+        $categories = Tag::take(15)->get();
 
         return view(
             'posts.index',
             [
-                'posts' => $posts,'tagPosts' => $tagPosts
+                'posts' => $posts,'categories' => $categories
             ]
         );
     }

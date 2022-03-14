@@ -78,21 +78,17 @@
         @else
         {{ $posts->links('pagination::bootstrap-4') }}
         @endif
-    </div>
 
-    <div>
-        <h1>カテゴリ</h1>
-        @foreach ($tagPosts as $tagPost)
-        <div class="card-tag">
-            @foreach ($tagPost->tags as $tag)
-            <div>
-                <a href="{{ route('posts.category', $tag->id) }}">
-                    {{ $tag->tag_name }}
+        <div class="categories">
+            <h1>カテゴリ</h1>
+            @foreach ($categories as $category)
+            <div class="card-tag">
+                <a href="{{ route('posts.category', $category->id) }}">
+                    {{ $category->tag_name }}
                 </a>
             </div>
             @endforeach
         </div>
-        @endforeach
     </div>
 
     <!-- </div>
