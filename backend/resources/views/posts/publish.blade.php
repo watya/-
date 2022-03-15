@@ -71,6 +71,7 @@
 
             <div class="postIndex">
                 <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
+                <a href="#app" id="btn">ページTOPへ戻る</a>
             </div>
 
             {{ $posts->links('pagination::bootstrap-4') }}

@@ -1,20 +1,28 @@
 @charset "utf-8";
+@media (min-width: 1000px){
 
-html {
-    font-size: 110%;
-}
+    html {
+        font-size: 110%;
+    }
 
-body {
-    color: #333;
-    font-size: 1rem;
-    margin: 0;
-    /* background-color: hwb(0 100% 0%); */
-    /* background-size: cover; */
+    body {
+        color: #333;
+        font-size: 1rem;
+        margin: 0;
+        /* background-color: hwb(0 100% 0%); */
+        /* background-size: cover; */
+    }
+
+    #search-area{
+        margin-left:380px;
+        margin-top: 5px;
+    }
 }
 
 .navbar-brand {
-    font-family: "Kaushan Script", cursive;
-    font-size: 2.7rem;
+    font-family: 'Caveat', cursive;
+    font-size: 3.3rem;
+    /* font-family: 'Permanent Marker', cursive; */
 }
 
 #app {

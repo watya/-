@@ -8,7 +8,7 @@
     <!-- <div class="row">
             <div class="col-md-16"> -->
     <div class="card-body-index">
-        <div class="card-header" id="blog-top">記事一覧</div>
+        <div id="blog-top">記事一覧</div>
         @if (session('err_msg'))
         <p class="text-danger">
             {{ session('err_msg') }}
@@ -79,12 +79,15 @@
         {{ $posts->links('pagination::bootstrap-4') }}
         @endif
 
+        <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
+        <a href="#app" id="btn">ページTOPへ戻る</a>
+
         <div class="categories">
             <h1>カテゴリ</h1>
             @foreach ($categories as $category)
             <div class="card-tag">
                 <a href="{{ route('posts.category', $category->id) }}">
-                    {{ $category->tag_name }}
+                    　{{ $category->tag_name }}
                 </a>
             </div>
             @endforeach

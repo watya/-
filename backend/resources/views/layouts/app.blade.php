@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+<meta name=”viewport” content=”width=device-width, initial-scale=1”>
+
 <head>
     <meta charset="utf-12">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,18 +44,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="card-body">
+                <div class="card-body" id="search-area">
                     <form action="{{ route('posts.search') }}" method="get">
                         {{ csrf_field() }}
                         <div class="input-group">
                             <div class="form-outline">
                                 <input type="text" class="form-control input-lg" placeholder="検索" name="search"
                                     value="">
-                                <div class="search">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="search">
+                                <button type="submit" class="btn btn-light">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
