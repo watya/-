@@ -29,11 +29,6 @@
         background-color: #ffffff;
     }
 
-    .a-title{
-        color: #000000;
-        font-size:25px;
-    }
-
     .card-created{
         color:rgb(153, 152, 152);
     }
@@ -43,8 +38,22 @@
     }
 
     .categories{
-        position:absolute; top:30%; right:-3%;
+        position:absolute; top:30%; right:-4%;
     }
+
+    .card-tag{
+        width:50%;
+        word-break:break-word;
+    }
+}
+
+.card-created{
+    color:rgb(153, 152, 152);
+}
+
+.a-title{
+    color: #000000;
+    font-size:25px;
 }
 
 #image{
@@ -61,3 +70,4 @@
     margin-left: auto;
     margin-right: auto;
 }
+

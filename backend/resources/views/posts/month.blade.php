@@ -1,4 +1,5 @@
 <!-- トップページ -->
+<!-- トップページ -->
 @extends('layouts.app')
 
 @section('content')
@@ -80,17 +81,6 @@
 
         <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
         <a href="#app" id="btn">ページTOPへ戻る</a>
-
-        <div class="categories">
-            <h1>カテゴリ</h1>
-            @foreach ($categories as $category)
-                <div class="card-tag">
-                    <a href="{{ route('posts.category', $category->id) }}">
-                        #{{ $category->tag_name }}
-                    </a>
-                </div>
-            @endforeach
-        </div>
     </div>
 
     <!-- </div>

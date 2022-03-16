@@ -23,11 +23,10 @@ class PostController extends Controller
         $posts = Post::where('is_published', 1)->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
 
-        $id = $request->post_id;
-        $image = Image::find($id);
+        // $id = $request->post_id;
+        // $image = Image::find($id);
 
-
-        $categories = Tag::take(15)->get();
+        $categories = Tag::take(10)->latest()->get();
 
         return view(
             'posts.index',
@@ -214,7 +213,7 @@ class PostController extends Controller
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
-        $categories = Tag::take(15)->get();
+        $categories = Tag::take(10)->latest()->get();
 
         return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search,'categories' => $categories]);
     }
@@ -223,7 +222,7 @@ class PostController extends Controller
     {
         $posts = Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
 
-        $categories = Tag::take(15)->get();
+        $categories = Tag::take(10)->latest()->get();
 
         return view(
             'posts.index',
@@ -251,9 +250,25 @@ class PostController extends Controller
         );
     }
 
-    public function test()
+    public function month()
     {
-        return view('posts.test', []);
+        $year = 2022;
+        $month = 03;
+
+        $start = "$year-$month-01";
+        $end = "$year-$month-31";
+        $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
+        $posts->load('user', 'tags', 'images');
+
+        $user_id = \Auth::id();
+
+        return view(
+            'posts.month',
+            [
+                'posts' => $posts,
+                'user_id' => $user_id,
+            ]
+        );
     }
 
 }
