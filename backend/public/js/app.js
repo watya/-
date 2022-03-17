@@ -93372,7 +93372,7 @@ var render = function () {
           _vm._v(" "),
           _c("option", { attrs: { value: "1" } }, [_vm._v("公開")]),
           _vm._v(" "),
-          _c("option", { attrs: { value: "0" } }, [_vm._v("非公開")]),
+          _c("option", { attrs: { value: "0" } }, [_vm._v("下書き")]),
         ]
       ),
     ]),
@@ -93782,7 +93782,7 @@ var render = function () {
           _vm._v(" "),
           _c("option", { attrs: { value: "1" } }, [_vm._v("公開")]),
           _vm._v(" "),
-          _c("option", { attrs: { value: "0" } }, [_vm._v("非公開")]),
+          _c("option", { attrs: { value: "0" } }, [_vm._v("下書き")]),
         ]
       ),
     ]),

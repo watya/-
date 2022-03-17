@@ -34,10 +34,9 @@ Route::get('/posts/category/{id}', [PostController::class, 'category'])->name('p
 Route::get('/posts/publish', [PostController::class, 'publish'])->name('posts.publish');
 Route::DELETE('/images/{id}', [ImageController::class, 'destroy'])->name('images.destroy');
 Route::POST('/images/store', [ImageController::class, 'store'])->name('images.store');
-
-Route::get('/posts/month', [PostController::class, 'month'])->name('posts.month');
+Route::get('/posts/month/{year}/{month}', [PostController::class, 'month'])->name('posts.month');
 
 Route::resource('/posts', 'App\Http\Controllers\PostController', ['except' => ['index']]);
 Route::resource('/users', 'App\Http\Controllers\UserController');
 Route::resource('/comments', 'App\Http\Controllers\CommentController')->middleware('auth'); //ログインしてる人だけ
-//Route::resource('/images', 'App\Http\Controllers\ImageController');
+

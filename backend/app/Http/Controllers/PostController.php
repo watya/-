@@ -250,15 +250,17 @@ class PostController extends Controller
         );
     }
 
-    public function month()
+    public function month(Request $request)
     {
-        $year = 2022;
-        $month = 03;
+        $year = $request->year;
+        $month = $request->month;
 
         $start = "$year-$month-01";
         $end = "$year-$month-31";
         $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
+
+        $categories = Tag::take(10)->latest()->get();
 
         $user_id = \Auth::id();
 
@@ -267,6 +269,9 @@ class PostController extends Controller
             [
                 'posts' => $posts,
                 'user_id' => $user_id,
+                'categories'=>$categories,
+                'year'=>$year,
+                'month'=>$month,
             ]
         );
     }

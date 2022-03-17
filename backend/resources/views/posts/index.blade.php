@@ -3,10 +3,7 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-
 <div class="index">
-    <!-- <div class="row">
-            <div class="col-md-16"> -->
     <div class="card-body-index">
         <div id="blog-top">記事一覧</div>
         @if (session('err_msg'))
@@ -57,7 +54,7 @@
                             </a>
                             @endif
                         </div>
-                        <div class="card-tag">
+                        <div class="tag">
                             @foreach ($post->tags as $tag)
                             <a href="{{ route('posts.category', $tag->id) }}">
                                 #{{ $tag->tag_name }}
@@ -84,16 +81,48 @@
         <div class="categories">
             <h1>カテゴリ</h1>
             @foreach ($categories as $category)
-                <div class="card-tag">
-                    <a href="{{ route('posts.category', $category->id) }}">
-                        #{{ $category->tag_name }}
-                    </a>
-                </div>
+            <div class="card-tag">
+                <a href="{{ route('posts.category', $category->id) }}">
+                    #{{ $category->tag_name }}
+                </a>
+            </div>
             @endforeach
         </div>
-    </div>
 
-    <!-- </div>
-    </div> -->
+        <div class="month">
+            <h1>月別記事</h1>
+            <button class="button">2022</button>
+            <div class="card-month">
+                @for ($i = 1; $i <= 12; $i++) <div>
+                    <a href="{{ route('posts.month', [2022,$i]) }}">
+                        2022/{{ $i }}
+                    </a>
+            </div>
+            @endfor
+        </div>
+    </div>
 </div>
+</div>
+
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    $(document).ready(function(){
+
+    $('.card-month').hide();
+
+    $('.button').click(function () {
+
+         //toggleClassでshowのclassを追加または削除
+        $('.month').toggleClass('show');
+
+        //#appがshowのclassをを持っていれば
+        if($('.month').hasClass('show')){
+            $('.card-month').show();
+        }else{
+            $('.card-month').hide();
+        }
+    });
+});
+</script>
