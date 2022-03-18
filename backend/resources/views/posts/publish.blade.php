@@ -6,10 +6,8 @@
 <link rel="stylesheet" href="{{ asset('css/publish.css') }}">
 
 <div class="publish">
-    <!-- <div class="row">
-        <div class="col-md-16"> -->
     <div class="card-body-publish">
-        <div class="card-header" id="archive-index">下書き一覧</div>
+        <div id="blog-top">下書き一覧</div>
 
         @if(session('err_msg'))
         <p class="text-danger">
@@ -18,7 +16,6 @@
         @endif
 
         @isset($search_result)
-        <!-- この中に値があれば表示 -->
         <h5 class="card-title">{{$search_result}}</h5>
         @endisset
 
@@ -34,21 +31,16 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $post->title }} </h5>
 
-                    <h5 class="card-title">
-                        @foreach($post->tags as $tag)
-                        <a href="{{ route('posts.category', $tag->id) }}">
-                            #{{ $tag->tag_name }}
-                        </a>
-                        @endforeach
-                    </h5>
+                    <div class="card-created">
+                        {{ $post->created_at }}
+                    </div>
 
-                    <h5 class="card-title">
-                        投稿日{{ $post->created_at }}
-                    </h5>
+                    <div class="card-title" id="post-title">
+                        <a class="a-title" href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
+                    </div>
 
-                    <div class=d>
+                    <div class="image">
                         @if($post->images->isNotEmpty())
                             @foreach($post->images as $image)
                                 <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
@@ -61,24 +53,33 @@
                             </a>
                         @endif
                     </div>
+                    <div class="card-title">
+                        @foreach($post->tags as $tag)
+                        <a href="{{ route('posts.category', $tag->id) }}">
+                            #{{ $tag->tag_name }}
+                        </a>
+                        @endforeach
+                    </div>
 
-                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">詳細へ</a>
+                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-secondary">詳細へ</a>
 
                 </div>
             </div>
             @endif
             @endforeach
 
-            <div class="postIndex">
-                <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
-                <a href="#app" id="btn">ページTOPへ戻る</a>
+            <div class="to-top">
+                <a href="{{ route('posts.index') }}" class="a-top">ブログ一覧へ</a>
+                <a href="#app" id="btn" class="a-top">ページTOPへ戻る</a>
             </div>
 
             {{ $posts->links('pagination::bootstrap-4') }}
 
         </div>
     </div>
-    <!-- </div>
-    </div> -->
 </div>
+
 @endsection
+
+
+

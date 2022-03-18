@@ -9,6 +9,7 @@
         color: #333;
         font-size: 1rem;
         margin: 0;
+        background-color: #f0ebe8;
         /* background-color: hwb(0 100% 0%); */
         /* background-size: cover; */
     }
@@ -17,15 +18,33 @@
         margin-left:380px;
         margin-top: 5px;
     }
+
+    .navbar-brand {
+        font-family: 'Caveat', cursive;
+        font-size: 3.3rem;
+        /* font-family: 'Permanent Marker', cursive; */
+    }
 }
 
-.navbar-brand {
-    font-family: 'Caveat', cursive;
-    font-size: 3.3rem;
-    /* font-family: 'Permanent Marker', cursive; */
+@media (max-width: 1000px){
+
+    html {
+        font-size: 80%;
+    }
+
+    body {
+        color: #333;
+        font-size: 1rem;
+        margin: 0;
+        background-color: #f0ebe8;
+        /* background-color: hwb(0 100% 0%); */
+        /* background-size: cover; */
+    }
+
+    .navbar-brand {
+        font-family: 'Caveat', cursive;
+        font-size: 3.3rem;
+        /* font-family: 'Permanent Marker', cursive; */
+    }
 }
 
-#app {
-    background-color: #f0ebe8;
-    /* background-color: #000000; */
-}

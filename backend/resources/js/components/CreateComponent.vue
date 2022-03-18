@@ -40,11 +40,11 @@
                 v-if="imageData"
                 style="width: 270px"
             />
-            <button class="btn btn-primary" v-if="imageData" @click="upload()">
+            <button class="btn btn-outline-primary" v-if="imageData" @click="upload()">
                 決定
             </button>
             <button
-                class="btn btn-danger"
+                class="btn btn-outline-danger"
                 v-if="imageData"
                 @click="resetFile()"
             >
@@ -82,10 +82,10 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-primary" @click="getContent">
+        <button type="button" class="btn btn-outline-primary" @click="getContent">
             投稿
         </button>
-        <a href="/" class="btn btn-primary">キャンセル</a>
+        <a href="/" class="btn btn-outline-secondary">キャンセル</a>
     </div>
 </template>
 

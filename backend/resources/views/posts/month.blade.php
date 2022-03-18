@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="{{ asset('css/month.css') }}">
 
 <div class="index">
-    <!-- <div class="row">
-            <div class="col-md-16"> -->
     <div class="card-body-index">
         <div id="blog-top">{{$year}}年{{$month}}月の記事一覧</div>
         @if (session('err_msg'))
@@ -79,14 +77,16 @@
         {{ $posts->links('pagination::bootstrap-4') }}
         @endif
 
-        <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
-        <a href="#app" id="btn">ページTOPへ戻る</a>
+        <div class="to-top">
+            <a href="{{ route('posts.index') }}" class="a-top">ブログ一覧へ</a>
+            <a href="#app" id="btn" class="a-top">ページTOPへ戻る</a>
+        </div>
 
         <div class="categories">
-            <h1>カテゴリ</h1>
+            <h1 class="category-title">最近のカテゴリ</h1>
             @foreach ($categories as $category)
             <div class="card-tag">
-                <a href="{{ route('posts.category', $category->id) }}">
+                <a href="{{ route('posts.category', $category->id) }}" class="a-tag">
                     #{{ $category->tag_name }}
                 </a>
             </div>
@@ -94,21 +94,20 @@
         </div>
 
         <div class="month">
-            <h1>月別記事</h1>
+            <h1 class="month-title">月別記事</h1>
             <button class="button">2022</button>
             <div class="card-month">
-                @for ($i = 1; $i <= 12; $i++) <div>
-                    <a href="{{ route('posts.month', [2022,$i]) }}">
+                @for ($i = 1; $i <= 12; $i++) <li class="li-month">
+                    <a href="{{ route('posts.month', [2022,$i]) }}" class="a-month">
                         2022/{{ $i }}
                     </a>
+                    </li>
+                    @endfor
             </div>
-            @endfor
         </div>
     </div>
 </div>
 
-<!-- </div>
-    </div> -->
 </div>
 @endsection
 

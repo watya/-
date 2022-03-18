@@ -38,7 +38,7 @@
     }
 
     .categories{
-        position:absolute; top:30%; right:-3%;
+        position:absolute; top:30%; right:-2%;
     }
 
     .card-tag{
@@ -47,31 +47,107 @@
     }
 
     .month{
-        position:absolute; top:30%; left:5%;
+        position:absolute; top:30%; left:6%;
+    }
+
+    .card-created{
+        color:rgb(153, 152, 152);
+    }
+
+    .a-title{
+        color: #000000;
+        font-size:25px;
+    }
+
+    #image{
+        width: 100%;
+        height: 400px;
+        object-fit: contain;
+        /* object-fit: cover; */
+    }
+
+    #blog-top{
+        border-bottom: solid 2px #000000;
+        text-align: center;
+        width: 250px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .a-month{
+        color: #1e33f3;
+    }
+    .to-top{
+        margin-top: 1%;
     }
 }
 
-.card-created{
-    color:rgb(153, 152, 152);
+@media (max-width: 1000px){
+    .card-created{
+        color:rgb(153, 152, 152);
+    }
+
+    .a-title{
+        color: #000000;
+        font-size:25px;
+    }
+
+    #image{
+        width: 100%;
+        /* height: 400px;
+        object-fit: contain; */
+        /* object-fit: cover; */
+    }
+
+    #blog-top{
+        border-bottom: solid 2px #000000;
+        text-align: center;
+        width: 250px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+/*  */
+    .a-month{
+        color:rgb(129, 128, 128);
+    }
+
+    .li-month{
+        color: #615f5d;
+    }
+
+    .categories{
+        margin-top: 5%;
+        margin-left: 8%;
+        border-top:  solid rgb(161, 159, 159);
+        width: 80%;
+    }
+    .category-title{
+        margin-top: 5%;
+    }
+
+    .month{
+        margin-top: 5%;
+        margin-left: 8%;
+        border-top:  solid rgb(161, 159, 159);
+        width: 80%;
+    }
+    .month-title{
+        margin-top: 5%;
+    }
+
+    .to-top{
+        margin-top: 1%;
+        margin-left: 8%;
+    }
+    .pagination{
+        margin-left: 5%;
+    }
 }
 
-.a-title{
-    color: #000000;
-    font-size:25px;
+.a-top{
+    color:rgb(129, 128, 128);
 }
 
-#image{
-    width: 100%;
-    height: 400px;
-    object-fit: contain;
-    /* object-fit: cover; */
+.a-tag{
+    color:rgb(5, 89, 158);
 }
-
-#blog-top{
-    border-bottom: solid 2px #000000;
-    text-align: center;
-    width: 250px;
-    margin-left: auto;
-    margin-right: auto;
-}
-

@@ -93248,7 +93248,7 @@ var render = function () {
           ? _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-outline-primary",
                 on: {
                   click: function ($event) {
                     return _vm.upload()
@@ -93263,7 +93263,7 @@ var render = function () {
           ? _c(
               "button",
               {
-                staticClass: "btn btn-danger",
+                staticClass: "btn btn-outline-danger",
                 on: {
                   click: function ($event) {
                     return _vm.resetFile()
@@ -93380,16 +93380,18 @@ var render = function () {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-outline-primary",
         attrs: { type: "button" },
         on: { click: _vm.getContent },
       },
       [_vm._v("\n        投稿\n    ")]
     ),
     _vm._v(" "),
-    _c("a", { staticClass: "btn btn-primary", attrs: { href: "/" } }, [
-      _vm._v("キャンセル"),
-    ]),
+    _c(
+      "a",
+      { staticClass: "btn btn-outline-secondary", attrs: { href: "/" } },
+      [_vm._v("キャンセル")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -93594,7 +93596,7 @@ var render = function () {
                           expression: "show",
                         },
                       ],
-                      staticClass: "btn btn-danger",
+                      staticClass: "btn btn-outline-danger",
                       on: {
                         click: function ($event) {
                           return _vm.resetThumbnail()
@@ -93669,7 +93671,7 @@ var render = function () {
           ? _c(
               "button",
               {
-                staticClass: "btn btn-danger",
+                staticClass: "btn btn-outline-danger",
                 on: {
                   click: function ($event) {
                     return _vm.resetFile()
@@ -93790,7 +93792,7 @@ var render = function () {
     _c(
       "button",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-outline-primary",
         attrs: { type: "button" },
         on: { click: _vm.update },
       },
@@ -93800,7 +93802,7 @@ var render = function () {
     _c(
       "a",
       {
-        staticClass: "btn btn-primary",
+        staticClass: "btn btn-outline-secondary",
         attrs: { href: "/posts/" + _vm.post.id },
       },
       [_vm._v("キャンセル")]

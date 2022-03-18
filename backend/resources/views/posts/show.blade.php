@@ -16,43 +16,41 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title1">{{ $post->title }}</h5>
-
-                <h5 class="card-title2">
+                <div class="card-created">
                     {{ $post->created_at }}
-                </h5>
+                </div>
 
-                <h5 class="card-title3">
+                <div class="post-title">{{ $post->title }}</div>
+
+                <div class="card-title3">
                     @foreach($post->tags as $tag)
                     <a href="{{ route('posts.category', $tag->id) }}">
                         #{{ $tag->tag_name }}
                     </a>
                     @endforeach
-                </h5>
+                </div>
 
                 <div class="markdown-body .pl-k">
                     <p class="card-text1">@include('markdowns.content')</p>
                 </div>
-
             </div>
-
         </div>
 
         @if ($user_id == $post->user_id)
         <div class="edit">
-            <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary">編集</a>
             <form method="POST" action="{{ route('posts.destroy',$post->id) }}" onSubmit="return checkDelete()">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-primary" onclick=>
+                <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-outline-primary">編集</a>
+                <button type="submit" class="btn btn-outline-danger" onclick=>
                     削除
                 </button>
             </form>
         </div>
         @endif
 
-        <div class="p-3">
-            <h3 class="card-title">コメント一覧</h3>
+        <div class="comments">
+            <div class="comment">コメント一覧</div>
             @foreach($post->comments as $comment)
             <div class="card">
                 <div class="card-body">
@@ -63,14 +61,15 @@
                 </div>
             </div>
             @endforeach
-
-            <div class="blue">
-                <a href="{{ route('comments.create', ['post_id' => $post->id]) }}" class="btn btn-primary">コメントする</a>
-            </div>
+        </div>
+        <div class="blue">
+            <a href="{{ route('comments.create', ['post_id' => $post->id]) }}" class="btn btn-info">コメントする</a>
         </div>
 
-        <a href="{{ route('posts.index') }}">ブログ一覧へ</a>
-        <a href="#app" id="btn">ページTOPへ戻る</a>
+        <div class="to-top">
+            <a href="{{ route('posts.index') }}" class="a-top">ブログ一覧へ</a>
+            <a href="#app" id="btn" class="a-top">ページTOPへ戻る</a>
+        </div>
     </div>
 </div>
 

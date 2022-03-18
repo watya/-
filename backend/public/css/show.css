@@ -1,61 +1,76 @@
 @charset "utf-8";
 
-/* .e {
-    position: relative;
-    left: 500px;
-} */
+@media (min-width: 1000px){
 
-/* .red {
-    position: relative;
-    left: 70px;
-    bottom: 41px;
-} */
+    .post-title{
+        font-family: 'Courier New', Courier, monospace;
+        font-size:200%;
+    }
 
-/* コメントする */
-/* .blue {
-    position: relative;
-    top: 7px;
-    left: 4px;
-} */
+    .card-created{
+        color:rgb(153, 152, 152);
+    }
 
-/* ブログ一覧 */
-/* .green {
-    position: relative;
-    bottom: 37px;
-    left: 770px;
-} */
+    .a-top{
+        color:rgb(129, 128, 128);
+    }
 
-/* ページトップ */
-/* .greeen {
-    position: relative;
-    bottom: 65px;
-    left: 900px;
-} */
+    .to-top{
+        margin-top: 3%;
+    }
 
-/* ブログタイトル */
-/* .card-title1 {
-    font-size: 45px;
-    font-family: sans-serif;
-} */
+    .comments{
+        margin-top: 3%;
+        margin-bottom: 1%;
+        border-top:  solid rgb(161, 159, 159);
+        width: 90%;
+    }
+    .comment{
+        font-size: 165%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+    .edit{
+        margin-top: 1%;
+    }
+}
 
-/* ブログ日付 */
-/* .card-title2 {
-    font-size: 20px;
-    font-family: serif;
-} */
+@media (max-width: 999px){
 
-/* ブログカテゴリ */
-/* .card-title3 {
-    font-size: 24px;
-} */
+    .post-title{
+        font-family: 'Courier New', Courier, monospace;
+        font-size:200%;
+    }
 
-/* ブログ内容 */
-/* .card-text1 {
-    font-size: 26px;
-} */
+    .card-created{
+        color:rgb(153, 152, 152);
+    }
 
-/* 編集削除ボタン */
-/* .edit {
-    position: relative;
-    top: 10px;
-} */
+    .a-top{
+        color:rgb(129, 128, 128);
+    }
+
+    .to-top{
+        margin-top: 5%;
+    }
+
+    .comments{
+        margin-top: 3%;
+        margin-bottom: 1%;
+        border-top:  solid rgb(161, 159, 159);
+        width: 90%;
+    }
+    .comment{
+        font-size: 165%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+
+    .card{
+        margin-left: -8%;
+        margin-right: -8%;
+    }
+    .edit{
+        margin-top: 2%;
+    }
+}
