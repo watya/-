@@ -31,7 +31,7 @@ class PostController extends Controller
         return view(
             'posts.index',
             [
-                'posts' => $posts,'categories'=>$categories
+                'posts' => $posts, 'categories' => $categories
             ]
         );
     }
@@ -82,11 +82,11 @@ class PostController extends Controller
         $post->tags()->attach($tag_ids);
 
         if ($request->thumbnail != null) {
-                $image = new Image;
-                $image->image = $request->thumbnail;
-                $image->post_id = $post->id;
-                $image->save();
-            };
+            $image = new Image;
+            $image->image = $request->thumbnail;
+            $image->post_id = $post->id;
+            $image->save();
+        };
 
         \DB::commit();
 
@@ -108,7 +108,7 @@ class PostController extends Controller
         $post->load('user', 'comments.user');
         $user_id = \Auth::id();
 
-        return view('posts.show', ['post' => $post , 'user_id' => $user_id,]);
+        return view('posts.show', ['post' => $post, 'user_id' => $user_id,]);
     }
 
     /**
@@ -206,16 +206,16 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        $posts = Post::where('is_published' , 1)->where(function($query)use($request){
+        $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
             $query->where('title', 'like', "%$request->search%")
-            ->orWhere('content', 'like', "%$request->search%");
+                ->orWhere('content', 'like', "%$request->search%");
         })->paginate(9);
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
         $categories = Tag::take(10)->latest()->get();
 
-        return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search,'categories' => $categories]);
+        return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search, 'categories' => $categories]);
     }
 
     public function category(int $id)
@@ -227,7 +227,7 @@ class PostController extends Controller
         return view(
             'posts.index',
             [
-                'posts' => $posts,'categories' => $categories
+                'posts' => $posts, 'categories' => $categories
             ]
         );
     }
@@ -269,11 +269,10 @@ class PostController extends Controller
             [
                 'posts' => $posts,
                 'user_id' => $user_id,
-                'categories'=>$categories,
-                'year'=>$year,
-                'month'=>$month,
+                'categories' => $categories,
+                'year' => $year,
+                'month' => $month,
             ]
         );
     }
-
 }

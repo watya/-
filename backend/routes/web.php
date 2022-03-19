@@ -39,4 +39,3 @@ Route::get('/posts/month/{year}/{month}', [PostController::class, 'month'])->nam
 Route::resource('/posts', 'App\Http\Controllers\PostController', ['except' => ['index']]);
 Route::resource('/users', 'App\Http\Controllers\UserController');
 Route::resource('/comments', 'App\Http\Controllers\CommentController')->middleware('auth'); //ログインしてる人だけ
-
