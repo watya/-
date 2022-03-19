@@ -41,7 +41,11 @@
                 style="width: 270px"
             />
             <div>
-                <button class="btn btn-outline-primary" v-if="imageData" @click="upload()">
+                <button
+                    class="btn btn-outline-primary"
+                    v-if="imageData"
+                    @click="upload()"
+                >
                     決定
                 </button>
                 <button
@@ -61,7 +65,9 @@
                 v-if="imageData"
                 style="width: 270px"
             />
-            <button @click="resetThumbnail()" class="btn btn-outline-dark">別のサムネイルを選択する</button>
+            <button @click="resetThumbnail()" class="btn btn-outline-dark">
+                別のサムネイルを選択する
+            </button>
         </div>
 
         <div class="form-group">
@@ -84,7 +90,11 @@
             </select>
         </div>
 
-        <button type="button" class="btn btn-outline-primary" @click="getContent">
+        <button
+            type="button"
+            class="btn btn-outline-primary"
+            @click="getContent"
+        >
             投稿
         </button>
         <a href="/" class="btn btn-outline-secondary">キャンセル</a>

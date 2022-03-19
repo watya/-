@@ -46,7 +46,11 @@
                 style="width: 270px"
             />
             <div>
-                <button class="btn btn-outline-primary" v-if="imageData" @click="upload()">
+                <button
+                    class="btn btn-outline-primary"
+                    v-if="imageData"
+                    @click="upload()"
+                >
                     決定
                 </button>
                 <button
@@ -96,7 +100,11 @@
                 style="width: 270px"
             />
             <div>
-                <button class="btn btn-outline-primary" v-if="imageData" @click="upload()">
+                <button
+                    class="btn btn-outline-primary"
+                    v-if="imageData"
+                    @click="upload()"
+                >
                     決定
                 </button>
                 <button
@@ -116,7 +124,9 @@
                 v-if="imageData"
                 style="width: 270px"
             />
-            <button @click="ReThumbnail()" class="btn btn-outline-dark">別のサムネイルを選択する</button>
+            <button @click="ReThumbnail()" class="btn btn-outline-dark">
+                別のサムネイルを選択する
+            </button>
         </div>
 
         <div class="form-group">
@@ -147,7 +157,9 @@
         <button type="button" class="btn btn-outline-primary" @click="update">
             更新
         </button>
-        <a :href="'/posts/' + post.id" class="btn btn-outline-secondary">キャンセル</a>
+        <a :href="'/posts/' + post.id" class="btn btn-outline-secondary"
+            >キャンセル</a
+        >
     </div>
 </template>
 
