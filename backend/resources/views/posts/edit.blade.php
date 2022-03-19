@@ -22,9 +22,10 @@
       </div>
       @endif
 
-        <div class="form-group">
-          <edit-component v-bind:post="{{ json_encode($post) }}" v-bind:tags="{{ ($post->tags) }}" v-bind:images="{{ ($post->images) }}" ></edit-component>
-        </div>
+      <div class="form-group">
+        <edit-component v-bind:post="{{ json_encode($post) }}" v-bind:tags="{{ ($post->tags) }}"
+          v-bind:images="{{ ($post->images) }}"></edit-component>
+      </div>
     </div>
   </div>
 </div>

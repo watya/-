@@ -42,16 +42,17 @@
 
                     <div class="image">
                         @if($post->images->isNotEmpty())
-                            @foreach($post->images as $image)
-                                <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
+                        @foreach($post->images as $image)
+                        <image src="{{ asset('storage/image/'.$image->image) }}" width="300">
                             @break
                             @endforeach
-                        @else
+                            @else
                             <a href="{{ route('posts.show', $post->id) }}">
                                 <image id="image"
-                                    src="https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-760x460.png" width="300">
+                                    src="https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-760x460.png"
+                                    width="300">
                             </a>
-                        @endif
+                            @endif
                     </div>
                     <div class="card-title">
                         @foreach($post->tags as $tag)
@@ -80,6 +81,3 @@
 </div>
 
 @endsection
-
-
-

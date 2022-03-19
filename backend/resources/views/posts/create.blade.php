@@ -22,9 +22,9 @@
       </div>
       @endif
 
-        <div class="form-group">
-          <create-component></create-component>
-        </div>
+      <div class="form-group">
+        <create-component></create-component>
+      </div>
     </div>
   </div>
 </div>
