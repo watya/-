@@ -84,6 +84,15 @@
     .to-top{
         margin-top: 1%;
     }
+
+    .a-top{
+        color:rgb(129, 128, 128);
+    }
+
+    .a-tag{
+        color:rgb(5, 89, 158);
+    }
+
 }
 
 
@@ -146,12 +155,13 @@
     .pagination{
         margin-left: 5%;
     }
+
+    .a-top{
+        color:rgb(129, 128, 128);
+    }
+
+    .a-tag{
+        color:rgb(5, 89, 158);
+    }
 }
 
-.a-top{
-    color:rgb(129, 128, 128);
-}
-
-.a-tag{
-    color:rgb(5, 89, 158);
-}
