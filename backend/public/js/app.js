@@ -42472,6 +42472,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -42623,6 +42625,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! codemirror/lib/codemirror.css */ "./node_modules/codemirror/lib/codemirror.css");
 /* harmony import */ var _toast_ui_editor_dist_toastui_editor_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @toast-ui/editor/dist/toastui-editor.css */ "./node_modules/@toast-ui/editor/dist/toastui-editor.css");
 /* harmony import */ var _toast_ui_vue_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @toast-ui/vue-editor */ "./node_modules/@toast-ui/vue-editor/dist/esm/index.js");
+//
+//
+//
+//
 //
 //
 //
@@ -93244,35 +93250,37 @@ var render = function () {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.imageData
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-primary",
-                on: {
-                  click: function ($event) {
-                    return _vm.upload()
+        _c("div", [
+          _vm.imageData
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary",
+                  on: {
+                    click: function ($event) {
+                      return _vm.upload()
+                    },
                   },
                 },
-              },
-              [_vm._v("\n            決定\n        ")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.imageData
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-danger",
-                on: {
-                  click: function ($event) {
-                    return _vm.resetFile()
+                [_vm._v("\n                決定\n            ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.imageData
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger",
+                  on: {
+                    click: function ($event) {
+                      return _vm.resetFile()
+                    },
                   },
                 },
-              },
-              [_vm._v("\n            削除\n        ")]
-            )
-          : _vm._e(),
+                [_vm._v("\n                削除\n            ")]
+              )
+            : _vm._e(),
+        ]),
       ]
     ),
     _vm._v(" "),
@@ -93302,6 +93310,7 @@ var render = function () {
         _c(
           "button",
           {
+            staticClass: "btn btn-outline-dark",
             on: {
               click: function ($event) {
                 return _vm.resetThumbnail()
@@ -93523,35 +93532,37 @@ var render = function () {
                 })
               : _vm._e(),
             _vm._v(" "),
-            _vm.imageData
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    on: {
-                      click: function ($event) {
-                        return _vm.upload()
+            _c("div", [
+              _vm.imageData
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-primary",
+                      on: {
+                        click: function ($event) {
+                          return _vm.upload()
+                        },
                       },
                     },
-                  },
-                  [_vm._v("\n            決定\n        ")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.imageData
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    on: {
-                      click: function ($event) {
-                        return _vm.resetFile()
+                    [_vm._v("\n                決定\n            ")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.imageData
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      on: {
+                        click: function ($event) {
+                          return _vm.resetFile()
+                        },
                       },
                     },
-                  },
-                  [_vm._v("\n            削除\n        ")]
-                )
-              : _vm._e(),
+                    [_vm._v("\n                削除\n            ")]
+                  )
+                : _vm._e(),
+            ]),
           ]
         )
       : _c(
@@ -93652,35 +93663,37 @@ var render = function () {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.imageData
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function ($event) {
-                    return _vm.upload()
+        _c("div", [
+          _vm.imageData
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary",
+                  on: {
+                    click: function ($event) {
+                      return _vm.upload()
+                    },
                   },
                 },
-              },
-              [_vm._v("\n            決定\n        ")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.imageData
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-danger",
-                on: {
-                  click: function ($event) {
-                    return _vm.resetFile()
+                [_vm._v("\n                決定\n            ")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.imageData
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger",
+                  on: {
+                    click: function ($event) {
+                      return _vm.resetFile()
+                    },
                   },
                 },
-              },
-              [_vm._v("\n            削除\n        ")]
-            )
-          : _vm._e(),
+                [_vm._v("\n                削除\n            ")]
+              )
+            : _vm._e(),
+        ]),
       ]
     ),
     _vm._v(" "),
@@ -93710,6 +93723,7 @@ var render = function () {
         _c(
           "button",
           {
+            staticClass: "btn btn-outline-dark",
             on: {
               click: function ($event) {
                 return _vm.ReThumbnail()

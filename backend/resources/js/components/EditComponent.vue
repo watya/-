@@ -45,16 +45,18 @@
                 v-if="imageData"
                 style="width: 270px"
             />
-            <button class="btn btn-primary" v-if="imageData" @click="upload()">
-                決定
-            </button>
-            <button
-                class="btn btn-danger"
-                v-if="imageData"
-                @click="resetFile()"
-            >
-                削除
-            </button>
+            <div>
+                <button class="btn btn-outline-primary" v-if="imageData" @click="upload()">
+                    決定
+                </button>
+                <button
+                    class="btn btn-outline-danger"
+                    v-if="imageData"
+                    @click="resetFile()"
+                >
+                    削除
+                </button>
+            </div>
         </div>
 
         <div v-else v-show="show" class="form-group">
@@ -93,16 +95,18 @@
                 v-if="imageData"
                 style="width: 270px"
             />
-            <button class="btn btn-primary" v-if="imageData" @click="upload()">
-                決定
-            </button>
-            <button
-                class="btn btn-outline-danger"
-                v-if="imageData"
-                @click="resetFile()"
-            >
-                削除
-            </button>
+            <div>
+                <button class="btn btn-outline-primary" v-if="imageData" @click="upload()">
+                    決定
+                </button>
+                <button
+                    class="btn btn-outline-danger"
+                    v-if="imageData"
+                    @click="resetFile()"
+                >
+                    削除
+                </button>
+            </div>
         </div>
 
         <div v-show="hide" class="form-group" id="file-preview">
@@ -112,7 +116,7 @@
                 v-if="imageData"
                 style="width: 270px"
             />
-            <button @click="ReThumbnail()">別のサムネイルを選択する</button>
+            <button @click="ReThumbnail()" class="btn btn-outline-dark">別のサムネイルを選択する</button>
         </div>
 
         <div class="form-group">
