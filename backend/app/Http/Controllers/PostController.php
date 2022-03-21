@@ -8,19 +8,24 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Image;
 use Log;
-use Response;
+use Illuminate\Http\Response;
 
 
 class PostController extends Controller
 {
 
+    /** @var Post $Post */
     private $Post;
-    private $Image;
-    private $Tag;
-    /**
-     *コンストラクタ
-     */
 
+    /** @var Image $Image */
+    private $Image;
+
+    /** @var Tag $Tag */
+    private $Tag;
+
+    /**
+     * コンストラクタ
+     */
     public function __construct()
     {
         $this->Post = new Post();
@@ -31,10 +36,11 @@ class PostController extends Controller
     /**
      * ブログトップページ
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     *
      */
-
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $posts = $this->Post->findPublishPost();
         $categories = $this->Tag->findCategory();
@@ -61,7 +67,8 @@ class PostController extends Controller
     /**
      * ブログ投稿
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     * @param int[] $tag_ids
      * @return \Illuminate\Http\Response
      */
     public function store(PostRequest $request)
@@ -83,7 +90,7 @@ class PostController extends Controller
 
         $post = $this->Post->savePost($request, $tag_ids);
 
-        if ($request->thumbnail != null) {
+        if ($request->thumbnail !== null) {
             $this->Image->saveImage($request, $post);
         };
 
@@ -128,7 +135,9 @@ class PostController extends Controller
 
         return view(
             'posts.edit',
-            ['post' => $post]
+            [
+                'post' => $post
+            ]
         );
     }
 
@@ -137,6 +146,7 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     * @param int[] $tag_ids
      * @return \Illuminate\Http\Response
      */
 
@@ -148,7 +158,7 @@ class PostController extends Controller
 
         $post->tags()->detach();
 
-        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
+        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);
 
         $tags = [];
         foreach ($match[1] as $tag) {
@@ -201,6 +211,8 @@ class PostController extends Controller
 
     /**
      * ブログ検索
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function search(Request $request)
     {
@@ -223,6 +235,9 @@ class PostController extends Controller
 
     /**
      * カテゴリ一覧
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function category(int $id)
     {
@@ -240,8 +255,11 @@ class PostController extends Controller
 
     /**
      * 下書き一覧
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function publish(Request $request)
+    public function archive(Request $request)
     {
         $posts = $this->Post->findArchivePost();
         $user_id = \Auth::id();
@@ -257,6 +275,8 @@ class PostController extends Controller
 
     /**
      * 月別一覧
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function month(Request $request)
     {

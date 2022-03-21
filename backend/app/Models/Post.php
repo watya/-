@@ -53,17 +53,17 @@ class Post extends Model
         return Tag::take(10)->latest()->get();
     }
 
-    public function savePost($request, $tag_ids)
+    public function savePost($request, array $tag_ids)
     {
         $post = new Post();
-        $post->user_id = \Auth::id();
-        $post->content = $request->content;
-        $post->title = $request->title;
-        $post->is_published = $request->is_published;
+        $this->user_id = \Auth::id();
+        $this->content = $request->content;
+        $this->title = $request->title;
+        $this->is_published = $request->is_published;
 
-        $post->save();
-        $post->tags()->attach($tag_ids);
-        return $post;
+        $this->save();
+        $this->tags()->attach($tag_ids);
+        return $this;
     }
 
     public function findPostById(int $id)
@@ -71,7 +71,7 @@ class Post extends Model
         return Post::find($id);
     }
 
-    public function updatePost($request, $tag_ids): void
+    public function updatePost($request, array $tag_ids): void
     {
         $this->fill([
             'title' => $request->title,

@@ -20,12 +20,12 @@ class Tag extends Model
         return $this->belongsToMany(Post::class)->withTimestamps();
     }
 
-    public function findTagOrCreate($tag)
+    public function findTagOrCreate(string $tag)
     {
         return Tag::firstOrCreate(['tag_name' => $tag]);
     }
 
-    public function findCategoryById($id)
+    public function findCategoryById(int $id)
     {
         return Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
     }
