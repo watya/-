@@ -104,7 +104,8 @@ class Post extends Model
         return $posts;
     }
 
-    public function findPostByCreated(string $start, string $end){
+    public function findPostByCreated(string $start, string $end)
+    {
         $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
         return $posts;
