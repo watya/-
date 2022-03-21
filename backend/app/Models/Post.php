@@ -53,7 +53,7 @@ class Post extends Model
         return Tag::take(10)->latest()->get();
     }
 
-    public function savePost($request, int $tag_ids)
+    public function savePost($request, $tag_ids)
     {
         $post = new Post();
         $post->user_id = \Auth::id();
@@ -71,7 +71,7 @@ class Post extends Model
         return Post::find($id);
     }
 
-    public function updatePost($request, int $tag_ids): void
+    public function updatePost($request, $tag_ids): void
     {
         $this->fill([
             'title' => $request->title,
