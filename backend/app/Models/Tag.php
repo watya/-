@@ -19,4 +19,19 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class)->withTimestamps();
     }
+
+    public function findTagOrCreate($tag)
+    {
+        return Tag::firstOrCreate(['tag_name' => $tag]);
+    }
+
+    public function findCategoryById($id)
+    {
+        return Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
+    }
+
+    public function findCategory()
+    {
+        return Tag::take(10)->latest()->get();
+    }
 }

@@ -17,7 +17,13 @@ class Image extends Model
 
     public function post()
     {
-        //return $this->belongsTo('App\Models\Post')->withTimestamps();
         return $this->belongsTo(Post::class);
+    }
+    public function saveImage($request, $post): void
+    {
+        $image = new Image;
+        $image->image = $request->thumbnail;
+        $image->post_id = $post->id;
+        $image->save();
     }
 }
