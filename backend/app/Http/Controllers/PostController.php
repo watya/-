@@ -20,6 +20,28 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
+        // DBから情報を取得して変数に値を入れている部分はモデルにメソッド作って返り値をここで変数に入れる
+        /**
+         * $post = new Post();
+         * $category = new Tag();
+         *
+         * $posts = $post->findPublishPost();
+         *
+         * Postモデルに書くメソッド
+         * public function findPublishPost()
+         * {
+         *    $posts = Post::where('is_published', 1)->latest()->paginate(9);
+         *    $posts->load('user', 'tags', 'images');
+         *    return $posts;
+         * }
+         *
+         * $categories = $category->findCategory();
+         * Tagモデルに書く
+         * public function findCategory()
+         * {
+         *    return Tag::take(10)->latest()->get();
+         * }
+         */
         $posts = Post::where('is_published', 1)->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
         $categories = Tag::take(10)->latest()->get();
@@ -30,6 +52,14 @@ class PostController extends Controller
                 'posts' => $posts, 'categories' => $categories
             ]
         );
+        // 改行した方がいいかも
+        // return view(
+        //     'posts.index',
+        //     [
+        //         'posts' => $posts,
+        //         'categories' => $categories
+        //     ]
+        // );
     }
 
     /**
@@ -50,6 +80,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        // 最初にタグを作る→そのあとポストをセーブする流れに
         \DB::beginTransaction();
 
         $post = new Post;
@@ -63,6 +94,18 @@ class PostController extends Controller
         $tags = [];
 
         foreach ($match[1] as $tag) {
+            // ここもモデルに書くので
+            /**
+             * ここで書くこと
+             * $tag = new Tag();
+             * $found = $tag->findTagOrCreate($tag);
+             *
+             * Tagモデル
+             * public function findTagOrCreate(array $tag)
+             * {
+             *    return Tag::firstOrCreate(['tag_name' => $tag])
+             * }
+             */
             $found = Tag::firstOrCreate(['tag_name' => $tag]); //タグが既に存在していたら作らない。存在してなかったら作る。
 
             array_push($tags, $found);
@@ -74,6 +117,23 @@ class PostController extends Controller
             array_push($tag_ids, $tag['id']);
         }
 
+        /**
+         * Postモデルでかくこと
+         * public function savePost(): void
+         * {
+         *   $post = new Post;
+         *   $post->user_id = \Auth::id();
+         *   $post->content = $request->content;
+         *   $post->title = $request->title;
+         *   $post->is_published = $request->is_published;
+         *
+         *   $post->save();
+         *   $post->tags()->attach($tag_ids);
+         * }
+         *
+         * ここのコントローラでは
+         * $post->savePost();
+         */
         $post->save();
         $post->tags()->attach($tag_ids);
 
@@ -86,6 +146,7 @@ class PostController extends Controller
 
         \DB::commit();
 
+        // === 厳密比較すること
         if ($post->is_published == 1) {
             \Session::flash('err_msg', 'ブログを投稿しました');
         } else {
@@ -115,6 +176,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        // ここもモデルに書く
+        /**
+         * public finction findPostById()
+         */
         $post = Post::find($id);
 
         return view('posts.edit', ['post' => $post]);
@@ -130,6 +195,7 @@ class PostController extends Controller
 
     public function update(PostRequest $request, int $id)
     {
+        // storeと同じように切り分ける
         \DB::beginTransaction();
 
         $post = Post::find($id);
@@ -191,6 +257,10 @@ class PostController extends Controller
         }
 
         try {
+            // ここもモデルで書く
+            /**
+             * public function destroyPost(): void
+             */
             Post::destroy($id);
         } catch (\Throwable $e) {
             abort(500);
@@ -202,6 +272,10 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
+        /**
+         * モデルに書いて返り値を変数に入れる
+         * public function findPostByTitleOrContent(): Post
+         */
         $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
             $query->where('title', 'like', "%$request->search%")
                 ->orWhere('content', 'like', "%$request->search%");
@@ -209,15 +283,32 @@ class PostController extends Controller
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
+        /**
+         * public function findCategory(): Category
+         */
         $categories = Tag::take(10)->latest()->get();
 
         return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search, 'categories' => $categories]);
+        // 改行しよう
+        // return view('posts.index', [
+        //     'posts' => $posts,
+        //     'search_result' => $search_result,
+        //     'search_query' => $request->search,
+        //     'categories' => $categories
+        // ]);
     }
 
     public function category(int $id)
     {
+        /**
+         * Tagモデルに書く
+         * public function findCategoryById();
+         */
         $posts = Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
 
+        /**
+         * findCategory()
+         */
         $categories = Tag::take(10)->latest()->get();
 
         return view(
@@ -226,14 +317,26 @@ class PostController extends Controller
                 'posts' => $posts, 'categories' => $categories
             ]
         );
+        // return view(
+        //     'posts.index',
+        //     [
+        //         'posts' => $posts,
+        //         'categories' => $categories
+        //     ]
+        // );
     }
 
     public function publish(Request $request)
     {
+        /**
+         * public function findArchivePost();
+         */
         $posts = Post::where('is_published', 0)->latest()->paginate(5);
         $posts->load('user', 'tags', 'images');
 
+        // 使ってない
         $id = $request->post_id;
+        // 使ってない
         $image = Image::find($id);
         $user_id = \Auth::id();
 
@@ -253,6 +356,10 @@ class PostController extends Controller
 
         $start = "$year-$month-01";
         $end = "$year-$month-31";
+        /**
+         * モデル書く
+         * public finction findPostByCreated(string $start, string $end);
+         */
         $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
 
