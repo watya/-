@@ -13,7 +13,7 @@ use Response;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * ブログトップページ
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,10 +22,6 @@ class PostController extends Controller
     {
         $posts = Post::where('is_published', 1)->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
-
-        // $id = $request->post_id;
-        // $image = Image::find($id);
-
         $categories = Tag::take(10)->latest()->get();
 
         return view(
@@ -37,7 +33,7 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * ブログ作成画面
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,7 +43,7 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * ブログ投稿
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
