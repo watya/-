@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Image;
 use Log;
-use Illuminate\Http\Response;
 
 
 class PostController extends Controller
@@ -37,10 +38,10 @@ class PostController extends Controller
      * ブログトップページ
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      *
      */
-    public function index(Request $request): Response
+    public function index(Request $request): View
     {
         $posts = $this->Post->findPublishPost();
         $categories = $this->Tag->findCategory();
@@ -57,9 +58,9 @@ class PostController extends Controller
     /**
      * ブログ作成画面
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function create()
+    public function create(): View
     {
         return view('posts.create', []);
     }
@@ -109,7 +110,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
         $post->load('user', 'comments.user');
         $user_id = \Auth::id();
