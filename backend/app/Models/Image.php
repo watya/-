@@ -19,11 +19,17 @@ class Image extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
     public function saveImage($request, $post): void
     {
         $image = new Image;
         $image->image = $request->thumbnail;
         $image->post_id = $post->id;
         $image->save();
+    }
+
+    public static function destroyImage(int $id): void
+    {
+        Image::destroy($id);
     }
 }

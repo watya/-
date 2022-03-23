@@ -10,6 +10,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Image;
 use Log;
+use Illuminate\Http\RedirectResponse;
 
 
 class PostController extends Controller
@@ -39,7 +40,6 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\View\View;
-     *
      */
     public function index(Request $request): View
     {
@@ -50,7 +50,7 @@ class PostController extends Controller
             'posts.index',
             [
                 'posts' => $posts,
-                'categories' => $categories
+                'categories' => $categories,
             ]
         );
     }
@@ -70,9 +70,9 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param int[] $tag_ids
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request): void
     {
         \DB::beginTransaction();
 
@@ -108,7 +108,7 @@ class PostController extends Controller
      * ブログ詳細画面
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
     public function show(Post $post): View
     {
@@ -128,9 +128,9 @@ class PostController extends Controller
      * ブログ編集画面
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function edit(int $id)
+    public function edit(int $id): View
     {
         $post = $this->Post->findPostById($id);
 
@@ -148,10 +148,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @param int[] $tag_ids
-     * @return \Illuminate\Http\Response
+     * @return void
      */
 
-    public function update(PostRequest $request, int $id)
+    public function update(PostRequest $request, int $id): void
     {
         \DB::beginTransaction();
 
@@ -191,7 +191,7 @@ class PostController extends Controller
      * ブログ削除
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(int $id)
     {
@@ -213,9 +213,9 @@ class PostController extends Controller
     /**
      * ブログ検索
      * @param  Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function search(Request $request)
+    public function search(Request $request): View
     {
         $posts = $this->Post->findPostByTitleOrContent($request);
 
@@ -236,11 +236,11 @@ class PostController extends Controller
 
     /**
      * カテゴリ一覧
-     * 
+     *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function category(int $id)
+    public function category(int $id): View
     {
         $posts = $this->Tag->findCategoryById($id);
         $categories = $this->Tag->findCategory();
@@ -258,9 +258,9 @@ class PostController extends Controller
      * 下書き一覧
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function archive(Request $request)
+    public function archive(Request $request): View
     {
         $posts = $this->Post->findArchivePost();
         $user_id = \Auth::id();
@@ -277,9 +277,9 @@ class PostController extends Controller
     /**
      * 月別一覧
      * @param  Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function month(Request $request)
+    public function month(Request $request): View
     {
         $year = $request->year;
         $month = $request->month;

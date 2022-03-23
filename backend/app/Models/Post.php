@@ -41,6 +41,13 @@ class Post extends Model
         return $this->hasMAny(Image::class);
     }
 
+    /**
+     * 公開記事取得
+     *
+     * @param  void
+     * @return string[] $posts
+     *
+     */
     public function findPublishPost()
     {
         $posts = Post::where('is_published', 1)->latest()->paginate(9);
@@ -48,6 +55,12 @@ class Post extends Model
         return $posts;
     }
 
+    /**
+     * カテゴリ取得
+     *
+     * @param  void
+     * @return \Illuminate\View\View;
+     */
     public function findCategory()
     {
         return Tag::take(10)->latest()->get();

@@ -1,76 +1,74 @@
 @charset "utf-8";
 
-@media (min-width: 1000px){
-
-    .post-title{
-        font-family: 'Courier New', Courier, monospace;
-        font-size:200%;
+@media (min-width: 1000px) {
+    .post-title {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 200%;
     }
 
-    .card-created{
-        color:rgb(153, 152, 152);
+    .card-created {
+        color: rgb(153, 152, 152);
     }
 
-    .a-top{
-        color:rgb(129, 128, 128);
+    .a-top {
+        color: rgb(129, 128, 128);
     }
 
-    .to-top{
+    .to-top {
         margin-top: 3%;
     }
 
-    .comments{
+    .comments {
         margin-top: 3%;
         margin-bottom: 1%;
-        border-top:  solid rgb(161, 159, 159);
+        border-top: solid rgb(161, 159, 159);
         width: 90%;
     }
-    .comment{
+    .comment {
         font-size: 165%;
         margin-top: 1%;
         margin-bottom: 1%;
     }
-    .edit{
+    .edit {
         margin-top: 1%;
     }
 }
 
-@media (max-width: 999px){
-
-    .post-title{
-        font-family: 'Courier New', Courier, monospace;
-        font-size:200%;
+@media (max-width: 999px) {
+    .post-title {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 200%;
     }
 
-    .card-created{
-        color:rgb(153, 152, 152);
+    .card-created {
+        color: rgb(153, 152, 152);
     }
 
-    .a-top{
-        color:rgb(129, 128, 128);
+    .a-top {
+        color: rgb(129, 128, 128);
     }
 
-    .to-top{
+    .to-top {
         margin-top: 5%;
     }
 
-    .comments{
+    .comments {
         margin-top: 3%;
         margin-bottom: 1%;
-        border-top:  solid rgb(161, 159, 159);
+        border-top: solid rgb(161, 159, 159);
         width: 90%;
     }
-    .comment{
+    .comment {
         font-size: 165%;
         margin-top: 1%;
         margin-bottom: 1%;
     }
 
-    .card{
+    .card {
         margin-left: -8%;
         margin-right: -8%;
     }
-    .edit{
+    .edit {
         margin-top: 2%;
     }
 }
