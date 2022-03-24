@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Image;
@@ -46,10 +48,9 @@ class Post extends Model
      * 公開記事取得
      *
      * @param  void
-     * @return string[] $posts
-     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPublishPost()
+    public function findPublishPost(): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 1)->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
@@ -60,9 +61,9 @@ class Post extends Model
      * カテゴリ取得
      *
      * @param  void
-     * @return string[] Tag
+     * @return Illuminate\Database\Eloquent\Collection
      */
-    public function findCategory()
+    public function findCategory(): Collection
     {
         return Tag::take(10)->latest()->get();
     }
@@ -72,9 +73,9 @@ class Post extends Model
      *
      * @param  Request  $request
      * @param  int[] $tag_ids
-     * @return $this
+     * @return App\Models\Post
      */
-    public function savePost($request, array $tag_ids)
+    public function savePost($request, array $tag_ids): Post
     {
         $post = new Post();
         $this->user_id = \Auth::id();

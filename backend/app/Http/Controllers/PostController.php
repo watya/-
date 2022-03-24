@@ -90,11 +90,11 @@ class PostController extends Controller
         }
 
         $post = $this->Post->savePost($request, $tag_ids);
+        var_dump($post);
 
         if ($request->thumbnail !== null) {
             $this->Image->saveImage($request, $post);
         };
-
         \DB::commit();
 
         if ((int)$post->is_published === 1) {
