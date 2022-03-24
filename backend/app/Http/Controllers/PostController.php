@@ -98,7 +98,7 @@ class PostController extends Controller
         \DB::commit();
 
         if ((int)$post->is_published === 1) {
-            \Session::flash('err_msg', 'ブログを投稿しました');
+            \Session::flash('err_msg', 'ブログを投稿しました',);
         } else {
             \Session::flash('err_msg', 'ブログを下書きに保存しました');
         }
@@ -193,7 +193,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
         if (empty($id)) {
             \Session::flash('err_msg', 'データがありません');

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Image;
+use Illuminate\Http\Request;
 
 class Post extends Model
 {
@@ -59,13 +60,20 @@ class Post extends Model
      * カテゴリ取得
      *
      * @param  void
-     * @return \Illuminate\View\View;
+     * @return string[] Tag
      */
     public function findCategory()
     {
         return Tag::take(10)->latest()->get();
     }
 
+    /**
+     * ブログ保存
+     *
+     * @param  Request  $request
+     * @param  int[] $tag_ids
+     * @return $this
+     */
     public function savePost($request, array $tag_ids)
     {
         $post = new Post();
@@ -79,11 +87,24 @@ class Post extends Model
         return $this;
     }
 
+    /**
+     * カテゴリ取得
+     *
+     * @param  int $id
+     * @return $post
+     */
     public function findPostById(int $id)
     {
         return Post::find($id);
     }
 
+    /**
+     * カテゴリ取得
+     *
+     * @param  Request $request
+     * @param  int[] $tag_ids
+     * @return void
+     */
     public function updatePost($request, array $tag_ids): void
     {
         $this->fill([
@@ -96,11 +117,23 @@ class Post extends Model
         $this->tags()->attach($tag_ids);
     }
 
+    /**
+     * カテゴリ取得
+     *
+     * @param  int $id
+     * @return void
+     */
     public static function destroyPost(int $id): void
     {
         Post::destroy($id);
     }
 
+    /**
+     * カテゴリ取得
+     *
+     * @param  Request $request
+     * @return $posts
+     */
     public function findPostByTitleOrContent($request)
     {
         return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
@@ -110,6 +143,12 @@ class Post extends Model
     }
 
 
+    /**
+     * カテゴリ取得
+     *
+     * @param  void
+     * @return $posts
+     */
     public function findArchivePost()
     {
         $posts = Post::where('is_published', 0)->latest()->paginate(5);
@@ -117,6 +156,13 @@ class Post extends Model
         return $posts;
     }
 
+    /**
+     * カテゴリ取得
+     *
+     * @param  string $start
+     * @param  string $end
+     * @return $posts
+     */
     public function findPostByCreated(string $start, string $end)
     {
         $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
