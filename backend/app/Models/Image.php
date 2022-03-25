@@ -20,6 +20,13 @@ class Image extends Model
         return $this->belongsTo(Post::class);
     }
 
+    /**
+     * ブログ更新
+     *
+     * @param  Request $request
+     * @param  int[] $tag_ids
+     * @return void
+     */
     public function saveImage($request, $post): void
     {
         $image = new Image;

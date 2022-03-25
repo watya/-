@@ -71,9 +71,9 @@ class Post extends Model
     /**
      * ブログ保存
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  int[] $tag_ids
-     * @return App\Models\Post
+     * @return \App\Models\Post
      */
     public function savePost($request, array $tag_ids): Post
     {
@@ -92,7 +92,7 @@ class Post extends Model
      * 編集ブログ取得
      *
      * @param  int $id
-     * @return App\Models\Post
+     * @return \App\Models\Post
      */
     public function findPostById(int $id): Post
     {
@@ -102,7 +102,7 @@ class Post extends Model
     /**
      * ブログ更新
      *
-     * @param  Request $request
+     * @param  \Illuminate\Http\Request $request
      * @param  int[] $tag_ids
      * @return void
      */
@@ -132,7 +132,7 @@ class Post extends Model
     /**
      * ブログ検索(タイトルor本文)
      *
-     * @param  Request $request
+     * @param  \Illuminate\Http\Request $request
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
     public function findPostByTitleOrContent($request): LengthAwarePaginator
