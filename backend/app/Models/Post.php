@@ -58,17 +58,6 @@ class Post extends Model
     }
 
     /**
-     * カテゴリ取得
-     *
-     * @param  void
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function findCategory(): Collection
-    {
-        return Tag::take(10)->latest()->get();
-    }
-
-    /**
      * ブログ保存
      *
      * @param  string[] $attributes
