@@ -58,17 +58,6 @@ class Post extends Model
     }
 
     /**
-     * カテゴリ取得
-     *
-     * @param  void
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function findCategory(): Collection
-    {
-        return Tag::take(10)->latest()->get();
-    }
-
-    /**
      * ブログ保存
      *
      * @param  string[] $attributes
@@ -136,7 +125,7 @@ class Post extends Model
      * @param  string[] $request
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByTitleOrContent(array $request)
+    public function findPostByTitleOrContent(array $request):LengthAwarePaginator
     {
         return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
             $query->where('title', 'like', "%$request[search]%")
