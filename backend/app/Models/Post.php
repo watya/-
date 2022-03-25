@@ -66,7 +66,6 @@ class Post extends Model
      */
     public function savePost(array $attributes, array $tag_ids): Post
     {
-        $post = new Post();
         $this->user_id = \Auth::id();
         $this->content = $attributes['content'];
         $this->title = $attributes['title'];
