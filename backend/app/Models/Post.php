@@ -133,17 +133,16 @@ class Post extends Model
     /**
      * ブログ検索(タイトルor本文)
      *
-     * @param  string[] $search
+     * @param  string[] $request
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByTitleOrContent($search): LengthAwarePaginator
+    public function findPostByTitleOrContent(array $request)
     {
-        return $posts = Post::where('is_published', 1)->where(function ($query) use ($search) {
-            $query->where('title', 'like', "%$search%")
-                ->orWhere('content', 'like', "%$search%");
+        return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
+            $query->where('title', 'like', "%$request[search]%")
+                ->orWhere('content', 'like', "%$request[search]%");
         })->paginate(9);
     }
-
 
     /**
      * 非公開ブログ取得
