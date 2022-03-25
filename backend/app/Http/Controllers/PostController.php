@@ -171,6 +171,8 @@ class PostController extends Controller
             array_push($tag_ids, $tag['id']);
         }
 
+        // $attributes = $request->only(['content', 'title', 'is_published','thumbnail']);
+        // $post = $this->Post->updatePost($attributes, $tag_ids);
         $post->updatePost($request, $tag_ids);
 
         if ($request->thumbnail != null) {
@@ -179,7 +181,7 @@ class PostController extends Controller
 
         \DB::commit();
 
-        if ((int)$post->is_published === 1) {
+        if ((int)$attributes['is_published'] === 1) {
             \Session::flash('err_msg', 'ブログを更新しました');
         } else {
             \Session::flash('err_msg', 'ブログを下書きに保存しました');
@@ -216,7 +218,9 @@ class PostController extends Controller
      */
     public function search(Request $request): View
     {
-        $posts = $this->Post->findPostByTitleOrContent($request);
+        $search = $request->search;
+        $posts = $this->Post->findPostByTitleOrContent($search);
+        // $posts = $this->Post->findPostByTitleOrContent($request);
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 

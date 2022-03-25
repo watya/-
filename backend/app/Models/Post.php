@@ -71,17 +71,17 @@ class Post extends Model
     /**
      * ブログ保存
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  string[] $attributes
      * @param  int[] $tag_ids
      * @return \App\Models\Post
      */
-    public function savePost($request, array $tag_ids): Post
+    public function savePost(array $attributes, array $tag_ids): Post
     {
         $post = new Post();
         $this->user_id = \Auth::id();
-        $this->content = $request->content;
-        $this->title = $request->title;
-        $this->is_published = $request->is_published;
+        $this->content = $attributes['content'];
+        $this->title = $attributes['title'];
+        $this->is_published = $attributes['is_published'];
 
         $this->save();
         $this->tags()->attach($tag_ids);
@@ -102,16 +102,17 @@ class Post extends Model
     /**
      * ブログ更新
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  string[] $attributes
      * @param  int[] $tag_ids
      * @return void
      */
-    public function updatePost($request, array $tag_ids): void
+    public function updatePost(array $attributes, array $tag_ids): void
     {
         $this->fill([
-            'title' => $request->title,
-            'content' => $request->content,
-            'is_published' => $request->is_published,
+            'user_id' => \Auth::id(),
+            'title' => $attributes['title'],
+            'content' => $attributes['content'],
+            'is_published' => $attributes['is_published'],
         ]);
 
         $this->save();
@@ -132,14 +133,14 @@ class Post extends Model
     /**
      * ブログ検索(タイトルor本文)
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  string[] $search
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByTitleOrContent($request): LengthAwarePaginator
+    public function findPostByTitleOrContent($search): LengthAwarePaginator
     {
-        return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
-            $query->where('title', 'like', "%$request->search%")
-                ->orWhere('content', 'like', "%$request->search%");
+        return $posts = Post::where('is_published', 1)->where(function ($query) use ($search) {
+            $query->where('title', 'like', "%$search%")
+                ->orWhere('content', 'like', "%$search%");
         })->paginate(9);
     }
 
