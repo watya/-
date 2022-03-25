@@ -94,6 +94,7 @@ class PostController extends Controller
         if ($request->thumbnail !== null) {
             $this->Image->saveImage($request, $post);
         };
+
         \DB::commit();
 
         if ((int)$post->is_published === 1) {
