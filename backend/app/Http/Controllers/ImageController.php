@@ -13,7 +13,7 @@ class ImageController extends Controller
     /**
      *ファイルアップロード
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return string
      *
      */
