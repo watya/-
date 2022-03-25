@@ -219,9 +219,7 @@ class PostController extends Controller
      */
     public function search(Request $request): View
     {
-
-        $search = $request->search;
-        $posts = $this->Post->findPostByTitleOrContent($search);
+        $posts = $this->Post->findPostByTitleOrContent($request->only('search'));
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
