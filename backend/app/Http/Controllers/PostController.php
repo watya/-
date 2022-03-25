@@ -89,11 +89,11 @@ class PostController extends Controller
             array_push($tag_ids, $tag['id']);
         }
 
-        $attributes = $request->only(['content', 'title', 'is_published']);
+        $attributes = $request->only(['content', 'title', 'is_published','thumbnail']);
         $post = $this->Post->savePost($attributes, $tag_ids);
 
         if ($request->thumbnail !== null) {
-            $this->Image->saveImage($request, $post);
+            $this->Image->saveImage($attributes, $post);
         };
 
         \DB::commit();
