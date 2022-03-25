@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class Image extends Model
 {
@@ -20,10 +21,17 @@ class Image extends Model
         return $this->belongsTo(Post::class);
     }
 
-    public function saveImage($request, $post): void
+    /**
+     * ファイル保存
+     *
+     * @param  string[] $attributes
+     * @param  \App\Models\Post $post
+     * @return void
+     */
+    public function saveImage(array $attributes, $post): void
     {
         $image = new Image;
-        $image->image = $request->thumbnail;
+        $image->image = $attributes['thumbnail'];
         $image->post_id = $post->id;
         $image->save();
     }
