@@ -124,7 +124,7 @@ class Post extends Model
      * @param  string[] $request
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByTitleOrContent(array $request):LengthAwarePaginator
+    public function findPostByTitleOrContent(array $request): LengthAwarePaginator
     {
         return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
             $query->where('title', 'like', "%$request[search]%")
