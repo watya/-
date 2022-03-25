@@ -89,7 +89,7 @@ class PostController extends Controller
             array_push($tag_ids, $tag['id']);
         }
 
-        $attributes = $request->only(['content', 'title', 'is_published','thumbnail']);
+        $attributes = $request->only(['content', 'title', 'is_published', 'thumbnail']);
         $post = $this->Post->savePost($attributes, $tag_ids);
 
         if ($request->thumbnail !== null) {
@@ -173,7 +173,7 @@ class PostController extends Controller
             array_push($tag_ids, $tag['id']);
         }
 
-        $attributes = $request->only(['content', 'title', 'is_published','thumbnail']);
+        $attributes = $request->only(['content', 'title', 'is_published', 'thumbnail']);
         $post = $this->Post->updatePost($attributes, $tag_ids);
 
         if ($request->thumbnail !== null) {
@@ -182,7 +182,7 @@ class PostController extends Controller
 
         \DB::commit();
 
-        if ((int)$post->is_published === 1) {
+        if ((int)$attributes['is_published'] === 1) {
             \Session::flash('err_msg', 'ブログを更新しました');
         } else {
             \Session::flash('err_msg', 'ブログを下書きに保存しました');
@@ -195,7 +195,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
         if (empty($id)) {
             \Session::flash('err_msg', 'データがありません');
