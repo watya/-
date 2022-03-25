@@ -39,7 +39,7 @@ class PostController extends Controller
      * ブログトップページ
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\View\View;
+     * @return \Illuminate\View\View
      */
     public function index(Request $request): View
     {
@@ -58,7 +58,7 @@ class PostController extends Controller
     /**
      * ブログ作成画面
      *
-     * @return \Illuminate\View\View;
+     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -68,7 +68,7 @@ class PostController extends Controller
     /**
      * ブログ投稿
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\PostRequest $request
      * @param int[] $tag_ids
      * @return void
      */
@@ -108,7 +108,7 @@ class PostController extends Controller
      * ブログ詳細画面
      *
      * @param  int  $id
-     * @return \Illuminate\View\View;
+     * @return \Illuminate\View\View
      */
     public function show(Post $post): View
     {
@@ -128,7 +128,7 @@ class PostController extends Controller
      * ブログ編集画面
      *
      * @param  int  $id
-     * @return \Illuminate\View\View;
+     * @return \Illuminate\View\View
      */
     public function edit(int $id): View
     {
@@ -145,7 +145,7 @@ class PostController extends Controller
     /**
      * ブログ更新
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\PostRequest $request
      * @param  int  $id
      * @param int[] $tag_ids
      * @return void
@@ -238,7 +238,7 @@ class PostController extends Controller
      * カテゴリ一覧
      *
      * @param  int  $id
-     * @return \Illuminate\View\View;
+     * @return \Illuminate\View\View
      */
     public function category(int $id): View
     {
@@ -277,7 +277,7 @@ class PostController extends Controller
     /**
      * 月別一覧
      * @param  Request  $request
-     * @return \Illuminate\View\View;
+     * @return \Illuminate\View\View
      */
     public function month(Request $request): View
     {

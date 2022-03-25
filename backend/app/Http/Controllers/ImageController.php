@@ -13,9 +13,8 @@ class ImageController extends Controller
     /**
      *ファイルアップロード
      *
-     * @param  Request  $request
+     * @param  \App\Http\Requests\PostRequest $request;
      * @return string
-     *
      */
     public function store(PostRequest $request)
     {
