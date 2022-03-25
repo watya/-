@@ -89,18 +89,18 @@ class Post extends Model
     }
 
     /**
-     * カテゴリ取得
+     * 編集ブログ取得
      *
      * @param  int $id
-     * @return $post
+     * @return App\Models\Post
      */
-    public function findPostById(int $id)
+    public function findPostById(int $id): Post
     {
         return Post::find($id);
     }
 
     /**
-     * カテゴリ取得
+     * ブログ更新
      *
      * @param  Request $request
      * @param  int[] $tag_ids
@@ -119,7 +119,7 @@ class Post extends Model
     }
 
     /**
-     * カテゴリ取得
+     * ブログ削除
      *
      * @param  int $id
      * @return void
@@ -130,12 +130,12 @@ class Post extends Model
     }
 
     /**
-     * カテゴリ取得
+     * ブログ検索(タイトルor本文)
      *
      * @param  Request $request
-     * @return $posts
+     * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByTitleOrContent($request)
+    public function findPostByTitleOrContent($request): LengthAwarePaginator
     {
         return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
             $query->where('title', 'like', "%$request->search%")
@@ -145,12 +145,12 @@ class Post extends Model
 
 
     /**
-     * カテゴリ取得
+     * 非公開ブログ取得
      *
      * @param  void
-     * @return $posts
+     * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findArchivePost()
+    public function findArchivePost(): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 0)->latest()->paginate(5);
         $posts->load('user', 'tags', 'images');
@@ -158,13 +158,13 @@ class Post extends Model
     }
 
     /**
-     * カテゴリ取得
+     * 日付別ブログ取得
      *
      * @param  string $start
      * @param  string $end
-     * @return $posts
+     * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByCreated(string $start, string $end)
+    public function findPostByCreated(string $start, string $end): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
