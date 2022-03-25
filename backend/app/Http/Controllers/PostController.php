@@ -89,7 +89,8 @@ class PostController extends Controller
             array_push($tag_ids, $tag['id']);
         }
 
-        $post = $this->Post->savePost($request, $tag_ids);
+        $attributes = $request->only(['content', 'title', 'is_published']);
+        $post = $this->Post->savePost($attributes, $tag_ids);
 
         if ($request->thumbnail !== null) {
             $this->Image->saveImage($request, $post);
@@ -172,7 +173,8 @@ class PostController extends Controller
             array_push($tag_ids, $tag['id']);
         }
 
-        $post->updatePost($request, $tag_ids);
+        $attributes = $request->only(['content', 'title', 'is_published']);
+        $post = $this->Post->updatePost($attributes, $tag_ids);
 
         if ($request->thumbnail != null) {
             $this->Image->saveImage($request, $post);
@@ -217,7 +219,9 @@ class PostController extends Controller
      */
     public function search(Request $request): View
     {
-        $posts = $this->Post->findPostByTitleOrContent($request);
+
+        $search = $request->search;
+        $posts = $this->Post->findPostByTitleOrContent($search);
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 

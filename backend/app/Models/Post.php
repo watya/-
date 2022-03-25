@@ -109,7 +109,6 @@ class Post extends Model
         })->paginate(9);
     }
 
-
     public function findArchivePost()
     {
         $posts = Post::where('is_published', 0)->latest()->paginate(5);
