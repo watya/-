@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Collection;
 
 class Tag extends Model
 {
@@ -27,7 +28,7 @@ class Tag extends Model
      * @param  string $tag
      * @return \App\Models\Tag
      */
-    public function findTagOrCreate(string $tag): Post
+    public function findTagOrCreate(string $tag): Tag
     {
         return Tag::firstOrCreate(['tag_name' => $tag]);
     }
