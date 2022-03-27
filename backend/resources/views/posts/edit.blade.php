@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/edit.css') }}">
 
 <div class="card-header">編集</div>
 <div class="card-body">
@@ -11,7 +12,7 @@
   @endif
 
   <div class="card">
-    <div class="card-body">
+    <div class="card-body" id="edit">
       @if ($errors->any())
       <div class="alert alert-danger">
         <ul>
