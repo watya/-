@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/create.css') }}">
 
 <div class="card-header">新規投稿</div>
 <div class="card-body">
@@ -11,7 +12,7 @@
   @endif
 
   <div class="card">
-    <div class="card-body">
+    <div class="card-body" id="create">
       @if ($errors->any())
       <div class="alert alert-danger">
         <ul>
@@ -22,7 +23,7 @@
       </div>
       @endif
 
-      <div class="form-group">
+      <div>
         <create-component></create-component>
       </div>
     </div>

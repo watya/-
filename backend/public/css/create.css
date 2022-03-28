@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+@media (min-width: 1000px) {
+    #create {
+        background-color: #f8f4f4d3;
+    }
+}
+
+@media (max-width: 999px) {
+    #create {
+        background-color: #f8f4f4d3;
+    }
+}

@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
-use App\Models\Post;
 use App\Models\Image;
 
 class ImageController extends Controller
 {
-
+    /**
+     *ファイルアップロード
+     *
+     * @param  Request  $request
+     * @return string
+     *
+     */
     public function store(PostRequest $request)
     {
         if ($request->imageData->isValid()) {
@@ -19,16 +24,14 @@ class ImageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * ファイル削除
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
+     *
      */
-    public function destroy(int $id)
+    public function destroy(int $id): void
     {
-        $image = Image::find($id);
-        $post = Post::find($image->post_id);
-
-        Image::destroy($id);
+        Image::destroyImage($id);
     }
 }

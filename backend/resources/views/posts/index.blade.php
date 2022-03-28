@@ -1,4 +1,3 @@
-<!-- トップページ -->
 @extends('layouts.app')
 
 @section('content')
@@ -13,7 +12,6 @@
         @endif
 
         @isset($search_result)
-        <!-- この中に値があれば表示 -->
         <h5 class="card-title">{{ $search_result }}</h5>
         @endisset
 
@@ -83,7 +81,7 @@
         </div>
 
         <div class="categories">
-            <h1 class="category-title">最近のカテゴリ</h1>
+            <h1 class="category-title">よく使われるカテゴリ</h1>
             @foreach ($categories as $category)
             <div class="card-tag">
                 <a href="{{ route('posts.category', $category->id) }}" class="a-tag">
@@ -118,10 +116,8 @@
 
     $('.button').click(function () {
 
-         //toggleClassでshowのclassを追加または削除
         $('.month').toggleClass('show');
 
-        //#appがshowのclassをを持っていれば
         if($('.month').hasClass('show')){
             $('.card-month').show();
         }else{

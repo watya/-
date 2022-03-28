@@ -94,7 +94,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a href="{{ route('posts.create') }}" class="dropdown-item">新規投稿</a>
-                                <a href="{{ route('posts.publish') }}" class="dropdown-item">下書き一覧</a>
+                                <a href="{{ route('posts.archive') }}" class="dropdown-item">下書き一覧</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('ログアウト') }}

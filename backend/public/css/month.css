@@ -1,72 +1,73 @@
 @charset "utf-8";
-@media (min-width: 1000px){
-    .index{
+@media (min-width: 1000px) {
+    .index {
         width: 80%;
         display: flex;
         margin: 20px auto;
         justify-content: center;
     }
 
-    .card-body-index{
+    .card-body-index {
         margin-right: calc(50% - 35vw);
         margin-left: calc(50% - 35vw);
     }
 
-    .card-body{
+    .card-body {
         display: flex;
         flex-wrap: wrap;
-        /* margin-left: -20px; */
-
-        align-items:stretch;
-        justify-content:center;
+        align-items: stretch;
+        justify-content: center;
     }
 
     .card {
-        /* margin-left: 20px; */
-        float:left;
-        width:33%;
+        float: left;
+        width: 33%;
 
         background-color: #ffffff;
     }
 
-    .card-created{
-        color:rgb(153, 152, 152);
+    .card-created {
+        color: rgb(153, 152, 152);
     }
 
-    h1{
+    h1 {
         font-size: 20px;
     }
 
-    .categories{
-        position:absolute; top:30%; right:-2%;
+    .categories {
+        position: absolute;
+        top: 30%;
+        right: 1%;
     }
 
-    .card-tag{
-        width:50%;
-        word-break:break-word;
+    .card-tag {
+        width: 50%;
+        word-break: break-word;
     }
 
-    .month{
-        position:absolute; top:30%; left:6%;
+    .month {
+        position: absolute;
+        top: 30%;
+        left: 6%;
     }
 
-    .card-created{
-        color:rgb(153, 152, 152);
+    .card-created {
+        color: rgb(153, 152, 152);
     }
 
-    .a-title{
+    .a-title {
         color: #000000;
-        font-size:25px;
+        font-size: 25px;
     }
 
-    #image{
+    #image {
         width: 100%;
         height: 400px;
         object-fit: contain;
         /* object-fit: cover; */
     }
 
-    #blog-top{
+    #blog-top {
         border-bottom: solid 2px #000000;
         text-align: center;
         width: 250px;
@@ -74,40 +75,37 @@
         margin-right: auto;
     }
 
-    .a-month{
-        color:rgb(129, 128, 128);
+    .a-month {
+        color: rgb(129, 128, 128);
     }
-    .to-top{
+    .to-top {
         margin-top: 1%;
     }
 
-    .a-top{
-        color:rgb(129, 128, 128);
+    .a-top {
+        color: rgb(129, 128, 128);
     }
 
-    .a-tag{
-        color:rgb(5, 89, 158);
+    .a-tag {
+        color: rgb(5, 89, 158);
     }
 }
 
-@media (max-width: 1000px){
-    .card-created{
-        color:rgb(153, 152, 152);
+@media (max-width: 1000px) {
+    .card-created {
+        color: rgb(153, 152, 152);
     }
 
-    .a-title{
+    .a-title {
         color: #000000;
-        font-size:25px;
+        font-size: 25px;
     }
 
-    #image{
+    #image {
         width: 100%;
-        /* height: 400px;
-        object-fit: contain; */
-        /* object-fit: cover; */
     }
 
-    #blog-top{
+    #blog-top {
         border-bottom: solid 2px #000000;
         text-align: center;
         width: 250px;
@@ -115,48 +113,48 @@
         margin-right: auto;
     }
 
-    .a-month{
-        color:rgb(129, 128, 128);
+    .a-month {
+        color: rgb(129, 128, 128);
     }
 
-    .li-month{
+    .li-month {
         color: #615f5d;
     }
 
-    .categories{
+    .categories {
         margin-top: 5%;
         margin-left: 8%;
-        border-top:  solid rgb(161, 159, 159);
+        border-top: solid rgb(161, 159, 159);
         width: 80%;
     }
-    .category-title{
+
+    .category-title {
         margin-top: 5%;
     }
 
-    .month{
+    .month {
         margin-top: 5%;
         margin-left: 8%;
-        border-top:  solid rgb(161, 159, 159);
+        border-top: solid rgb(161, 159, 159);
         width: 80%;
     }
-    .month-title{
+    .month-title {
         margin-top: 5%;
     }
 
-    .to-top{
+    .to-top {
         margin-top: 1%;
         margin-left: 8%;
     }
-    .pagination{
+    .pagination {
         margin-left: 5%;
     }
 
-    .a-top{
-        color:rgb(129, 128, 128);
+    .a-top {
+        color: rgb(129, 128, 128);
     }
 
-    .a-tag{
-        color:rgb(5, 89, 158);
+    .a-tag {
+        color: rgb(5, 89, 158);
     }
 }
-

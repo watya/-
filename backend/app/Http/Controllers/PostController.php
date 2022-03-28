@@ -3,94 +3,100 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Image;
-use Log;
-use Response;
+use Illuminate\Http\RedirectResponse;
+
 
 class PostController extends Controller
 {
+
+    /** @var Post $Post */
+    private $Post;
+
+    /** @var Image $Image */
+    private $Image;
+
+    /** @var Tag $Tag */
+    private $Tag;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * コンストラクタ
      */
-
-    public function index(Request $request)
+    public function __construct()
     {
-        $posts = Post::where('is_published', 1)->latest()->paginate(9);
-        $posts->load('user', 'tags', 'images');
+        $this->Post = new Post();
+        $this->Image = new Image();
+        $this->Tag = new Tag();
+    }
 
-        // $id = $request->post_id;
-        // $image = Image::find($id);
-
-        $categories = Tag::take(10)->latest()->get();
+    /**
+     * ブログトップページ
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View;
+     */
+    public function index(Request $request): View
+    {
+        $posts = $this->Post->findPublish();
+        $categories = $this->Tag->findPopular();
 
         return view(
             'posts.index',
             [
-                'posts' => $posts, 'categories' => $categories
+                'posts' => $posts,
+                'categories' => $categories,
             ]
         );
     }
 
     /**
-     * Show the form for creating a new resource.
+     * ブログ作成画面
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function create()
+    public function create(): View
     {
         return view('posts.create', []);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * ブログ投稿
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param int[] $tag_ids
+     * @return void
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request): void
     {
         \DB::beginTransaction();
 
-        $post = new Post;
-        $post->user_id = \Auth::id();
-        $post->content = $request->content;
-        $post->title = $request->title;
-        $post->is_published = $request->is_published;
-
-        // tagcategoryからtagを抽出。それを$matchに移行
         preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
+
         $tags = [];
-
         foreach ($match[1] as $tag) {
-            $found = Tag::firstOrCreate(['tag_name' => $tag]); //タグが既に存在していたら作らない。存在してなかったら作る。
-
+            $found = $this->Tag->findOrCreate($tag);
             array_push($tags, $found);
         }
 
         $tag_ids = [];
-
         foreach ($tags as $tag) {
             array_push($tag_ids, $tag['id']);
         }
 
-        $post->save();
-        $post->tags()->attach($tag_ids);
+        $attributes = $request->only(['content', 'title', 'is_published']);
+        $post = $this->Post->savePost($attributes, $tag_ids);
 
-        if ($request->thumbnail != null) {
-            $image = new Image;
-            $image->image = $request->thumbnail;
-            $image->post_id = $post->id;
-            $image->save();
+        if ($request->thumbnail !== null) {
+            $this->Image->saveImage($request->only('thumbnail'), $post);
         };
 
         \DB::commit();
 
-        if ($post->is_published == 1) {
+        if ((int)$post->is_published === 1) {
             \Session::flash('err_msg', 'ブログを投稿しました');
         } else {
             \Session::flash('err_msg', 'ブログを下書きに保存しました');
@@ -98,83 +104,83 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * ブログ詳細画面
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function show(Post $post)
+    public function show(Post $post): View
     {
         $post->load('user', 'comments.user');
         $user_id = \Auth::id();
 
-        return view('posts.show', ['post' => $post, 'user_id' => $user_id,]);
+        return view(
+            'posts.show',
+            [
+                'post' => $post,
+                'user_id' => $user_id,
+            ]
+        );
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * ブログ編集画面
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View;
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
-        $post = Post::find($id);
+        $post = $this->Post->findById($id);
 
-        return view('posts.edit', ['post' => $post]);
+        return view(
+            'posts.edit',
+            [
+                'post' => $post
+            ]
+        );
     }
 
     /**
-     * Update the specified resource in storage.
+     * ブログ更新
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int[] $tag_ids
+     * @return void
      */
 
-    public function update(PostRequest $request, int $id)
+    public function update(PostRequest $request, int $id): void
     {
         \DB::beginTransaction();
 
-        $post = Post::find($id);
-
-        $post->fill([
-            'title' => $request->title,
-            'content' => $request->content,
-            'is_published' => $request->is_published,
-        ]);
+        $post = $this->Post->findById($id);
 
         $post->tags()->detach();
 
-        // contentからtagを抽出。それを$matchに移行
-        preg_match_all('/([a-zA-Z0-90-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
+        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);
 
         $tags = [];
-
         foreach ($match[1] as $tag) {
-            $found = Tag::firstOrCreate(['tag_name' => $tag]); //タグが既に存在していたら作らない。存在してなかったら作る。
+            $found = $this->Tag->findOrCreate($tag);
             array_push($tags, $found);
         }
 
         $tag_ids = [];
-
         foreach ($tags as $tag) {
             array_push($tag_ids, $tag['id']);
         }
 
-        $post->save();
-        $post->tags()->syncWithoutDetaching($tag_ids);
+        $attributes = $request->only(['content', 'title', 'is_published']);
+        $post->updatePost($attributes, $tag_ids);
 
-        if ($request->thumbnail != null) {
-            $image = new Image;
-            $image->image = $request->thumbnail;
-            $image->post_id = $post->id;
-            $image->save();
-        }
+        if ($request->thumbnail !== null) {
+            $this->Image->saveImage($request->only('thumbnail'), $post);
+        };
 
         \DB::commit();
 
-        if ($post->is_published == 1) {
+        if ((int)$post->is_published === 1) {
             \Session::flash('err_msg', 'ブログを更新しました');
         } else {
             \Session::flash('err_msg', 'ブログを下書きに保存しました');
@@ -182,12 +188,12 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * ブログ削除
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): RedirectResponse
     {
         if (empty($id)) {
             \Session::flash('err_msg', 'データがありません');
@@ -195,7 +201,7 @@ class PostController extends Controller
         }
 
         try {
-            Post::destroy($id);
+            Post::destroyPost($id);
         } catch (\Throwable $e) {
             abort(500);
         }
@@ -204,41 +210,59 @@ class PostController extends Controller
         return redirect('/');
     }
 
-    public function search(Request $request)
+    /**
+     * ブログ検索
+     * @param  Request  $request
+     * @return \Illuminate\View\View;
+     */
+    public function search(Request $request): View
     {
-        $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
-            $query->where('title', 'like', "%$request->search%")
-                ->orWhere('content', 'like', "%$request->search%");
-        })->paginate(9);
+        $posts = $this->Post->findByTitleOrContent($request->only('search'));
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
-        $categories = Tag::take(10)->latest()->get();
-
-        return view('posts.index', ['posts' => $posts, 'search_result' => $search_result, 'search_query' => $request->search, 'categories' => $categories]);
-    }
-
-    public function category(int $id)
-    {
-        $posts = Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
-
-        $categories = Tag::take(10)->latest()->get();
+        $categories = $this->Tag->findPopular();
 
         return view(
             'posts.index',
             [
-                'posts' => $posts, 'categories' => $categories
+                'posts' => $posts,
+                'search_result' => $search_result,
+                'search_query' => $request->search,
+                'categories' => $categories
             ]
         );
     }
 
-    public function publish(Request $request)
+    /**
+     * カテゴリ一覧
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View;
+     */
+    public function category(int $id): View
     {
-        $posts = Post::where('is_published', 0)->latest()->paginate(5);
-        $posts->load('user', 'tags', 'images');
+        $posts = $this->Tag->findById($id);
+        $categories = $this->Tag->findPopular();
 
-        $id = $request->post_id;
-        $image = Image::find($id);
+        return view(
+            'posts.index',
+            [
+                'posts' => $posts,
+                'categories' => $categories
+            ]
+        );
+    }
+
+    /**
+     * 下書き一覧
+     *
+     * @param  Request  $request
+     * @return \Illuminate\View\View;
+     */
+    public function archive(Request $request): View
+    {
+        $posts = $this->Post->findArchive();
         $user_id = \Auth::id();
 
         return view(
@@ -250,17 +274,21 @@ class PostController extends Controller
         );
     }
 
-    public function month(Request $request)
+    /**
+     * 月別一覧
+     * @param  Request  $request
+     * @return \Illuminate\View\View;
+     */
+    public function month(Request $request): View
     {
         $year = $request->year;
         $month = $request->month;
-
         $start = "$year-$month-01";
         $end = "$year-$month-31";
-        $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
-        $posts->load('user', 'tags', 'images');
 
-        $categories = Tag::take(10)->latest()->get();
+        $posts = $this->Post->findByCreated($start, $end);
+
+        $categories = app()->make(Tag::class)->findPopular();
 
         $user_id = \Auth::id();
 

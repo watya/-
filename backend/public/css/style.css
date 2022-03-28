@@ -1,6 +1,5 @@
 @charset "utf-8";
-@media (min-width: 1000px){
-
+@media (min-width: 1000px) {
     html {
         font-size: 110%;
     }
@@ -10,25 +9,20 @@
         font-size: 1rem;
         margin: 0;
         background-color: #f0ebe8;
-        /* background-color: hwb(0 100% 0%); */
-        /* background-size: cover; */
     }
 
-    #search-area{
-        margin-left:380px;
+    #search-area {
+        margin-left: 380px;
         margin-top: 5px;
     }
 
     .navbar-brand {
-        font-family: 'Caveat', cursive;
+        font-family: "Caveat", cursive;
         font-size: 3.3rem;
-        /* font-family: 'Permanent Marker', cursive; */
     }
-
 }
 
-@media (max-width: 1000px){
-
+@media (max-width: 1000px) {
     html {
         font-size: 80%;
     }
@@ -38,14 +32,10 @@
         font-size: 1rem;
         margin: 0;
         background-color: #f0ebe8;
-        /* background-color: hwb(0 100% 0%); */
-        /* background-size: cover; */
     }
 
     .navbar-brand {
-        font-family: 'Caveat', cursive;
+        font-family: "Caveat", cursive;
         font-size: 3.3rem;
-        /* font-family: 'Permanent Marker', cursive; */
     }
 }
-
