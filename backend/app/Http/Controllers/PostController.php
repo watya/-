@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Image;
-use Log;
 use Illuminate\Http\RedirectResponse;
 
 
@@ -43,8 +41,8 @@ class PostController extends Controller
      */
     public function index(Request $request): View
     {
-        $posts = $this->Post->findPublishPost();
-        $categories = $this->Tag->findCategory();
+        $posts = $this->Post->findPublish();
+        $categories = $this->Tag->findPopular();
 
         return view(
             'posts.index',
@@ -80,7 +78,7 @@ class PostController extends Controller
 
         $tags = [];
         foreach ($match[1] as $tag) {
-            $found = $this->Tag->findTagOrCreate($tag);
+            $found = $this->Tag->findOrCreate($tag);
             array_push($tags, $found);
         }
 
@@ -133,7 +131,7 @@ class PostController extends Controller
      */
     public function edit(int $id): View
     {
-        $post = $this->Post->findPostById($id);
+        $post = $this->Post->findById($id);
 
         return view(
             'posts.edit',
@@ -156,7 +154,7 @@ class PostController extends Controller
     {
         \DB::beginTransaction();
 
-        $post = $this->Post->findPostById($id);
+        $post = $this->Post->findById($id);
 
         $post->tags()->detach();
 
@@ -164,7 +162,7 @@ class PostController extends Controller
 
         $tags = [];
         foreach ($match[1] as $tag) {
-            $found = $this->Tag->findTagOrCreate($tag);
+            $found = $this->Tag->findOrCreate($tag);
             array_push($tags, $found);
         }
 
@@ -219,11 +217,11 @@ class PostController extends Controller
      */
     public function search(Request $request): View
     {
-        $posts = $this->Post->findPostByTitleOrContent($request->only('search'));
+        $posts = $this->Post->findByTitleOrContent($request->only('search'));
 
         $search_result = $request->search . 'の検索結果' . $posts->total() . '件';
 
-        $categories = $this->Tag->findCategory();
+        $categories = $this->Tag->findPopular();
 
         return view(
             'posts.index',
@@ -244,8 +242,8 @@ class PostController extends Controller
      */
     public function category(int $id): View
     {
-        $posts = $this->Tag->findCategoryById($id);
-        $categories = $this->Tag->findCategory();
+        $posts = $this->Tag->findById($id);
+        $categories = $this->Tag->findPopular();
 
         return view(
             'posts.index',
@@ -264,7 +262,7 @@ class PostController extends Controller
      */
     public function archive(Request $request): View
     {
-        $posts = $this->Post->findArchivePost();
+        $posts = $this->Post->findArchive();
         $user_id = \Auth::id();
 
         return view(
@@ -288,8 +286,10 @@ class PostController extends Controller
         $start = "$year-$month-01";
         $end = "$year-$month-31";
 
-        $posts = $this->Post->findPostByCreated($start, $end);
-        $categories = $this->Tag->findCategory();
+        $posts = $this->Post->findByCreated($start, $end);
+
+        $categories = app()->make(Tag::class)->findPopular();
+
         $user_id = \Auth::id();
 
         return view(

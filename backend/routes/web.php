@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
 
@@ -38,4 +37,4 @@ Route::get('/posts/month/{year}/{month}', [PostController::class, 'month'])->nam
 
 Route::resource('/posts', 'App\Http\Controllers\PostController', ['except' => ['index']]);
 Route::resource('/users', 'App\Http\Controllers\UserController');
-Route::resource('/comments', 'App\Http\Controllers\CommentController')->middleware('auth'); //ログインしてる人だけ
+Route::resource('/comments', 'App\Http\Controllers\CommentController')->middleware('auth');

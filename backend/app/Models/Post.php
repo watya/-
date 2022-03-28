@@ -4,11 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Image;
-use Illuminate\Http\Request;
 
 class Post extends Model
 {
@@ -50,7 +48,7 @@ class Post extends Model
      * @param  void
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPublishPost(): LengthAwarePaginator
+    public function findPublish(): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 1)->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
@@ -82,7 +80,7 @@ class Post extends Model
      * @param  int $id
      * @return \App\Models\Post
      */
-    public function findPostById(int $id): Post
+    public function findById(int $id): Post
     {
         return Post::find($id);
     }
@@ -124,7 +122,7 @@ class Post extends Model
      * @param  string[] $request
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByTitleOrContent(array $request): LengthAwarePaginator
+    public function findByTitleOrContent(array $request): LengthAwarePaginator
     {
         return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
             $query->where('title', 'like', "%$request[search]%")
@@ -138,7 +136,7 @@ class Post extends Model
      * @param  void
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findArchivePost(): LengthAwarePaginator
+    public function findArchive(): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 0)->latest()->paginate(5);
         $posts->load('user', 'tags', 'images');
@@ -152,7 +150,7 @@ class Post extends Model
      * @param  string $end
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByCreated(string $start, string $end): LengthAwarePaginator
+    public function findByCreated(string $start, string $end): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');

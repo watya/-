@@ -28,7 +28,7 @@ class Tag extends Model
      * @param  string $tag
      * @return \App\Models\Tag
      */
-    public function findTagOrCreate(string $tag): Tag
+    public function findOrCreate(string $tag): Tag
     {
         return Tag::firstOrCreate(['tag_name' => $tag]);
     }
@@ -39,7 +39,7 @@ class Tag extends Model
      * @param  int $id
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findCategoryById(int $id): LengthAwarePaginator
+    public function findById(int $id): LengthAwarePaginator
     {
         return Tag::find($id)->posts()->where('is_published', 1)->latest()->paginate(9);
     }
@@ -50,8 +50,8 @@ class Tag extends Model
      * @param  void
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function findCategory(): Collection
+    public function findPopular(): Collection
     {
-        return Tag::take(10)->latest()->get();
+        return Tag::withCount('posts')->orderBy('posts_count', 'desc')->limit(10)->get();
     }
 }

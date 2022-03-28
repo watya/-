@@ -9,8 +9,6 @@
         font-size: 1rem;
         margin: 0;
         background-color: #f0ebe8;
-        /* background-color: hwb(0 100% 0%); */
-        /* background-size: cover; */
     }
 
     #search-area {
@@ -21,7 +19,6 @@
     .navbar-brand {
         font-family: "Caveat", cursive;
         font-size: 3.3rem;
-        /* font-family: 'Permanent Marker', cursive; */
     }
 }
 
@@ -35,13 +32,10 @@
         font-size: 1rem;
         margin: 0;
         background-color: #f0ebe8;
-        /* background-color: hwb(0 100% 0%); */
-        /* background-size: cover; */
     }
 
     .navbar-brand {
         font-family: "Caveat", cursive;
         font-size: 3.3rem;
-        /* font-family: 'Permanent Marker', cursive; */
     }
 }

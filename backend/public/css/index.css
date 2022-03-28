@@ -15,17 +15,13 @@
     .card-body {
         display: flex;
         flex-wrap: wrap;
-        /* margin-left: -20px; */
-
         align-items: stretch;
         justify-content: center;
     }
 
     .card {
-        /* margin-left: 20px; */
         float: left;
         width: 33%;
-
         background-color: #ffffff;
     }
 
@@ -137,6 +133,7 @@
         border-top: solid rgb(161, 159, 159);
         width: 80%;
     }
+
     .category-title {
         margin-top: 5%;
     }
