@@ -4,11 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Image;
-use Illuminate\Http\Request;
 
 class Post extends Model
 {
@@ -50,7 +48,7 @@ class Post extends Model
      * @param  void
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPublishPost(): LengthAwarePaginator
+    public function findPublish(): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 1)->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');
@@ -58,30 +56,18 @@ class Post extends Model
     }
 
     /**
-     * カテゴリ取得
-     *
-     * @param  void
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function findCategory(): Collection
-    {
-        return Tag::take(10)->latest()->get();
-    }
-
-    /**
      * ブログ保存
      *
-     * @param  Request  $request
+     * @param  string[] $attributes
      * @param  int[] $tag_ids
-     * @return App\Models\Post
+     * @return \App\Models\Post
      */
-    public function savePost($request, array $tag_ids): Post
+    public function savePost(array $attributes, array $tag_ids): Post
     {
-        $post = new Post();
         $this->user_id = \Auth::id();
-        $this->content = $request->content;
-        $this->title = $request->title;
-        $this->is_published = $request->is_published;
+        $this->content = $attributes['content'];
+        $this->title = $attributes['title'];
+        $this->is_published = $attributes['is_published'];
 
         $this->save();
         $this->tags()->attach($tag_ids);
@@ -92,9 +78,9 @@ class Post extends Model
      * 編集ブログ取得
      *
      * @param  int $id
-     * @return App\Models\Post
+     * @return \App\Models\Post
      */
-    public function findPostById(int $id): Post
+    public function findById(int $id): Post
     {
         return Post::find($id);
     }
@@ -102,16 +88,17 @@ class Post extends Model
     /**
      * ブログ更新
      *
-     * @param  Request $request
+     * @param  string[] $attributes
      * @param  int[] $tag_ids
      * @return void
      */
-    public function updatePost($request, array $tag_ids): void
+    public function updatePost(array $attributes, array $tag_ids): void
     {
         $this->fill([
-            'title' => $request->title,
-            'content' => $request->content,
-            'is_published' => $request->is_published,
+            'user_id' => \Auth::id(),
+            'title' => $attributes['title'],
+            'content' => $attributes['content'],
+            'is_published' => $attributes['is_published'],
         ]);
 
         $this->save();
@@ -132,17 +119,16 @@ class Post extends Model
     /**
      * ブログ検索(タイトルor本文)
      *
-     * @param  Request $request
+     * @param  string[] $request
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByTitleOrContent($request): LengthAwarePaginator
+    public function findByTitleOrContent(array $request): LengthAwarePaginator
     {
         return $posts = Post::where('is_published', 1)->where(function ($query) use ($request) {
-            $query->where('title', 'like', "%$request->search%")
-                ->orWhere('content', 'like', "%$request->search%");
+            $query->where('title', 'like', "%$request[search]%")
+                ->orWhere('content', 'like', "%$request[search]%");
         })->paginate(9);
     }
-
 
     /**
      * 非公開ブログ取得
@@ -150,7 +136,7 @@ class Post extends Model
      * @param  void
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findArchivePost(): LengthAwarePaginator
+    public function findArchive(): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 0)->latest()->paginate(5);
         $posts->load('user', 'tags', 'images');
@@ -164,7 +150,7 @@ class Post extends Model
      * @param  string $end
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findPostByCreated(string $start, string $end): LengthAwarePaginator
+    public function findByCreated(string $start, string $end): LengthAwarePaginator
     {
         $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
         $posts->load('user', 'tags', 'images');

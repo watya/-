@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
-use App\Models\Post;
 use App\Models\Image;
-use Illuminate\Http\RedirectResponse;
 
 class ImageController extends Controller
 {
