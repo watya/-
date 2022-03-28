@@ -23,14 +23,14 @@ class Image extends Model
     /**
      * ファイル保存
      *
-     * @param  string[] $thumbnail
+     * @param  string[] $attributes
      * @param  \App\Models\Post $post
      * @return void
      */
-    public function saveImage(array $request, $post): void
+    public function saveImage(array $attributes, $post): void
     {
         $image = new Image;
-        $image->image = $request['thumbnail'];
+        $image->image = $attributes['thumbnail'];
         $image->post_id = $post->id;
         $image->save();
     }
