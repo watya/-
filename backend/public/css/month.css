@@ -22,7 +22,6 @@
     .card {
         float: left;
         width: 33%;
-
         background-color: #ffffff;
     }
 
@@ -43,6 +42,7 @@
     .card-tag {
         width: 50%;
         word-break: break-word;
+        margin-left: 14%;
     }
 
     .month {
