@@ -85,13 +85,13 @@
             @foreach ($categories as $category)
             <div class="card-tag">
                 <a href="{{ route('posts.category', $category->id) }}" class="a-tag">
-                    #{{ $category->tag_name }}
+                    #{{ $category->tag_name }}({{$category->posts_count}})
                 </a>
             </div>
             @endforeach
         </div>
 
-        <div class="month">
+        {{-- <div class="month">
             <h1 class="month-title">月別記事</h1>
             <button class="button">2022</button>
             <div class="card-month">
@@ -102,7 +102,20 @@
                     </li>
                     @endfor
             </div>
+        </div> --}}
+
+        <div class="month">
+            <h1 class="month-title">月別記事</h1>
+            <button class="button">2022</button>
+            <div class="card-month">
+                @foreach($counts as $count)
+                <li class="li-month">
+                    {{$count}}
+                </li>
+                @endforeach
+            </div>
         </div>
+
     </div>
 </div>
 

@@ -44,11 +44,17 @@ class PostController extends Controller
         $posts = $this->Post->findPublish();
         $categories = $this->Tag->findPopular();
 
+        for ($i = 1; $i <= 12; $i++) {
+            $counts[] = Post::where('is_published', 1)->whereBetween('created_at', ["2022-$i-01", "2022-$i-31"])->count();
+        }
+
         return view(
             'posts.index',
             [
                 'posts' => $posts,
                 'categories' => $categories,
+                'i' => $i,
+                'counts' => $counts,
             ]
         );
     }

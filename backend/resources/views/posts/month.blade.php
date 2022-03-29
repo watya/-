@@ -84,7 +84,7 @@
             @foreach ($categories as $category)
             <div class="card-tag">
                 <a href="{{ route('posts.category', $category->id) }}" class="a-tag">
-                    #{{ $category->tag_name }}
+                    #{{ $category->tag_name }}({{$category->posts_count}})
                 </a>
             </div>
             @endforeach
