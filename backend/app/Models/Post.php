@@ -150,9 +150,10 @@ class Post extends Model
      * @param  string $end
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
-    public function findByCreated(string $start, string $end): LengthAwarePaginator
+    public function findByCreated(string $year, string $month): LengthAwarePaginator
     {
-        $posts = Post::where('is_published', 1)->whereBetween('created_at', [$start, $end])->latest()->paginate(9);
+        $posts = Post::where('is_published', 1)->whereYear('created_at',  $year)->whereMonth('created_at', $month)->latest()->paginate(9);
+
         $posts->load('user', 'tags', 'images');
         return $posts;
     }

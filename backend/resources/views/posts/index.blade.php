@@ -110,7 +110,7 @@
             <div class="card-month">
                 @foreach($counts as $count)
                 <li class="li-month">
-                    {{$count}}
+                    {{$count->count()}}
                 </li>
                 @endforeach
             </div>

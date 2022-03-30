@@ -44,16 +44,21 @@ class PostController extends Controller
         $posts = $this->Post->findPublish();
         $categories = $this->Tag->findPopular();
 
+        // for ($i = 1; $i <= 12; $i++) {
+        //     $counts[] = Post::where('is_published', 1)->whereBetween('created_at', ["2022-$i-01", "2022-$i-31"])->count();
+        // }
+
         for ($i = 1; $i <= 12; $i++) {
-            $counts[] = Post::where('is_published', 1)->whereBetween('created_at', ["2022-$i-01", "2022-$i-31"])->count();
+            $counts[] = Post::where('is_published', 1)->whereYear('created_at',  2022)->whereMonth('created_at', $i)
+                ->get();
         }
+
 
         return view(
             'posts.index',
             [
                 'posts' => $posts,
                 'categories' => $categories,
-                'i' => $i,
                 'counts' => $counts,
             ]
         );
@@ -288,10 +293,8 @@ class PostController extends Controller
     {
         $year = $request->year;
         $month = $request->month;
-        $start = "$year-$month-01";
-        $end = "$year-$month-31";
 
-        $posts = $this->Post->findByCreated($start, $end);
+        $posts = $this->Post->findByCreated($year, $month);
 
         $categories = app()->make(Tag::class)->findPopular();
 
