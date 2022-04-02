@@ -173,7 +173,6 @@ export default {
             this.uploadFile = "";
         },
         upload() {
-            // this.imageData = "";
             const thumbnailData = new FormData();
             thumbnailData.append("imageData", this.uploadFile);
             axios
