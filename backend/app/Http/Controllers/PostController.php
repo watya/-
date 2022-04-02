@@ -40,10 +40,9 @@ class PostController extends Controller
     /**
      * ブログトップページ
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request): View
+    public function index(): View
     {
         $posts = $this->Post->findPublish();
         $categories = $this->Tag->findPopular();
@@ -272,10 +271,9 @@ class PostController extends Controller
     /**
      * 下書き一覧
      *
-     * @param  Request  $request
      * @return \Illuminate\View\View;
      */
-    public function archive(Request $request): View
+    public function archive(): View
     {
         $posts = $this->Post->findArchive();
         $user_id = \Auth::id();

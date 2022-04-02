@@ -45,7 +45,6 @@ class Post extends Model
     /**
      * 公開記事取得
      *
-     * @param  void
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function findPublish(): LengthAwarePaginator
@@ -133,7 +132,6 @@ class Post extends Model
     /**
      * 非公開ブログ取得
      *
-     * @param  void
      * @return Illuminate\Pagination\LengthAwarePaginator
      */
     public function findArchive(): LengthAwarePaginator
