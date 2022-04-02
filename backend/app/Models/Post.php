@@ -164,7 +164,7 @@ class Post extends Model
      */
     public function findMonthPostCount($year): Collection
     {
-        return Post::whereYear('created_at', $year)
+        return Post::where('is_published', 1)->whereYear('created_at', $year)
             ->orderBy('created_at')
             ->get()
             ->groupBy(function ($row) {
