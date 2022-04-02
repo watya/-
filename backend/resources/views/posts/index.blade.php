@@ -91,31 +91,19 @@
             @endforeach
         </div>
 
-        {{-- <div class="month">
-            <h1 class="month-title">月別記事</h1>
-            <button class="button">2022</button>
-            <div class="card-month">
-                @for ($i = 1; $i <= 12; $i++) <li class="li-month">
-                    <a href="{{ route('posts.month', [2022,$i]) }}" class="a-month">
-                        2022/{{ $i }}
-                    </a>
-                    </li>
-                    @endfor
-            </div>
-        </div> --}}
-
         <div class="month">
             <h1 class="month-title">月別記事</h1>
-            <button class="button">2022</button>
+            <button class="button">{{$year}}</button>
             <div class="card-month">
-                @foreach($counts as $count)
+                @foreach($monthPosts as $month => $count)
                 <li class="li-month">
-                    {{$count->count()}}
+                    <a href="{{ route('posts.month', [$year, $month]) }}" class="a-month">
+                        {{$year}}/{{ $month }} ({{$count}})
+                    </a>
                 </li>
                 @endforeach
             </div>
         </div>
-
     </div>
 </div>
 
@@ -125,17 +113,17 @@
 <script>
     $(document).ready(function(){
 
-    $('.card-month').hide();
+        $('.card-month').hide();
 
-    $('.button').click(function () {
+        $('.button').click(function () {
 
-        $('.month').toggleClass('show');
+            $('.month').toggleClass('show');
 
-        if($('.month').hasClass('show')){
-            $('.card-month').show();
-        }else{
-            $('.card-month').hide();
-        }
+            if($('.month').hasClass('show')){
+                $('.card-month').show();
+            }else{
+                $('.card-month').hide();
+            }
+        });
     });
-});
 </script>

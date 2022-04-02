@@ -11,10 +11,10 @@ class ImageController extends Controller
     /**
      *ファイルアップロード
      *
-     * @param  \App\Http\Requests\PostRequest $request;
+     * @param  \App\Http\Requests\Request $request;
      * @return string
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
         if ($request->imageData->isValid()) {
             $filename = $request->imageData->store('public/image');

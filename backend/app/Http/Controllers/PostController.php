@@ -23,6 +23,9 @@ class PostController extends Controller
     /** @var Tag $Tag */
     private $Tag;
 
+    /** @var string $year */
+    private $year;
+
     /**
      * コンストラクタ
      */
@@ -31,6 +34,7 @@ class PostController extends Controller
         $this->Post = new Post();
         $this->Image = new Image();
         $this->Tag = new Tag();
+        $this->year = date('Y');
     }
 
     /**
@@ -44,22 +48,15 @@ class PostController extends Controller
         $posts = $this->Post->findPublish();
         $categories = $this->Tag->findPopular();
 
-        // for ($i = 1; $i <= 12; $i++) {
-        //     $counts[] = Post::where('is_published', 1)->whereBetween('created_at', ["2022-$i-01", "2022-$i-31"])->count();
-        // }
-
-        for ($i = 1; $i <= 12; $i++) {
-            $counts[] = Post::where('is_published', 1)->whereYear('created_at',  2022)->whereMonth('created_at', $i)
-                ->get();
-        }
-
+        $monthPosts = $this->Post->findMonthPostCount($this->year);
 
         return view(
             'posts.index',
             [
                 'posts' => $posts,
                 'categories' => $categories,
-                'counts' => $counts,
+                'monthPosts' => $monthPosts,
+                'year' => $this->year,
             ]
         );
     }
@@ -233,13 +230,17 @@ class PostController extends Controller
 
         $categories = $this->Tag->findPopular();
 
+        $monthPosts = $this->Post->findMonthPostCount($this->year);
+
         return view(
             'posts.index',
             [
                 'posts' => $posts,
                 'search_result' => $search_result,
                 'search_query' => $request->search,
-                'categories' => $categories
+                'categories' => $categories,
+                'year' => $this->year,
+                'monthPosts' => $monthPosts,
             ]
         );
     }
@@ -255,11 +256,15 @@ class PostController extends Controller
         $posts = $this->Tag->findById($id);
         $categories = $this->Tag->findPopular();
 
+        $monthPosts = $this->Post->findMonthPostCount($this->year);
+
         return view(
             'posts.index',
             [
                 'posts' => $posts,
-                'categories' => $categories
+                'categories' => $categories,
+                'year' => $this->year,
+                'monthPosts' => $monthPosts,
             ]
         );
     }
@@ -296,9 +301,11 @@ class PostController extends Controller
 
         $posts = $this->Post->findByCreated($year, $month);
 
-        $categories = app()->make(Tag::class)->findPopular();
+        $categories = $this->Tag->findPopular();
 
         $user_id = \Auth::id();
+
+        $monthPosts = $this->Post->findMonthPostCount($year);
 
         return view(
             'posts.month',
@@ -308,6 +315,7 @@ class PostController extends Controller
                 'categories' => $categories,
                 'year' => $year,
                 'month' => $month,
+                'monthPosts' => $monthPosts,
             ]
         );
     }

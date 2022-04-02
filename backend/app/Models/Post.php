@@ -7,13 +7,13 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use App\Models\Image;
+use Illuminate\Support\Collection;
 
 class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable =
-    [
+    protected $fillable = [
         'user_id', 'category_id', 'content', 'title', 'image', 'is_published'
     ];
 
@@ -156,5 +156,24 @@ class Post extends Model
 
         $posts->load('user', 'tags', 'images');
         return $posts;
+    }
+
+    /**
+     * 月別ブログ投稿数取得
+     *
+     * @param string $year
+     * @return \Illuminate\Support\Collection
+     */
+    public function findMonthPostCount($year): Collection
+    {
+        return Post::whereYear('created_at', $year)
+            ->orderBy('created_at')
+            ->get()
+            ->groupBy(function ($row) {
+                return $row->created_at->format('m');
+            })
+            ->map(function ($day) {
+                return $day->count();
+            });
     }
 }
