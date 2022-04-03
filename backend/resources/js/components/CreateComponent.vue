@@ -163,6 +163,7 @@ export default {
                     this.imageData = e.target.result;
                 };
                 reader.readAsDataURL(file);
+                alert(err);
             }
         },
         resetFile() {
@@ -186,6 +187,7 @@ export default {
                 .catch((err) => {
                     console.log(err);
                     console.log(err.response.data);
+                    alert(err);
                 });
         },
         resetThumbnail() {
@@ -236,6 +238,7 @@ export default {
                     .catch((err) => {
                         console.log(err);
                         console.log(err.response.data);
+                        alert(err);
                     });
             } else {
                 return false;

@@ -239,6 +239,7 @@ export default {
                     this.imageData = e.target.result;
                 };
                 reader.readAsDataURL(file);
+                alert(err);
             }
         },
         resetFile() {
@@ -286,6 +287,7 @@ export default {
                 .catch((err) => {
                     console.log(err);
                     console.log(err.response.data);
+                    alert(err);
                 });
         },
         update(post) {
@@ -325,6 +327,7 @@ export default {
                     .catch((error) => {
                         console.log(error);
                         console.log(error.response.data);
+                        alert(err);
                     });
             } else {
                 return false;

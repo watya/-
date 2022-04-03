@@ -42542,6 +42542,7 @@ __webpack_require__.r(__webpack_exports__);
         };
 
         reader.readAsDataURL(file);
+        alert(err);
       }
     },
     resetFile: function resetFile() {
@@ -42554,7 +42555,6 @@ __webpack_require__.r(__webpack_exports__);
     upload: function upload() {
       var _this2 = this;
 
-      // this.imageData = "";
       var thumbnailData = new FormData();
       thumbnailData.append("imageData", this.uploadFile);
       axios.post("/images/store", thumbnailData).then(function (res) {
@@ -42564,6 +42564,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
         console.log(err.response.data);
+        alert(err);
       });
     },
     resetThumbnail: function resetThumbnail() {
@@ -42611,6 +42612,7 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (err) {
           console.log(err);
           console.log(err.response.data);
+          alert(err);
         });
       } else {
         return false;
@@ -42884,6 +42886,7 @@ __webpack_require__.r(__webpack_exports__);
         };
 
         reader.readAsDataURL(file);
+        alert(err);
       }
     },
     resetFile: function resetFile() {
@@ -42929,6 +42932,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
         console.log(err.response.data);
+        alert(err);
       });
     },
     update: function update(post) {
@@ -42966,6 +42970,7 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           console.log(error);
           console.log(error.response.data);
+          alert(err);
         });
       } else {
         return false;
