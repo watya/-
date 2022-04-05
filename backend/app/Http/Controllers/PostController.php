@@ -81,7 +81,7 @@ class PostController extends Controller
     {
         \DB::beginTransaction();
 
-        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);;
+        preg_match_all('/([a-zA-Z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->tagCategory, $match);
 
         $tags = [];
         foreach ($match[1] as $tag) {
