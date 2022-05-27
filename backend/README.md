@@ -20,6 +20,7 @@
 * PHP 8.1.3
 * Laravel 8.73.2
 * Vue.js 2.6.14
+* Docker/docker-compose
 
 ## **機能一覧**
 * ユーザー登録、ログイン機能
